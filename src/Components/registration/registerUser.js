@@ -38,7 +38,7 @@ function RegisterUser() {
                 </Form.Item>
                 <Form.Item>
                     <Space>
-                        <Button type="primary" htmlType="submit">Зарегестрироваться</Button>
+                        <Button type="primary" htmlType="submit" style={{ background: 'rgb(231, 53, 89)' }}>Зарегестрироваться</Button>
                     </Space>
                 </Form.Item>
             </Form>

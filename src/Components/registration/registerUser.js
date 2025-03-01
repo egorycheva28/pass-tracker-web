@@ -3,10 +3,13 @@ import React from 'react';
 import { registerUserThunkCreator } from "../../reducers/userReducer";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
+import { useNavigate } from 'react-router-dom';
+
 const { Title } = Typography;
 
 function RegisterUser() {
     const dispatch = useDispatch()
+    const navigate = useNavigate();
 
     const [lastName, setLastName] = useState("");
     const [firstName, setFirstName] = useState("");
@@ -16,11 +19,15 @@ function RegisterUser() {
     const [password1, setPassword1] = useState("");
     const [password2, setPassword2] = useState("");
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         console.log("Успешный вход");
 
-        dispatch(registerUserThunkCreator(lastName, firstName, middleName, group, email, password1, password2));
+        await dispatch(registerUserThunkCreator(lastName, firstName, middleName, group, email, password1, password2));
+
+        if (localStorage.getItem('token') !== null) {
+            navigate('/login');
+        }
     };
 
     return (

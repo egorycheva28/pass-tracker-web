@@ -1,22 +1,30 @@
-import { Row } from 'antd';
-import { Header } from "antd/es/layout/layout";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useEffect } from "react";
-import Galochka from "./Galochka.jpg";
-import { useDispatch, useSelector } from 'react-redux';
-
+import { Dropdown, Menu } from 'antd';
+import { Link, useNavigate } from "react-router-dom";
 
 function Navbar() {
-    //const dispatch=useDispatch()
-    //const isAuth=useSelector()
-    // const userRole=useSelector()
+    const navigate = useNavigate();
 
-    //const location = useLocation();
-    //const navigate = useNavigate();
+    const token = localStorage.getItem('token');
+    const lastName = localStorage.getItem('lastName');
+    const firstName = localStorage.getItem('firstName');
+    const middleName = localStorage.getItem('middleName');
 
-    /*useEffect(() => {
+    const logout = () => {
+        localStorage.removeItem('token');
+        localStorage.removeItem('lastName');
+        localStorage.removeItem('firstName');
+        localStorage.removeItem('middleName');
+        navigate('/login');
+    };
 
-    }, [location]);*/
+    const items = [
+        { label: <Link to="/profile">Профиль</Link>, key: "profile" },
+        { label: <button style={{ background: 'none', border: 'none' }} onClick={logout}>Выход</button>, key: "logout" }
+    ];
+
+    const menu = (
+        <Menu items={items} />
+    );
 
     return (
         <nav style={{ justifyContent: "space-between", padding: 0, background: '#001529', borderBottom: '1px solid grey', position: 'fixed', top: 0, left: 0, right: 0, zIndex: 2, display: 'flex', color: 'white' }}>
@@ -32,11 +40,36 @@ function Navbar() {
                     37.5046 5.22264 30.8582 5.22264 22.6884V5.64296H35.1794V22.6884H35.1794Z" fill="rgb(231, 53, 89)"></path>
                 </svg>
                 <h2 style={{ marginLeft: 10, marginRight: 20, marginTop: '15px', whiteSpace: 'nowrap', color: 'rgb(231, 53, 89)' }}>Pass-tracker</h2>
-                <Link to="/listStudents" style={{ marginInline: 20, color: 'white', marginTop: '20px', whiteSpace: 'nowrap'/*, display: 'none'*/ }}>Список студентов</Link>
-                <Link to="/applications" style={{ marginInline: 20, color: 'white', marginTop: '20px', whiteSpace: 'nowrap'/*, display: 'none'*/ }}>Заявки</Link>
-                <Link to="/role" style={{ marginInline: 20, color: 'white', marginTop: '20px', whiteSpace: 'nowrap'/*, display: 'none'*/ }}>Выдача роли</Link>
+                {token ? (
+                    <Link to="/listStudents" style={{ marginInline: 20, color: 'white', marginTop: '20px', whiteSpace: 'nowrap'/*, display: 'none'*/ }}>Список студентов</Link>
+
+                ) : (
+                    null
+                )}
+                {token ? (
+                    <Link to="/applications" style={{ marginInline: 20, color: 'white', marginTop: '20px', whiteSpace: 'nowrap'/*, display: 'none'*/ }}>Заявки</Link>
+
+                ) : (
+                    null
+                )}
+                {token ? (
+                    <Link to="/role" style={{ marginInline: 20, color: 'white', marginTop: '20px', whiteSpace: 'nowrap'/*, display: 'none'*/ }}>Выдача роли</Link>
+
+                ) : (
+                    null
+                )}
             </div>
-            <Link to="/login" style={{ marginInline: 70, color: 'white', marginTop: '20px', whiteSpace: 'nowrap' }}>Войти</Link>
+            {token ? (
+                <Dropdown overlay={menu} trigger={['click']}>
+                    <p style={{ marginInline: 70, color: 'white', marginTop: '20px', whiteSpace: 'nowrap', cursor: 'pointer' }}>
+                        {lastName + ' ' + firstName + '. ' + middleName + '.'}
+                    </p>
+                </Dropdown>
+            ) : (
+                <Link to="/login" style={{ marginInline: 70, color: 'white', marginTop: '20px', whiteSpace: 'nowrap' }}>
+                    Войти
+                </Link>
+            )}
         </nav>
     );
 }

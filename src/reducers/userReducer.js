@@ -39,6 +39,10 @@ export function registerUserThunkCreator(lastName, firstName, middleName, group,
         try {
             const data = await userApi.registerUser(lastName, firstName, middleName, group, email, password1, password2);
             dispatch(registerUserActionCreator(data));
+            localStorage.setItem('token', `${data.token}`);
+            localStorage.setItem('lastName', `${lastName}`);
+            localStorage.setItem('firstName', `${firstName[0]}`);
+            localStorage.setItem('middleName', `${middleName[0]}`);
             alert("Успешный вход!");
         }
         catch (error) {

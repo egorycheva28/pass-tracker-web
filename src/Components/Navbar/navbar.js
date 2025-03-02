@@ -1,7 +1,10 @@
 import { Dropdown, Menu } from 'antd';
 import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { logoutThunkCreator } from '../../reducers/userReducer';
 
 function Navbar() {
+    const dispatch = useDispatch()
     const navigate = useNavigate();
 
     const token = localStorage.getItem('token');
@@ -9,7 +12,8 @@ function Navbar() {
     const firstName = localStorage.getItem('firstName');
     const middleName = localStorage.getItem('middleName');
 
-    const logout = () => {
+    const logout = async () => {
+        await dispatch(logoutThunkCreator());
         localStorage.removeItem('token');
         localStorage.removeItem('lastName');
         localStorage.removeItem('firstName');
@@ -41,19 +45,19 @@ function Navbar() {
                 </svg>
                 <h2 style={{ marginLeft: 10, marginRight: 20, marginTop: '15px', whiteSpace: 'nowrap', color: 'rgb(231, 53, 89)' }}>Pass-tracker</h2>
                 {token ? (
-                    <Link to="/listStudents" style={{ marginInline: 20, color: 'white', marginTop: '20px', whiteSpace: 'nowrap'/*, display: 'none'*/ }}>Список студентов</Link>
+                    <Link to="/listStudents" style={{ marginInline: 20, color: 'white', marginTop: '20px', whiteSpace: 'nowrap' }}>Список студентов</Link>
 
                 ) : (
                     null
                 )}
                 {token ? (
-                    <Link to="/applications" style={{ marginInline: 20, color: 'white', marginTop: '20px', whiteSpace: 'nowrap'/*, display: 'none'*/ }}>Заявки</Link>
+                    <Link to="/applications" style={{ marginInline: 20, color: 'white', marginTop: '20px', whiteSpace: 'nowrap' }}>Заявки</Link>
 
                 ) : (
                     null
                 )}
                 {token ? (
-                    <Link to="/role" style={{ marginInline: 20, color: 'white', marginTop: '20px', whiteSpace: 'nowrap'/*, display: 'none'*/ }}>Выдача роли</Link>
+                    <Link to="/role" style={{ marginInline: 20, color: 'white', marginTop: '20px', whiteSpace: 'nowrap' }}>Выдача роли</Link>
 
                 ) : (
                     null

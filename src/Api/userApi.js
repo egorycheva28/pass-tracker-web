@@ -3,13 +3,6 @@ import axios from "axios";
 const instance = axios.create({
     baseURL: 'https://blog.kreosoft.space/api/account/'
 });
- 
-const instanceA = axios.create({
-    baseURL: 'https://blog.kreosoft.space/api/account/',
-    headers: {
-        'Authorization': `Bearer ${localStorage.getItem('token')}`
-    }
-});
 
 function loginUser(email, password){
     return instance.post("/login", { email, password })

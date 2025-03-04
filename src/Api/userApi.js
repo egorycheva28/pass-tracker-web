@@ -30,7 +30,7 @@ function getProfile(){
 }
 
 export const userApi = {
-    
+
     loginUser: loginUser,
     getProfile: getProfile
 }

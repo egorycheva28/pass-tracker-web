@@ -16,7 +16,21 @@ function loginUser(email, password){
     });
 }
 
+function getProfile(){
+    return instance.get("/profile")
+    .then(response => {
+        if(response=== 200){
+            return response.data;
+        }
+    })
+    .catch(error => {
+        console.log(error.response.data.error)
+    });
+    
+}
+
 export const userApi = {
 
-    loginUser: loginUser
+    loginUser: loginUser,
+    getProfile: getProfile
 }

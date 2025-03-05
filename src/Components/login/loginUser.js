@@ -1,8 +1,7 @@
-
 import React from 'react';
 import { useState } from "react";
 import { userApi } from '../../Api/userApi.js';
-
+import { useNavigate } from 'react-router-dom';
 
 const styles = {
   container: {
@@ -31,7 +30,7 @@ const styles = {
   },
   input: {
     padding: "10px",
-    paddingRight: "35px", 
+    paddingRight: "35px",
     margin: "10px 0",
     borderRadius: "4px",
     border: "1px solid #ccc",
@@ -48,7 +47,7 @@ const styles = {
   },
   button: {
     padding: "10px",
-    backgroundColor: "#007bff",
+    background: 'rgb(231, 53, 89)',
     color: "white",
     border: "none",
     borderRadius: "4px",
@@ -58,6 +57,8 @@ const styles = {
 };
 
 function LoginUser() {
+  const navigate = useNavigate();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -70,6 +71,8 @@ function LoginUser() {
     try {
       const data = await userApi.loginUser(email, password);
       if (data) {
+        localStorage.setItem('token', `${data.token}`);
+        navigate('/profile');
         console.log("Успешный вход!", data);
         alert("Вы вошли в систему!");
       }
@@ -78,11 +81,15 @@ function LoginUser() {
     }
   };
 
+  const registration = async () => {
+    navigate('/registration');
+  }
+
   return (
     <div style={styles.container}>
       <div style={styles.formBox}>
         <h2>Авторизация</h2>
-        <form onSubmit={handleSubmit} style={styles.form}>
+        <form style={styles.form}>
           <div style={styles.inputContainer}>
             <input
               type="email"
@@ -108,8 +115,8 @@ function LoginUser() {
               onClick={() => setShowPassword(!showPassword)}
             />
           </div>
-          <button type="submit" style={styles.button}> Войти</button>
-          <button style={styles.button}> Зарегестрироваться </button>
+          <button type="submit" style={styles.button} onClick={handleSubmit}> Войти</button>
+          <button style={styles.button} onClick={registration}> Зарегестрироваться </button>
         </form>
       </div>
     </div>

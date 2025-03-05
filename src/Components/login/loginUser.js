@@ -48,7 +48,7 @@ const styles = {
   },
   button: {
     padding: "10px",
-    backgroundColor: "#007bff",
+    background: 'rgb(231, 53, 89)',
     color: "white",
     border: "none",
     borderRadius: "4px",
@@ -70,6 +70,7 @@ function LoginUser() {
     try {
       const data = await userApi.loginUser(email, password);
       if (data) {
+        localStorage.setItem("token", data.token);
         console.log("Успешный вход!", data);
         alert("Вы вошли в систему!");
       }

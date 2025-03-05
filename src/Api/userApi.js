@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const instance = axios.create({
-    baseURL: 'https://blog.kreosoft.space/api/account/'
+    baseURL: 'https://camp-courses.api.kreosoft.space/'
 });
 
 const instanceA = axios.create({

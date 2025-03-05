@@ -11,11 +11,11 @@ const instanceAuth = axios.create({
     }
 });
 
-function listStudents() {
-    return instance.get(`post`)
+function listStudents(params) {
+    //console.log(params.author);
+    return instance.get(`post?author=${params.author}&page=${params.page}&size=${params.size}`)
         .then(response => {
             console.log("Catalog Data:", response.data);
-
             if (response.status === 200) {
                 console.log("Catalog Data:", response.data);
                 return response.data;
@@ -26,6 +26,21 @@ function listStudents() {
         });
 }
 
+/*function exportListStudents() {
+    return instance.post(`post`)
+        .then(response => {
+            console.log("Catalog Data:", response.data);
+            if (response.status === 200) {
+                console.log("Catalog Data:", response.data);
+                return response.data;
+            }
+        })
+        .catch(error => {
+            console.log(error.response.data.error)
+        });
+}*/
+
 export const prepodApi = {
-    listStudents: listStudents
+    listStudents: listStudents,
+    // exportListStudents: exportListStudents
 }

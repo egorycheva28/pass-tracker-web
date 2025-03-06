@@ -22,10 +22,19 @@ const styles = {
   },
   infoRow: {
     display: "flex",
-    justifyContent: "flex-start",
-    gap: "10px",
+    justifyContent: "flex-start",  // Выравнивание элементов по горизонтали
+    gap: "10px",                   // Отступ между элементами
     marginBottom: "5px",
     fontSize: "16px",
+  },
+  button: {
+    marginLeft: "10px", // Отступ между датой и кнопкой
+    padding: "5px 20px",
+    backgroundColor: "#4CAF50",
+    color: "white",
+    border: "none",
+    borderRadius: "4px",
+    cursor: "pointer",
   }
   
   
@@ -57,7 +66,11 @@ function GetSpecificRequest() {
       <div style={styles.formBox}>
         <h2 style={{ marginBottom: "20px" }}>{user.name} {user.semester}-{user.semester} </h2>
 
-        <div style={styles.infoRow}> <strong>Дата:</strong> {user?.email || "Нет данных"} </div> 
+        <div 
+        style={styles.infoRow}> <strong>Дата:</strong> {user?.email || "Нет данных"} 
+         <button style={styles.button}> Продлить </button>
+        </div> 
+       
 
         <div style={styles.infoRow}> <strong>Причина:</strong> {user?.email || "Нет данных"} </div> 
         </div>
@@ -76,7 +89,10 @@ function GetSpecificRequest() {
 
 
         </div>
-
+        <div>
+        <button style={styles.button}> Принять </button>
+        <button style={styles.button}> Отклонить </button>
+        </div>
     </div>
   );
 }

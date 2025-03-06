@@ -8,8 +8,8 @@ function RoutesPage() {
         <Routes>
             <Route path="/" />
             <Route path="/login" element={<LoginUser />} />
-            <Route path="/listStudents"element={<GetUserProfile />} />
-            <Route path="/applications"  element={<RegisterUser />}/>
+            <Route path="/listStudents" />
+            <Route path="/applications" />
             <Route path="/role" />
         </Routes>
     )

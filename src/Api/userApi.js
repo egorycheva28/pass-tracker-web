@@ -23,19 +23,6 @@ function loginUser(email, password){
     });
 }
 
-function getProfile(){
-    return instance.get("/profile")
-    .then(response => {
-        if(response=== 200){
-            return response.data;
-        }
-    })
-    .catch(error => {
-        console.log(error.response.data.error)
-    });
-    
-}
-
 function registerUser(fullName, password, email, birthDate, gender, phoneNumber) {
     const body = {
         fullName: fullName,
@@ -82,6 +69,44 @@ async function logout() {
         });
 }
 
+function getProfile(){
+    const token = localStorage.getItem("token"); 
+
+    return instance.get("/profile", {
+        headers: {
+            Authorization: `Bearer ${token}` 
+        }
+    })
+
+    .then(response => {
+        if(response.status=== 200){
+            return response.data;
+        }
+    })
+    .catch(error => {
+        console.log(error.response.data.error)
+    });
+    
+}
+
+function updateProfile( fullName ){
+    const token = localStorage.getItem("token");
+
+    return instance.put("/profile", { fullName }, {
+        headers: {
+            Authorization: `Bearer ${token}` 
+        }
+    })
+
+    .then(response => {
+            return response.data;
+        
+    })
+    .catch(error => {
+        console.log(error.response.data.error)
+    });
+    
+}
 export const userApi = {
     loginUser: loginUser,
     getProfile: getProfile,

@@ -1,7 +1,8 @@
 import { Route, Routes } from "react-router-dom";
 import LoginUser from "./Components/login/loginUser";
 import GetUserProfile from "./Components/profil/getUserProfil";
-import RegisterUser from "./Components/registration/registerUser";
+import RegisterUserContainer from "./Components/registration/registerUserContainer";
+import ListStudentsContainer from "./Components/teacher/listStudentsContainer";
 
 function RoutesPage() {
     return (

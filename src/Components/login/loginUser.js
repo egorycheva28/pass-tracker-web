@@ -70,7 +70,6 @@ function LoginUser() {
     try {
       const data = await userApi.loginUser(email, password);
       if (data) {
-        localStorage.setItem("token", data.token);
         console.log("Успешный вход!", data);
         alert("Вы вошли в систему!");
       }

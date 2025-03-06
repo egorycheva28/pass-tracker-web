@@ -45,13 +45,19 @@ function Navbar() {
                 </svg>
                 <h2 style={{ marginLeft: 10, marginRight: 20, marginTop: '15px', whiteSpace: 'nowrap', color: 'rgb(231, 53, 89)' }}>Pass-tracker</h2>
                 {token ? (
-                    <Link to="/listStudents" style={{ marginInline: 20, color: 'white', marginTop: '20px', whiteSpace: 'nowrap' }}>Список студентов</Link>
+                    <Link to="/listStudents" style={{ marginInline: 20, color: 'white', marginTop: '20px', whiteSpace: 'nowrap' }}>Одобренные заявки для преподавателей</Link>
 
                 ) : (
                     null
                 )}
                 {token ? (
-                    <Link to="/applications" style={{ marginInline: 20, color: 'white', marginTop: '20px', whiteSpace: 'nowrap' }}>Заявки</Link>
+                    <Link to="/approvedApplications" style={{ marginInline: 20, color: 'white', marginTop: '20px', whiteSpace: 'nowrap' }}>Одобренные заявки для деканата</Link>
+
+                ) : (
+                    null
+                )}
+                {token ? (
+                    <Link to="/applications" style={{ marginInline: 20, color: 'white', marginTop: '20px', whiteSpace: 'nowrap' }}>Неодобренные заявки</Link>
 
                 ) : (
                     null

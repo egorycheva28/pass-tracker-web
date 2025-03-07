@@ -4,7 +4,7 @@ import React from 'react';
 function ListStudentsItem(props) {
     return (
         <Card style={{ margin: '20px', textAlign: 'left', height: '50px', display: 'flex', justifyContent: 'flex-start', alignItems: 'center' }}>
-            <p>{props.title} - {props.description} - {props.title}</p>
+            <p>{'Фио'} - {'Группа'} - {'Дата'}</p>
         </Card>
     );
 }

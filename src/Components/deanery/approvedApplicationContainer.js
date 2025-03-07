@@ -3,7 +3,7 @@ import React from "react";
 import ApprovedApplications from "./approvedApplications";
 import { approvedApplicationsThunkCreator } from "../../reducers/deaneryReducer";
 
-class MiddlePizzasComponent extends React.Component {
+class MiddleApprovedComponent extends React.Component {
     /*componentDidMount() {
         this.props.getStudentsThunkCreator();
     }*/
@@ -12,10 +12,10 @@ class MiddlePizzasComponent extends React.Component {
     }
 }
 
-function mapStateProps(state) {
+function mapStatePropss(state) {
     return { deaneryPage: state.deaneryPage };
 }
 
-const ApprovedApplicationsContainer = connect(mapStateProps, { approvedApplicationsThunkCreator })(MiddlePizzasComponent)
+const ApprovedApplicationsContainer = connect(mapStatePropss, { approvedApplicationsThunkCreator })(MiddleApprovedComponent)
 
 export default ApprovedApplicationsContainer;

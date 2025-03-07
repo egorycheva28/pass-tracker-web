@@ -87,7 +87,7 @@ const ListStudents = ({ teacherPage }) => {
 
     return (
         <div>
-            <h1 style={{ marginTop: '100px', marginBottom: '30px' }}>Список студентов</h1>
+            <h1 style={{ marginTop: '100px', marginBottom: '30px' }}>Список пропусков</h1>
 
             <Card style={{ margin: '20px', textAlign: 'left', marginBottom: '50px' }}>
                 <Form >

@@ -16,14 +16,13 @@ function RegisterUser() {
     const [middleName, setMiddleName] = useState("");
     const [group, setGroup] = useState("");
     const [email, setEmail] = useState("");
-    const [password1, setPassword1] = useState("");
-    const [password2, setPassword2] = useState("");
+    const [password, setPassword] = useState("");
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         console.log("Успешный вход");
 
-        await dispatch(registerUserThunkCreator(lastName, firstName, middleName, group, email, password1, password2));
+        await dispatch(registerUserThunkCreator(lastName, firstName, middleName, group, email, password));
 
         if (localStorage.getItem('token') !== null) {
             navigate('/login');
@@ -57,10 +56,7 @@ function RegisterUser() {
                     </div>
                 </Form.Item>
                 <Form.Item name="password1" label="Пароль" rules={[{ required: true, message: 'Введите пароль' }]} style={{ textAlign: 'right' }}>
-                    <Input.Password value={password1} onChange={(e) => setPassword1(e.target.value)} placeholder="Введите пароль" style={{ width: "432px" }} />
-                </Form.Item>
-                <Form.Item name="password2" label="Пароль" rules={[{ required: true, message: 'Введите повторно пароль' }]} style={{ textAlign: 'right' }}>
-                    <Input.Password value={password2} onChange={(e) => setPassword2(e.target.value)} placeholder="Введите повторно пароль" style={{ width: "432px" }} />
+                    <Input.Password value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Введите пароль" style={{ width: "432px" }} />
                 </Form.Item>
                 <Form.Item>
                     <Space>

@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 import React from "react";
-import RegisterUser from "./registerUser";
-//import RegisterUser from "./reg";
+//import RegisterUser from "./registerUser";
+import RegisterUser from "./reg";
 
 import { registerUserThunkCreator } from "../../reducers/userReducer";
 

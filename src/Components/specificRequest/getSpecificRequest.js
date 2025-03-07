@@ -27,10 +27,19 @@ const styles = {
     marginBottom: "5px",
     fontSize: "16px",
   },
-  button: {
-    marginLeft: "10px", // Отступ между датой и кнопкой
+  declineButton: {
+    marginLeft: "10px",
     padding: "5px 20px",
-    backgroundColor: "#4CAF50",
+    background: "#555",
+    color: "white",
+    border: "none",
+    borderRadius: "4px",
+    cursor: "pointer",
+  },
+  button: {
+    marginLeft: "10px",
+    padding: "5px 20px",
+    background: 'rgb(231, 53, 89)' ,
     color: "white",
     border: "none",
     borderRadius: "4px",
@@ -64,21 +73,21 @@ function GetSpecificRequest() {
   return (
     <div style={styles.container}>
       <div style={styles.formBox}>
-        <h2 style={{ marginBottom: "20px" }}>{user.name} {user.semester}-{user.semester} </h2>
+        <h2 style={{ marginBottom: "20px" }}>Иванов Иван Иванович - 972302 </h2>
 
         <div 
-        style={styles.infoRow}> <strong>Дата:</strong> {user?.email || "Нет данных"} 
+        style={styles.infoRow}> <strong>Дата:</strong>  {user?.email || "12.12.2024!"}
          <button style={styles.button}> Продлить </button>
         </div> 
        
 
-        <div style={styles.infoRow}> <strong>Причина:</strong> {user?.email || "Нет данных"} </div> 
+        <div style={styles.infoRow}> <strong>Причина:</strong> {user?.email || "Болезнь"} </div> 
         </div>
 
         <div style={styles.formBox}>
         <h2 style={{ marginBottom: "20px" }}>Описание: </h2>
 
-        <div style={styles.infoRow}> <strong>Дата:</strong> {user?.email || "Нет данных"} </div> 
+        <div style={styles.infoRow}> {user?.email || "Нет данных"} </div> 
 
 
         </div>
@@ -91,7 +100,7 @@ function GetSpecificRequest() {
         </div>
         <div>
         <button style={styles.button}> Принять </button>
-        <button style={styles.button}> Отклонить </button>
+        <button style={styles.declineButton}> Отклонить </button>
         </div>
     </div>
   );

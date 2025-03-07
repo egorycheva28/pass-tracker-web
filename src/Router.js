@@ -4,6 +4,7 @@ import RegisterUserContainer from "./Components/registration/registerUserContain
 import ListStudentsContainer from "./Components/teacher/listStudentsContainer";
 import GetUserProfile from "./Components/profil/getUserProfil";
 import ApprovedApplicationsContainer from "./Components/deanery/approvedApplicationContainer";
+import UnapprovedApplicationsContainer from "./Components/dean/unapprovedContainer";
 
 function RoutesPage() {
     return (
@@ -14,7 +15,7 @@ function RoutesPage() {
             <Route path="/registration" element={<RegisterUserContainer />} />
             <Route path="/listStudents" element={<ListStudentsContainer />} />
             <Route path="/approvedApplications" element={<ApprovedApplicationsContainer/>} />
-            <Route path="/applications" />
+            <Route path="/applications" element={<UnapprovedApplicationsContainer/>}/>
             <Route path="/detail/:id" element={<GetUserProfile/>}/>
             <Route path="/role" />
         </Routes>

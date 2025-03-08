@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 import React from "react";
 import Unapproved from "./unapproved";
-import { unapprovedApplicationsThunkCreator } from "../../reducers/deanReducer";
+import { unapprovedApplicationsThunkCreator } from "../../../reducers/deaneryReducer";
 
 class MiddleUnapprovedComponent extends React.Component {
     /*componentDidMount() {
@@ -13,7 +13,7 @@ class MiddleUnapprovedComponent extends React.Component {
 }
 
 function mapStateProps(state) {
-    return { deanPage: state.deanPage };
+    return { deaneryPage: state.deaneryPage };
 }
 
 const UnapprovedApplicationsContainer = connect(mapStateProps, { unapprovedApplicationsThunkCreator })(MiddleUnapprovedComponent)

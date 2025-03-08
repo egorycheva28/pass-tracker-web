@@ -9,7 +9,7 @@ function ApprovedApplicationItem(props) {
     };
 
     return (
-        <Card style={{ margin: '20px', textAlign: 'left', cursor: 'pointer' }}
+        <Card style={{ margin: '20px', textAlign: 'left', height: '50px', display: 'flex', justifyContent: 'flex-start', alignItems: 'center', cursor: 'pointer' }}
             onClick={detail}>
             <p>{'Фио'} - {'Группа'} - {'Дата'} - {'Причина'}</p>
         </Card>

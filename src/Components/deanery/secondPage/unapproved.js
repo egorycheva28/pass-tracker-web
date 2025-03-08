@@ -1,11 +1,11 @@
 import React from "react";
-import ApprovedApplicationItem from "./approvedApplicationItem";
+import UnapprovedItem from "./unapprovedItem";
 import { Button, Card, Form, Input, DatePicker, Pagination } from "antd";
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { approvedApplicationsThunkCreator } from "../../reducers/deaneryReducer";
+import { unapprovedApplicationsThunkCreator } from "../../../reducers/deaneryReducer";
 
-const ApprovedApplications = ({ deaneryPage }) => {
+const Unapproved = ({ deaneryPage }) => {
     const dispatch = useDispatch()
 
     const [startDate, setStartDate] = useState("");
@@ -41,7 +41,7 @@ const ApprovedApplications = ({ deaneryPage }) => {
             size: pageSize
         });
 
-        await dispatch(approvedApplicationsThunkCreator(parameters));
+        await dispatch(unapprovedApplicationsThunkCreator(parameters));
     };
 
     const resetFilters = async (e) => {
@@ -63,7 +63,7 @@ const ApprovedApplications = ({ deaneryPage }) => {
             size: pageSize
         });
 
-        await dispatch(approvedApplicationsThunkCreator(parameters));
+        await dispatch(unapprovedApplicationsThunkCreator(parameters));
         //console.log(parameters);
     };
 
@@ -78,7 +78,7 @@ const ApprovedApplications = ({ deaneryPage }) => {
             fullName*/
         });
 
-        dispatch(approvedApplicationsThunkCreator(parameters));
+        dispatch(unapprovedApplicationsThunkCreator(parameters));
     }, [current, pageSize]);
 
     const exportListStudents = async () => {
@@ -87,7 +87,7 @@ const ApprovedApplications = ({ deaneryPage }) => {
 
     return (
         <div>
-            <h1 style={{ marginTop: '100px', marginBottom: '30px' }}>Список одобренных заявок</h1>
+            <h1 style={{ marginTop: '100px', marginBottom: '30px' }}>Список неодобренных заявок</h1>
 
             <Card style={{ margin: '20px', textAlign: 'left', marginBottom: '50px' }}>
                 <Form >
@@ -103,8 +103,8 @@ const ApprovedApplications = ({ deaneryPage }) => {
             </Card >
 
             <div className="card-deck">
-                {deaneryPage.approvedApplications.map((value) => (
-                    <ApprovedApplicationItem title={value.title} description={value.description} id={value.id} key={value.id} />
+                {deaneryPage.unapprovedApplications.map((value) => (
+                    <UnapprovedItem title={value.title} description={value.description} id={value.id} key={value.id} />
                 ))}
             </div>
 
@@ -121,4 +121,4 @@ const ApprovedApplications = ({ deaneryPage }) => {
     );
 };
 
-export default ApprovedApplications;
+export default Unapproved;

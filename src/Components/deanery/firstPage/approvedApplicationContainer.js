@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 import React from "react";
 import ApprovedApplications from "./approvedApplications";
-import { approvedApplicationsThunkCreator } from "../../reducers/deaneryReducer";
+import { approvedApplicationsThunkCreator } from "../../../reducers/deaneryReducer";
 
 class MiddleApprovedComponent extends React.Component {
     /*componentDidMount() {

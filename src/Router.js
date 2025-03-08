@@ -3,8 +3,9 @@ import LoginUser from "./Components/login/loginUser";
 import RegisterUserContainer from "./Components/registration/registerUserContainer";
 import ListStudentsContainer from "./Components/teacher/listStudentsContainer";
 import GetUserProfile from "./Components/profil/getUserProfil";
-import ApprovedApplicationsContainer from "./Components/deanery/approvedApplicationContainer";
-import UnapprovedApplicationsContainer from "./Components/dean/unapprovedContainer";
+import ApprovedApplicationsContainer from "./Components/deanery/firstPage/approvedApplicationContainer";
+import UnapprovedApplicationsContainer from "./Components/deanery/secondPage/unapprovedContainer";
+import RoleContainer from "./Components/deanery/thirdPage/roleContainer";
 
 function RoutesPage() {
     return (
@@ -17,7 +18,7 @@ function RoutesPage() {
             <Route path="/approvedApplications" element={<ApprovedApplicationsContainer/>} />
             <Route path="/applications" element={<UnapprovedApplicationsContainer/>}/>
             <Route path="/detail/:id" element={<GetUserProfile/>}/>
-            <Route path="/role" />
+            <Route path="/role" element={<RoleContainer/>}/>
         </Routes>
     )
 };

@@ -1,12 +1,14 @@
 import { deaneryApi } from "../Api/deaneryApi";
 
 const APPROVED_APPLICATIONS = "APPROVED_APPLICATIONS";
-//const UNAPPROVED_APPLICATIONS = "UNAPPROVED_APPLICATIONS";
+const UNAPPROVED_APPLICATIONS = "UNAPPROVED_APPLICATIONS";
+const ROLE = "ROLE";
 const EXPORT = "EXPORT";
 
 let initialState = {
     approvedApplications: [],
-    //unapprovedApplications: [],
+    unapprovedApplications: [],
+    role: [],
     pagination: {
         size: '',
         count: '',
@@ -22,10 +24,13 @@ const deaneryReducer = (state = initialState, action) => {
             newState.approvedApplications = action.approvedApplications;
             newState.pagination = action.pagination;
             return newState;
-        /*case UNAPPROVED_APPLICATIONS:
+        case UNAPPROVED_APPLICATIONS:
             newState.unapprovedApplications = action.unapprovedApplications;
-            newState.pagination2 = action.pagination2;
-            return newState;*/
+            newState.pagination = action.pagination;
+            return newState;
+        case ROLE:
+            newState.role = action.role;
+            newState.pagination = action.pagination;
         case EXPORT:
             return newState;
         default:
@@ -51,8 +56,8 @@ export function approvedApplicationsThunkCreator(params) { //обращение 
     }
 }
 
-/*export function unapprovedApplicationsActionCreator(data) { //обращение к reducers
-    return { type: UNAPPROVED_APPLICATIONS, unapprovedApplications: data.tags }
+export function unapprovedApplicationsActionCreator(data) { //обращение к reducers
+    return { type: UNAPPROVED_APPLICATIONS, unapprovedApplications: data.posts, pagination: data.pagination }
 }
 
 export function unapprovedApplicationsThunkCreator(params) { //обращение к серверу
@@ -68,7 +73,26 @@ export function unapprovedApplicationsThunkCreator(params) { //обращени�
             alert("Произошла ошибка.");
         }
     }
-}*/
+}
+
+export function roleActionCreator(data) { //обращение к reducers
+    return { type: ROLE, role: data.posts, pagination: data.pagination }
+}
+
+export function roleThunkCreator(params) { //обращение к серверу
+    //console.log(params);
+    return async (dispatch) => {
+        try {
+            const data = await deaneryApi.role(params);
+            console.log(data);
+            dispatch(roleActionCreator(data));
+        }
+        catch (error) {
+            console.error("Ошибка:", error);
+            alert("Произошла ошибка.");
+        }
+    }
+}
 
 /*export function exportActionCreator(data) { //обращение к reducers
     return { type: EXPORT }

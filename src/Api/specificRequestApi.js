@@ -3,15 +3,15 @@ import axios from "axios";
 
 
 const instance = axios.create({
-    baseURL: 'https://camp-courses.api.kreosoft.space/',
+    baseURL: 'https://localhost:7129',
 
 });
 
-function getDetails(courseId){
+function getDetails(id){
     const token = localStorage.getItem("token");
 console.log("Токен в localStorage:", token);
 
-    return instance.get(`/courses/${courseId}/details`, {
+    return instance.get(`/request/get-requestInfo/${id}`, {
         headers: {
             Authorization: `Bearer ${token}`, 
     Accept: "application/json"

@@ -126,7 +126,12 @@ function GetSpecificRequest() {
         <h2 style={{ marginBottom: "20px" }}>{user?.userName} - {user?.group} </h2>
         <div style={styles.infoRow}>
           <strong>Дата:</strong> {formatDate(user?.startDate)} - {formatDate(user?.finishDate)}
-          <button style={styles.button}>Продлить</button>
+          {user?.typeRequest === "EducationalActivity" ? (
+
+                <button style={styles.button}>Продлить</button>
+
+          ) : null}
+        
         </div>
         <div style={styles.infoRow}>
           <strong>Причина:</strong> {user?.typeRequest || "Болезнь"}
@@ -147,12 +152,12 @@ function GetSpecificRequest() {
           onClick={() => setIsModalOpen(true)}
         />
       </div>
-
-      <div>
-        <button style={styles.button}>Принять</button>
-        <button style={styles.declineButton}>Отклонить</button>
-      </div>
-
+      {user?.statusRequest !== "Accepted" ? (
+  <div>
+    <button style={styles.button}>Принять</button>
+    <button style={styles.declineButton}>Отклонить</button>
+  </div>
+) : null}
       {isModalOpen && (
         <div style={styles.modalOverlay} onClick={() => setIsModalOpen(false)}>
           <div style={styles.modalContent} onClick={(e) => e.stopPropagation()}>

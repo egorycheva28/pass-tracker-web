@@ -1,59 +1,32 @@
 import axios from "axios";
 
 const instance = axios.create({
-    baseURL: 'https://blog.kreosoft.space/api/account/'
+    baseURL: 'https://localhost:7129/user/'
 });
 
-const instanceA = axios.create({
-    baseURL: 'https://blog.kreosoft.space/api/account/',
-    headers: {
-        'Authorization': `Bearer ${localStorage.getItem('token')}`
-    }
-});
-
-function loginUser(email, password){
+function loginUser(email, password) {
     return instance.post("/login", { email, password })
-    .then(response => {
-        if(response.status === 200){
-            return response.data;
-        }
-    })
-    .catch(error => {
-        console.log(error.response.data.error)
-    });
+        .then(response => {
+            if (response.status === 200) {
+                return response.data;
+            }
+        })
+        .catch(error => {
+            console.log(error.response.data.error)
+        });
 }
 
-function getProfile(){
-    return instance.get("/profile")
-    .then(response => {
-        if(response=== 200){
-            return response.data;
-        }
-    })
-    .catch(error => {
-        console.log(error.response.data.error)
-    });
-    
-}
-
-function registerUser(fullName, password, email, birthDate, gender, phoneNumber) {
+function registerUser(lastName, firstName, middleName, group, email, password) {
     const body = {
-        fullName: fullName,
-        password: password,
-        email: email,
-        birthDate: birthDate,
-        gender: gender,
-        phoneNumber: phoneNumber
-        /*lastName: lastName,
+        secondName: lastName,
         firstName: firstName,
         middleName: middleName,
-        group: group,
+        group: group == "" ? null : group,
         email: email,
-        password1: password1,
-        password2: password2*/
+        password: password
     }
 
-    return instance.post(`register`, body)
+    return instance.post(`/register`, body)
         .then(response => {
             console.log("Catalog Data:", response.data);
 
@@ -68,7 +41,13 @@ function registerUser(fullName, password, email, birthDate, gender, phoneNumber)
 }
 
 async function logout() {
-    return await instanceA.post(`logout`)
+    const token = localStorage.getItem("token");
+    console.log(token);
+    return await instance.post(`logout`, {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    })
         .then(response => {
             console.log("Catalog Data:", response.data);
 
@@ -80,6 +59,45 @@ async function logout() {
         .catch(error => {
             console.log(error.response.data.error)
         });
+}
+
+function getProfile() {
+    const token = localStorage.getItem("token");
+    console.log(token);
+    return instance.get("/profile", {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    })
+
+        .then(response => {
+            if (response.status === 200) {
+                return response.data;
+            }
+        })
+        .catch(error => {
+            console.log(error.response.data.error)
+        });
+
+}
+
+function updateProfile(fullName) {
+    const token = localStorage.getItem("token");
+
+    return instance.put("/profile", { fullName }, {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    })
+
+        .then(response => {
+            return response.data;
+
+        })
+        .catch(error => {
+            console.log(error.response.data.error)
+        });
+
 }
 
 export const userApi = {

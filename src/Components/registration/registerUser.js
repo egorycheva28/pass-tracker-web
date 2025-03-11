@@ -25,7 +25,7 @@ function RegisterUser() {
         await dispatch(registerUserThunkCreator(lastName, firstName, middleName, group, email, password));
 
         if (localStorage.getItem('token') !== null) {
-            navigate('/login');
+            navigate('/profile');
         }
     };
 

@@ -89,10 +89,10 @@ function getProfile(){
     
 }
 
-function updateProfile( fullName ){
+function updateProfile( email ){
     const token = localStorage.getItem("token");
 
-    return instance.put("/profile", { fullName }, {
+    return instance.patch("/edit/email", { email }, {
         headers: {
             Authorization: `Bearer ${token}` 
         }
@@ -111,5 +111,7 @@ export const userApi = {
     loginUser: loginUser,
     getProfile: getProfile,
     registerUser: registerUser,
-    logout: logout
+    logout: logout,
+    updateProfile: updateProfile
+    
 }

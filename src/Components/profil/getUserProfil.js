@@ -174,47 +174,41 @@ function GetUserProfile() {
         <div style={styles.infoRow}>
           <strong>Роль:</strong> {translatedRoles?.join(", ") || "Нет данных"}
         </div>
-
+        
+        {user?.group && user?.group !== 0 ? (
+          <div style={styles.infoRow}>
+            <strong>Группа:</strong> {user?.group || "Нет данных"}
+          </div>
+        ) : null}
+        
         <div style={styles.infoRow}>
-          <strong>Группа:</strong> {user?.group || "Нет данных"}
-        </div>
+          <strong>Почта:</strong> {user?.email || "Нет данных"}
+          <button onClick={handleOpenModal} style={styles.editButton}>
+            <img src="/edit.png" alt="Редактировать" style={styles.editIcon} />
+          </button>
+          </div>
+          </div>
 
-<div style={styles.infoRow}>
-  <strong>Почта:</strong> {user?.email || "Нет данных"}
-  <button onClick={handleOpenModal} style={styles.editButton}>
-    <img src="/edit.png" alt="Редактировать" style={styles.editIcon} />
-  </button>
-</div>
-</div>
         {/* Модальное окно */}
         {isModalOpen && (
-  <div style={styles.modalOverlay}>
-    <div style={styles.modalContent}>
-      <button onClick={handleCloseModal} style={styles.closeButton}>✖</button>
-      <h3>Изменить почту</h3>
-      <input
-        type="email"
-        value={newEmail}
-        onChange={(e) => setNewEmail(e.target.value)}
-        style={styles.input}
-      />
-      <div>
-        <button
-          onClick={handleSaveEmail}
-          style={{ ...styles.button, ...styles.saveButton }}
-        >
-          Сохранить
-        </button>
-        <button
-          onClick={handleCloseModal}
-          style={{ ...styles.button, ...styles.cancelButton }}
-        >
-          Отмена
-        </button>
-      </div>
-    </div>
-  </div>
-)}
+          <div style={styles.modalOverlay}>
+            <div style={styles.modalContent}>
+              <button onClick={handleCloseModal} style={styles.closeButton}>✖</button>
+              <h3>Изменить почту</h3>
+              <input
+                type="email"
+                value={newEmail}
+                onChange={(e) => setNewEmail(e.target.value)}
+                style={styles.input}
+              />
+              
+              <div>
+                <button onClick={handleSaveEmail} style={{ ...styles.button, ...styles.saveButton }}> Сохранить</button>
+                <button onClick={handleCloseModal} style={{ ...styles.button, ...styles.cancelButton }}> Отмена </button>
+              </div>
+            </div>
+          </div>
+        )}
 
       </div>
     </div>

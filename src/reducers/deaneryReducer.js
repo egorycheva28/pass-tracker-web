@@ -39,7 +39,7 @@ const deaneryReducer = (state = initialState, action) => {
 }
 
 export function approvedApplicationsActionCreator(data) { //обращение к reducers
-    return { type: APPROVED_APPLICATIONS, approvedApplications: data.posts, pagination: data.pagination }
+    return { type: APPROVED_APPLICATIONS, approvedApplications: data.requests, pagination: data.pagination }
 }
 
 export function approvedApplicationsThunkCreator(params) { //обращение к серверу
@@ -57,7 +57,7 @@ export function approvedApplicationsThunkCreator(params) { //обращение 
 }
 
 export function unapprovedApplicationsActionCreator(data) { //обращение к reducers
-    return { type: UNAPPROVED_APPLICATIONS, unapprovedApplications: data.posts, pagination: data.pagination }
+    return { type: UNAPPROVED_APPLICATIONS, unapprovedApplications: data.requests, pagination: data.pagination }
 }
 
 export function unapprovedApplicationsThunkCreator(params) { //обращение к серверу
@@ -76,7 +76,7 @@ export function unapprovedApplicationsThunkCreator(params) { //обращени�
 }
 
 export function roleActionCreator(data) { //обращение к reducers
-    return { type: ROLE, role: data.posts, pagination: data.pagination }
+    return { type: ROLE, role: data.requests, pagination: data.pagination }
 }
 
 export function roleThunkCreator(params) { //обращение к серверу

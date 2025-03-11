@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const instance = axios.create({
-    baseURL: 'https://blog.kreosoft.space/api/'
+    baseURL: 'https://localhost:7129/admin/'
 });
 
 const instanceAuth = axios.create({
@@ -42,8 +42,14 @@ function unapprovedApplications(params) {
 }
 
 function role(params) {
+    const token = localStorage.getItem("token");
+    console.log(token);
     //console.log(params.author);
-    return instance.get(`post?author=${params.author}&page=${params.page}&size=${params.size}`)
+    return instance.get(`users?page=${params.page}&size=${params.size}`, {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    })
         .then(response => {
             console.log("Catalog Data:", response.data);
             if (response.status === 200) {

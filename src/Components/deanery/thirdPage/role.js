@@ -104,7 +104,7 @@ const Role = ({ deaneryPage }) => {
 
             <div className="card-deck">
                 {deaneryPage.role.map((value) => (
-                    <RoleItem title={value.title} description={value.description} id={value.id} key={value.id} />
+                    <RoleItem name={value.name} group={value.group} id={value.id} key={value.id} />
                 ))}
             </div>
 

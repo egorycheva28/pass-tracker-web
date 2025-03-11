@@ -81,6 +81,27 @@ function getProfile() {
 
 }
 
+function getProfileById(id) {
+    const token = localStorage.getItem("token");
+    console.log(token);
+    return instance.get(`/profile/${id}`, {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    })
+
+        .then(response => {
+            if (response.status === 200) {
+                return response.data;
+            }
+        })
+        .catch(error => {
+            console.log(error.response.data.error)
+        });
+
+}
+
+
 function updateProfile(fullName) {
     const token = localStorage.getItem("token");
 
@@ -104,5 +125,6 @@ export const userApi = {
     loginUser: loginUser,
     getProfile: getProfile,
     registerUser: registerUser,
-    logout: logout
+    logout: logout,
+    getProfileById:getProfileById
 }

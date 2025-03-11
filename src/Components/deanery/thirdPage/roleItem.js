@@ -5,15 +5,15 @@ import { useNavigate } from "react-router-dom";
 function RoleItem(props) {
     const navigate = useNavigate();
     const detail = () => {
-        navigate(`/detail${props.id}`);
+        navigate(`/profile/${props.id}`);
     };
 
     return (
         <Card style={{ margin: '20px', textAlign: 'left', cursor: 'pointer' }}
-            onClick={detail}>
+            >
             <div style={{ display: 'flex', alignItems: 'center' }}>
                 <div style={{ flexGrow: 1 }}>
-                    <p style={{ margin: 0 }} >{'Фио'} - {'Группа'} - {'Дата'} - {'Причина'}</p>
+                    <p style={{ margin: 0 }} onClick={detail}>{props.name} - {props.group}</p>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
 

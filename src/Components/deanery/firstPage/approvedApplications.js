@@ -19,10 +19,10 @@ const ApprovedApplications = ({ deaneryPage }) => {
     //console.log(startDate, finishDate, group, fullName);
 
     var parameters = ({
-        /*startDate: startDate,
+        startDate: startDate,
         finishDate: finishDate,
         group: group,
-        fullName: fullName*/
+        fullName: fullName,
         author: group,
         page: current,
         size: pageSize
@@ -32,10 +32,10 @@ const ApprovedApplications = ({ deaneryPage }) => {
         e.preventDefault();
         //console.log(startDate, finishDate, group, fullName);
         parameters = ({
-            /*startDate: startDate,
+            startDate: startDate,
             finishDate: finishDate,
             group: group,
-            fullName: fullName*/
+            fullName: fullName,
             author: group,
             page: current,
             size: pageSize
@@ -54,11 +54,10 @@ const ApprovedApplications = ({ deaneryPage }) => {
 
         //console.log(startDate, finishDate, group, fullName);
         parameters = ({
-            /*startDate: "",
+            startDate: "",
             finishDate: "",
             group: "",
-            fullName: "*/
-            author: "",
+            fullName: "",
             page: current,
             size: pageSize
         });
@@ -69,13 +68,13 @@ const ApprovedApplications = ({ deaneryPage }) => {
 
     useEffect(() => {
         parameters = ({
-            author: group,
+            startDate: startDate,
+            finishDate: finishDate,
+            group: group,
+            fullName: fullName,
             page: current,
             size: pageSize,
-            /*startDate,
-            finishDate,
-            group,
-            fullName*/
+
         });
 
         dispatch(approvedApplicationsThunkCreator(parameters));
@@ -104,7 +103,8 @@ const ApprovedApplications = ({ deaneryPage }) => {
 
             <div className="card-deck">
                 {deaneryPage.approvedApplications.map((value) => (
-                    <ApprovedApplicationItem title={value.title} description={value.description} id={value.id} key={value.id} />
+                    <ApprovedApplicationItem userName={value.userName} group={value.group} startDate={value.startDate}
+                        finishDate={value.finishDate} typeRequest={value.typeRequest} id={value.id} key={value.id} />
                 ))}
             </div>
 

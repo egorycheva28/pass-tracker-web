@@ -3,6 +3,8 @@ import { deaneryApi } from "../Api/deaneryApi";
 const APPROVED_APPLICATIONS = "APPROVED_APPLICATIONS";
 const UNAPPROVED_APPLICATIONS = "UNAPPROVED_APPLICATIONS";
 const ROLE = "ROLE";
+const ACCEPT_REQUEST = "ACCEPT_REQUEST";
+const DECLINE_REQUEST = "DECLINE";
 const EXPORT = "EXPORT";
 
 let initialState = {
@@ -31,6 +33,11 @@ const deaneryReducer = (state = initialState, action) => {
         case ROLE:
             newState.role = action.role;
             newState.pagination = action.pagination;
+            return newState;
+        case ACCEPT_REQUEST:
+            return newState;
+        case DECLINE_REQUEST:
+            return newState;
         case EXPORT:
             return newState;
         default:
@@ -43,7 +50,6 @@ export function approvedApplicationsActionCreator(data) { //обращение �
 }
 
 export function approvedApplicationsThunkCreator(params) { //обращение к серверу
-    //console.log(params);
     return async (dispatch) => {
         try {
             const data = await deaneryApi.approvedApplications(params);
@@ -61,7 +67,6 @@ export function unapprovedApplicationsActionCreator(data) { //обращение
 }
 
 export function unapprovedApplicationsThunkCreator(params) { //обращение к серверу
-    //console.log(params);
     return async (dispatch) => {
         try {
             const data = await deaneryApi.unapprovedApplications(params);
@@ -80,12 +85,46 @@ export function roleActionCreator(data) { //обращение к reducers
 }
 
 export function roleThunkCreator(params) { //обращение к серверу
-    //console.log(params);
     return async (dispatch) => {
         try {
             const data = await deaneryApi.role(params);
             console.log(data);
             dispatch(roleActionCreator(data));
+        }
+        catch (error) {
+            console.error("Ошибка:", error);
+            alert("Произошла ошибка.");
+        }
+    }
+}
+export function acceptRequestActionCreator() { //обращение к reducers
+    return { type: ACCEPT_REQUEST }
+}
+
+export function acceptRequestThunkCreator(id) { //обращение к серверу
+    return async (dispatch) => {
+        try {
+            await deaneryApi.acceptRequest(id);
+            //console.log(data);
+            dispatch(acceptRequestActionCreator());
+        }
+        catch (error) {
+            console.error("Ошибка:", error);
+            alert("Произошла ошибка.");
+        }
+    }
+}
+
+export function declineRequestActionCreator(data) { //обращение к reducers
+    return { type: DECLINE_REQUEST }
+}
+
+export function declineRequestThunkCreator(id, comment) { //обращение к серверу
+    return async (dispatch) => {
+        try {
+            const data = await deaneryApi.declineRequest(id, comment);
+            console.log(data);
+            dispatch(declineRequestActionCreator(data));
         }
         catch (error) {
             console.error("Ошибка:", error);

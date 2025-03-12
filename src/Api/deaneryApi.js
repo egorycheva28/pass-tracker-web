@@ -1,19 +1,17 @@
 import axios from "axios";
 
 const instance = axios.create({
-    baseURL: 'https://localhost:7129/admin/'
-});
-
-const instanceAuth = axios.create({
-    baseURL: 'https://blog.kreosoft.space/api/account/',
-    headers: {
-        'Authorization': localStorage.getItem('token'),
-    }
+    baseURL: 'https://localhost:7129/'
 });
 
 function approvedApplications(params) {
-    //console.log(params.author);
-    return instance.get(`post?author=${params.author}&page=${params.page}&size=${params.size}`)
+    const token = localStorage.getItem("token");
+    return instance.get(`request/get-all-requests?StatusRequestSort=Accepted&StartDate=${params.startDate}&FinishDate=${params.finishDate}
+        &Group=${params.group}&Name=${params.fullName}&page=${params.page}&size=${params.size}`, {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    })
         .then(response => {
             console.log("Catalog Data:", response.data);
             if (response.status === 200) {
@@ -27,8 +25,13 @@ function approvedApplications(params) {
 }
 
 function unapprovedApplications(params) {
-    //console.log(params.author);
-    return instance.get(`post?author=${params.author}&page=${params.page}&size=${params.size}`)
+    const token = localStorage.getItem("token");
+    return instance.get(`request/get-all-requests?StatusRequestSort=Pending&StartDate=${params.startDate}&FinishDate=${params.finishDate}
+        &Group=${params.group}&Name=${params.fullName}&page=${params.page}&size=${params.size}`, {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    })
         .then(response => {
             console.log("Catalog Data:", response.data);
             if (response.status === 200) {
@@ -43,9 +46,45 @@ function unapprovedApplications(params) {
 
 function role(params) {
     const token = localStorage.getItem("token");
-    console.log(token);
-    //console.log(params.author);
-    return instance.get(`users?page=${params.page}&size=${params.size}`, {
+    return instance.get(`admin/users?page=${params.page}&size=${params.size}`, {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    })
+        .then(response => {
+            console.log("Catalog Data:", response.data);
+            if (response.status === 200) {
+                console.log("Catalog Data:", response.data);
+                return response.data;
+            }
+        })
+        .catch(error => {
+            console.log(error.response.data.error)
+        });
+}
+
+function acceptRequest(id) {
+    const token = localStorage.getItem("token");
+    return instance.post(`deanery/accept-request/${id}`, {}, {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    })
+        .then(response => {
+            console.log("Catalog Data:", response.data);
+            if (response.status === 200) {
+                console.log("Catalog Data:", response.data);
+                return response.data;
+            }
+        })
+        .catch(error => {
+            console.log(error.response.data.error)
+        });
+}
+
+function declineRequest(id, comment) {
+    const token = localStorage.getItem("token");
+    return instance.post(`deanery/decline-request/${id}`, { comment: comment }, {
         headers: {
             Authorization: `Bearer ${token}`
         }
@@ -79,6 +118,8 @@ function role(params) {
 export const deaneryApi = {
     approvedApplications: approvedApplications,
     unapprovedApplications: unapprovedApplications,
-    role: role
+    role: role,
+    acceptRequest: acceptRequest,
+    declineRequest: declineRequest
     // exportListStudents: exportListStudents
 }

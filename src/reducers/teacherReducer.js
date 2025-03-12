@@ -28,7 +28,7 @@ const teacherReducer = (state = initialState, action) => {
 }
 
 export function getStudentsActionCreator(data) { //обращение к reducers
-    return { type: LIST_STUDENT, listStudents: data.posts, pagination: data.pagination }
+    return { type: LIST_STUDENT, listStudents: data.requests, pagination: data.pagination }
 }
 
 export function getStudentsThunkCreator(params) { //обращение к серверу

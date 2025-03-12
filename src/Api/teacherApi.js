@@ -1,19 +1,17 @@
 import axios from "axios";
 
 const instance = axios.create({
-    baseURL: 'https://blog.kreosoft.space/api/'
-});
-
-const instanceAuth = axios.create({
-    baseURL: 'https://blog.kreosoft.space/api/account/',
-    headers: {
-        'Authorization': localStorage.getItem('token'),
-    }
+    baseURL: 'https://localhost:7129/'
 });
 
 function listStudents(params) {
-    //console.log(params.author);
-    return instance.get(`post?author=${params.author}&page=${params.page}&size=${params.size}`)
+    const token = localStorage.getItem("token");
+    return instance.get(`request/get-all-requests?StatusRequestSort=Accepted&StartDate=${params.startDate}&FinishDate=${params.finishDate}
+        &Group=${params.group}&Name=${params.fullName}&page=${params.page}&size=${params.size}`, {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    })
         .then(response => {
             console.log("Catalog Data:", response.data);
             if (response.status === 200) {

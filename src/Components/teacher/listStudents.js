@@ -19,11 +19,10 @@ const ListStudents = ({ teacherPage }) => {
     //console.log(startDate, finishDate, group, fullName);
 
     var parameters = ({
-        /*startDate: startDate,
+        startDate: startDate,
         finishDate: finishDate,
         group: group,
-        fullName: fullName*/
-        author: group,
+        fullName: fullName,
         page: current,
         size: pageSize
     });
@@ -32,11 +31,10 @@ const ListStudents = ({ teacherPage }) => {
         e.preventDefault();
         //console.log(startDate, finishDate, group, fullName);
         parameters = ({
-            /*startDate: startDate,
+            startDate: startDate,
             finishDate: finishDate,
             group: group,
-            fullName: fullName*/
-            author: group,
+            fullName: fullName,
             page: current,
             size: pageSize
         });
@@ -54,11 +52,10 @@ const ListStudents = ({ teacherPage }) => {
 
         //console.log(startDate, finishDate, group, fullName);
         parameters = ({
-            /*startDate: "",
+            startDate: "",
             finishDate: "",
             group: "",
-            fullName: "*/
-            author: "",
+            fullName: "",
             page: current,
             size: pageSize
         });
@@ -69,13 +66,13 @@ const ListStudents = ({ teacherPage }) => {
 
     useEffect(() => {
         parameters = ({
-            author: group,
+            startDate:startDate,
+            finishDate:finishDate,
+            group:group,
+            fullName:fullName,
             page: current,
             size: pageSize,
-            /*startDate,
-            finishDate,
-            group,
-            fullName*/
+            
         });
 
         dispatch(getStudentsThunkCreator(parameters));
@@ -104,7 +101,7 @@ const ListStudents = ({ teacherPage }) => {
 
             <div className="card-deck">
                 {teacherPage.listStudents.map((value) => (
-                    <ListStudentsItem title={value.title} description={value.description} key={value.id} />
+                    <ListStudentsItem userName={value.userName} group={value.group} startDate={value.startDate} finishDate={value.finishDate} key={value.id} />
                 ))}
             </div>
 

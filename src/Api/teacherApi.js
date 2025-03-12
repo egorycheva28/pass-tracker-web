@@ -10,9 +10,11 @@ const instanceAuth = axios.create({
         'Authorization': localStorage.getItem('token'),
     }
 });
+//const api = createAxiosInstance("user");
 
 function listStudents(params) {
     //console.log(params.author);
+    //return api.get(`post?author=${params.author}&page=${params.page}&size=${params.size}`)
     return instance.get(`post?author=${params.author}&page=${params.page}&size=${params.size}`)
         .then(response => {
             console.log("Catalog Data:", response.data);

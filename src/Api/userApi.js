@@ -5,7 +5,7 @@ const instance = axios.create({
 });
 
 const instanceA = axios.create({
-    baseURL: 'https://blog.kreosoft.space/api/account/',
+    baseURL: 'https://localhost:7129/user',
     headers: {
         'Authorization': `Bearer ${localStorage.getItem('token')}`
     }

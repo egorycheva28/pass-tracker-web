@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { requestApi } from "../../Api/specificRequestApi.js";
+import { deaneryApi } from '../../Api/deaneryApi.js';
 
 const styles = {
   container: {
@@ -50,6 +51,29 @@ const styles = {
     objectFit: "cover",
     cursor: "pointer",
   },
+    modalOverlay1: {
+      position: "fixed",
+      top: 0,
+      left: 0,
+      width: "100%",
+      height: "100%",
+      backgroundColor: "rgba(0, 0, 0, 0.7)",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      zIndex: 1000,
+    },
+    modalContent1: {
+      position: "relative",
+      backgroundColor: "white", 
+      flexDirection: "column",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      padding: "10px",
+      borderRadius: "8px",
+      
+    },
     modalOverlay: {
       position: "fixed",
       top: 0,
@@ -64,13 +88,14 @@ const styles = {
     },
     modalContent: {
       position: "relative",
-      backgroundColor: "white", 
+      backgroundColor: "white",
       display: "flex",
+      flexDirection: "column",
       justifyContent: "center",
       alignItems: "center",
-      padding: "10px",
+      padding: "20px",
       borderRadius: "8px",
-      
+      width: "400px",
     },
     enlargedImage: {
       width: "50vw", 
@@ -91,6 +116,15 @@ const styles = {
       fontSize: "18px",
       cursor: "pointer",
     },
+    textarea: {
+      width: "100%",
+      height: "80px",
+      marginBottom: "10px",
+      padding: "10px",
+      borderRadius: "4px",
+      border: "1px solid #ccc",
+      fontSize: "14px",
+    },
 
   
 };
@@ -99,11 +133,14 @@ function GetSpecificRequest() {
   const [error, setError] = useState("");
   const [user, setUser] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  
+  const [isDeclineModalOpen, setIsDeclineModalOpen] = useState(false);
+  const [declineComment, setDeclineComment] = useState("");
 
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const data = await requestApi.getDetails(`ab2b59f9-5de7-41da-b081-664072ce7c3c`);
+        const data = await requestApi.getDetails(`d8f9d91d-f41c-471a-a94d-6cac8fadf2c5`);
         if (data) {
           console.log("Успешная загрузка профиля", data);
           setUser(data);
@@ -120,6 +157,46 @@ function GetSpecificRequest() {
     return new Date(date).toLocaleDateString("ru-RU");
   };
 
+  const handleAccept = async () => {
+    try {
+      await deaneryApi.acceptRequest(user?.id); // Предположим, что у пользователя есть id, используйте соответствующее поле
+      console.log("Запрос принят");
+      setUser((prevUser) => ({ ...prevUser, statusRequest: "Accepted" })); // Обновление состояния
+    } catch (err) {
+      setError(err.message || "Ошибка принятия запроса");
+    }
+  };
+
+  const translations = {
+    EducationalActivity: "Образовательная деятельность",
+    Disease: "Болезнь",
+    FamilyCircumstances: "Семейные обстоятельства",
+    Pending: "На рассмотрении",
+    Accepted: "Принята",
+    Declined: "Отклонена"
+  };
+
+  const handleOpenDeclineModal = () => {
+    setDeclineComment("");
+    setIsDeclineModalOpen(true);
+  };
+
+  const handleCloseDeclineModal = () => {
+    setIsDeclineModalOpen(false);
+  };
+
+  const handleDecline = async () => {
+    try {
+      await deaneryApi.declineRequest(user?.id, { comment: declineComment });
+      console.log("Запрос отклонён с комментарием:", declineComment);
+      setUser((prevUser) => ({ ...prevUser, statusRequest: "Declined" }));
+      setIsDeclineModalOpen(false);
+    } catch (err) {
+      setError(err.message || "Ошибка отклонения запроса");
+    }
+  };
+
+
   return (
     <div style={styles.container}>
       <div style={styles.formBox}>
@@ -134,10 +211,15 @@ function GetSpecificRequest() {
         
         </div>
         <div style={styles.infoRow}>
-          <strong>Причина:</strong> {user?.typeRequest || "Болезнь"}
+          <strong>Причина:</strong> {translations[user?.typeRequest] || user?.typeRequest || "Не указано"}
+        </div>
+
+      <div style={styles.infoRow}>
+          <strong>Причина:</strong> {translations[user?.statusRequest] || user?.statusRequest || "Не указано"}
         </div>
       </div>
 
+      
       <div style={styles.formBox}>
         <h2 style={{ marginBottom: "20px" }}>Описание:</h2>
         <div style={styles.infoRow}>{user?.comment || "Нет данных"}</div>
@@ -152,15 +234,15 @@ function GetSpecificRequest() {
           onClick={() => setIsModalOpen(true)}
         />
       </div>
-      {user?.statusRequest !== "Accepted" ? (
+      {user?.statusRequest === "Pending" ? (
   <div>
-    <button style={styles.button}>Принять</button>
-    <button style={styles.declineButton}>Отклонить</button>
+    <button style={styles.button} onClick={handleAccept}>Принять</button>
+    <button style={styles.declineButton } onClick={handleOpenDeclineModal}>Отклонить</button>
   </div>
 ) : null}
       {isModalOpen && (
-        <div style={styles.modalOverlay} onClick={() => setIsModalOpen(false)}>
-          <div style={styles.modalContent} onClick={(e) => e.stopPropagation()}>
+        <div style={styles.modalOverlay1} onClick={() => setIsModalOpen(false)}>
+          <div style={styles.modalContent1} onClick={(e) => e.stopPropagation()}>
             <button style={styles.closeButton} onClick={() => setIsModalOpen(false)}>×</button>
             <img
               src={`data:image/png;base64,${user?.photo}`}
@@ -170,6 +252,24 @@ function GetSpecificRequest() {
           </div>
         </div>
       )}
+
+{isDeclineModalOpen && (
+  <div style={styles.modalOverlay}>
+    <div style={styles.modalContent}>
+      <h3>Отклонить запрос</h3>
+      <textarea
+        style={styles.textarea}
+        value={declineComment}
+        onChange={(e) => setDeclineComment(e.target.value)}
+        placeholder="Введите комментарий..."
+      />
+      <div style={{ display: "flex", justifyContent: "space-between", width: "100%" }}>
+        <button style={styles.button} onClick={handleDecline}>Подтвердить</button>
+        <button style={styles.declineButton} onClick={handleCloseDeclineModal}>Отмена</button>
+      </div>
+    </div>
+  </div>
+)}
     </div>
   );
 }

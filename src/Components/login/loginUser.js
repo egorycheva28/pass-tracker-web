@@ -71,7 +71,7 @@ function LoginUser() {
       const data = await userApi.loginUser(email, password);
       if (data) {
         console.log("Успешный вход!", data);
-        localStorage.setItem("token", data.token);
+        localStorage.setItem("token", data.accessToken);
         alert("Вы вошли в систему!");
       }
     } catch (err) {

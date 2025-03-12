@@ -1,115 +1,55 @@
-import axios from "axios";
+import createAxiosInstance from "./axiosInstance";
 
-const instance = axios.create({
-    baseURL: 'https://localhost:7129/user/'
-});
-
-const instanceA = axios.create({
-    baseURL: 'https://localhost:7129/user/',
-    headers: {
-        'Authorization': `Bearer ${localStorage.getItem('token')}`
-    }
-});
+const api = createAxiosInstance("user");
 
 function loginUser(email, password){
-    return instance.post("/login", { email, password })
+    return api.post("/login", { email, password })
     .then(response => {
         if(response.status === 200){
+            localStorage.setItem('token', response.data.accessToken);
+            localStorage.setItem('refreshToken', response.data.refreshToken);
             return response.data;
         }
     })
     .catch(error => {
-        console.log(error.response.data.error)
+        console.log(error.response.data?.error || "Ошибка входа");
     });
 }
 
 function registerUser(fullName, password, email, birthDate, gender, phoneNumber) {
-    const body = {
-        fullName: fullName,
-        password: password,
-        email: email,
-        birthDate: birthDate,
-        gender: gender,
-        phoneNumber: phoneNumber
-        /*lastName: lastName,
-        firstName: firstName,
-        middleName: middleName,
-        group: group,
-        email: email,
-        password1: password1,
-        password2: password2*/
-    }
-
-    return instance.post(`register`, body)
-        .then(response => {
-            console.log("Catalog Data:", response.data);
-
-            if (response.status === 200) {
-                console.log("Catalog Data:", response.data);
-                return response.data;
-            }
-        })
-        .catch(error => {
-            console.log(error.response.data.error)
-        });
+    return api.post("/register", { fullName, password, email, birthDate, gender, phoneNumber })
+    .then(response => {
+        if(response.status === 200){
+            localStorage.setItem('token', response.data.accessToken);
+            localStorage.setItem('refreshToken', response.data.refreshToken);
+            return response.data;
+        }
+    })
+        .catch(error => console.log(error.response.data?.error || "Ошибка регистрации"));
 }
 
-async function logout() {
-    return await instanceA.post(`logout`)
-        .then(response => {
-            console.log("Catalog Data:", response.data);
-
-            if (response.status === 200) {
-                console.log("Catalog Data:", response.data);
-                return response.data;
-            }
-        })
-        .catch(error => {
-            console.log(error.response.data.error)
-        });
+function logout() {
+    return api.post("/logout")
+        .then(response => response.data)
+        .catch(error => console.log(error.response.data?.error || "Ошибка выхода"));
 }
 
 function getProfile(){
-    const token = localStorage.getItem("token"); 
-
-    return instance.get("/profile", {
-        headers: {
-            Authorization: `Bearer ${token}` 
-        }
-    })
-
-    .then(response => {
-        if(response.status=== 200){
-            return response.data;
-        }
-    })
-    .catch(error => {
-        console.log(error.response.data.error)
-    });
-    
+    return api.get("/profile")
+        .then(response => response.data)
+        .catch(error => console.log(error.response.data?.error || "Ошибка получения профиля"));
 }
 
-function updateProfile( fullName ){
-    const token = localStorage.getItem("token");
-
-    return instance.put("/profile", { fullName }, {
-        headers: {
-            Authorization: `Bearer ${token}` 
-        }
-    })
-
-    .then(response => {
-            return response.data;
-        
-    })
-    .catch(error => {
-        console.log(error.response.data.error)
-    });
-    
+function updateProfile(fullName){
+    return api.post("/profile", { fullName })
+        .then(response => response.data)
+        .catch(error => console.log(error.response.data?.error || "Ошибка обновления профиля"));
 }
+
 export const userApi = {
-    loginUser: loginUser,
-    getProfile: getProfile,
-    registerUser: registerUser,
-    logout: logout
-}
+    loginUser,
+    getProfile,
+    registerUser,
+    logout,
+    updateProfile
+};

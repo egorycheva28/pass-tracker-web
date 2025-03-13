@@ -58,6 +58,7 @@ export const userApi = {
     getProfile: getProfile,
     registerUser: registerUser,
     logout: logout,
-    updateProfile: updateProfile
-    
+    updateProfile: updateProfile,
+    getProfileById: getProfileById
+
 }

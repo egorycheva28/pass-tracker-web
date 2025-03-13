@@ -162,7 +162,7 @@ function GetUserProfile() {
   const roleTranslations = {
     Teacher: "Учитель",
     Student: "Студент",
-    Deanery: "Студент",
+    Deanery: "Деканат",
     New: "Роль ещё не выдана"
   };
   

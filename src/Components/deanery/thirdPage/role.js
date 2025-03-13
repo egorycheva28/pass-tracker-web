@@ -81,10 +81,6 @@ const Role = ({ deaneryPage }) => {
         dispatch(roleThunkCreator(parameters));
     }, [current, pageSize]);
 
-    const exportListStudents = async () => {
-        console.log('export');
-    };
-
     return (
         <div>
             <h1 style={{ marginTop: '100px', marginBottom: '30px' }}>Выдача роли</h1>
@@ -106,10 +102,6 @@ const Role = ({ deaneryPage }) => {
                 {deaneryPage.role.map((value) => (
                     <RoleItem name={value.name} group={value.group} id={value.id} key={value.id} />
                 ))}
-            </div>
-
-            <div style={{ margin: '20px', display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
-                <Button type="primary" htmlType="submit" style={{ background: 'rgb(231, 53, 89)' }} onClick={exportListStudents}>Экспортировать</Button>
             </div>
 
             <div style={{ display: 'flex', alignItems: 'center', margin: '20px' }}>

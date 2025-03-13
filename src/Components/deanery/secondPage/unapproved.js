@@ -77,10 +77,6 @@ const Unapproved = ({ deaneryPage }) => {
         dispatch(unapprovedApplicationsThunkCreator(parameters));
     }, [current, pageSize]);
 
-    const exportListStudents = async () => {
-        console.log('export');
-    };
-
     return (
         <div>
             <h1 style={{ marginTop: '100px', marginBottom: '30px' }}>Список неодобренных заявок</h1>
@@ -103,10 +99,6 @@ const Unapproved = ({ deaneryPage }) => {
                     <UnapprovedItem userName={value.userName} group={value.group} startDate={value.startDate}
                         finishDate={value.finishDate} typeRequest={value.typeRequest} id={value.id} key={value.id} />
                 ))}
-            </div>
-
-            <div style={{ margin: '20px', display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
-                <Button type="primary" htmlType="submit" style={{ background: 'rgb(231, 53, 89)' }} onClick={exportListStudents}>Экспортировать</Button>
             </div>
 
             <div style={{ display: 'flex', alignItems: 'center', margin: '20px' }}>

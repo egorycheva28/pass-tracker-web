@@ -53,10 +53,10 @@ function updateProfile(fullName) {
 }
 
 export const userApi = {
-    loginUser,
-    getProfile,
-    registerUser,
-    logout,
-    updateProfile,
-    getProfileById
-};
+    loginUser: loginUser,
+    getProfile: getProfile,
+    registerUser: registerUser,
+    logout: logout,
+    updateProfile: updateProfile
+        
+}

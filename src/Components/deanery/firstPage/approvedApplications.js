@@ -4,6 +4,7 @@ import { Button, Card, Form, Input, DatePicker, Pagination } from "antd";
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { approvedApplicationsThunkCreator } from "../../../reducers/deaneryReducer";
+import { exportThunkCreator } from "../../../reducers/deaneryReducer";
 
 const ApprovedApplications = ({ deaneryPage }) => {
     const dispatch = useDispatch()
@@ -81,7 +82,9 @@ const ApprovedApplications = ({ deaneryPage }) => {
     }, [current, pageSize]);
 
     const exportListStudents = async () => {
-        console.log('export');
+        //console.log('export');
+        dispatch(exportThunkCreator());
+
     };
 
     return (

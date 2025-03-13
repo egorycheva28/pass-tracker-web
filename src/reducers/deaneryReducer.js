@@ -133,21 +133,22 @@ export function declineRequestThunkCreator(id, comment) { //обращение �
     }
 }
 
-/*export function exportActionCreator(data) { //обращение к reducers
+export function exportActionCreator(data) { //обращение к reducers
     return { type: EXPORT }
 }
 
 export function exportThunkCreator() { //обращение к серверу
     return async (dispatch) => {
         try {
-            const data = await prepodApi.exportListStudents();
+            const data = await deaneryApi.exportListStudents();
             dispatch(exportActionCreator(data));
+            console.log(data.body);
         }
         catch (error) {
             console.error("Ошибка:", error);
             alert("Произошла ошибка.");
         }
     }
-}*/
+}
 
 export default deaneryReducer;

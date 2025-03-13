@@ -4,6 +4,7 @@ import { Button, Card, Form, Input, DatePicker, Pagination } from "antd";
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { getStudentsThunkCreator } from "../../reducers/teacherReducer";
+import { exportThunkCreator } from "../../reducers/teacherReducer";
 
 const ListStudents = ({ teacherPage }) => {
     const dispatch = useDispatch()
@@ -66,20 +67,22 @@ const ListStudents = ({ teacherPage }) => {
 
     useEffect(() => {
         parameters = ({
-            startDate:startDate,
-            finishDate:finishDate,
-            group:group,
-            fullName:fullName,
+            startDate: startDate,
+            finishDate: finishDate,
+            group: group,
+            fullName: fullName,
             page: current,
             size: pageSize,
-            
+
         });
 
         dispatch(getStudentsThunkCreator(parameters));
     }, [current, pageSize]);
 
     const exportListStudents = async () => {
-        console.log('export');
+        //console.log('export');
+        dispatch(exportThunkCreator());
+
     };
 
     return (

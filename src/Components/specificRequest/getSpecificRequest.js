@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { requestApi } from "../../Api/specificRequestApi.js";
-import { deaneryApi } from '../../Api/deaneryApi.js';
+import { deaneryApi } from '../../Api/deaneryApii.js';
 
 const styles = {
   container: {

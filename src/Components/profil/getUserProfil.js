@@ -64,6 +64,7 @@ function GetUserProfile() {
         if (data) {
           console.log("Успешная загрузка профиля", data);
           setUser(data);
+          localStorage.setItem('role', `${data.roles}`);
           //setFullName(data.fullName || "");
           //setGroup(data.group || ""); 
         }

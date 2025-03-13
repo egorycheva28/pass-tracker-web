@@ -28,12 +28,6 @@ function registerUser(lastName, firstName, middleName, group, email, password) {
         .catch(error => console.log(error.response.data?.error || "Ошибка регистрации"));
 }
 
-function logout() {
-    return api.post("/logout", {})
-        .then(response => response.data)
-        .catch(error => console.log(error.response.data?.error || "Ошибка выхода"));
-}
-
 function getProfile() {
     return api.get("/profile")
         .then(response => response.data)
@@ -45,9 +39,22 @@ function getProfileById(id) {
         .then(response => response.data)
         .catch(error => console.log(error.response.data?.error || "Ошибка получения профиля"));
 }
+function logout() {
+    return api.post("/logout", {})
+        .then(response => response.data)
+        .catch(error => console.log(error.response.data?.error || "Ошибка выхода"));
+}
 
-function updateProfile(fullName) {
-    return api.post("/profile", { fullName })
+
+function getProfileById(id) {
+    return api.get(`/profile/${id}`)
+        .then(response => response.data)
+        .catch(error => console.log(error.response.data?.error || "Ошибка получения профиля"));
+}
+
+function updateProfile(email) {
+    return api.post("/edit/email", { email })
+
         .then(response => response.data)
         .catch(error => console.log(error.response.data?.error || "Ошибка обновления профиля"));
 }
@@ -58,5 +65,5 @@ export const userApi = {
     registerUser: registerUser,
     logout: logout,
     updateProfile: updateProfile
-        
+    
 }

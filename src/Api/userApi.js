@@ -43,7 +43,7 @@ function registerUser(lastName, firstName, middleName, group, email, password) {
 async function logout() {
     const token = localStorage.getItem("token");
     console.log(token);
-    return await instance.post(`logout`, {
+    return await instance.post(`logout`, {}, {
         headers: {
             Authorization: `Bearer ${token}`
         }
@@ -126,5 +126,5 @@ export const userApi = {
     getProfile: getProfile,
     registerUser: registerUser,
     logout: logout,
-    getProfileById:getProfileById
+    getProfileById: getProfileById
 }

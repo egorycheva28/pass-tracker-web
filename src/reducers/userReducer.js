@@ -5,7 +5,7 @@ const LOGOUT = "LOGOUT";
 
 let initialState = {
 
-    token: ''
+    accessToken: ''
 }
 
 const userReducer = (state = initialState, action) => {
@@ -13,7 +13,7 @@ const userReducer = (state = initialState, action) => {
 
     switch (action.type) {
         case REGISTER_USER:
-            newState.token = action.token;
+            newState.accessToken = action.accessToken;
             return newState;
         case LOGOUT:
             //newState.token = action.token;
@@ -24,22 +24,24 @@ const userReducer = (state = initialState, action) => {
 }
 
 export function registerUserActionCreator(data) { //обращение к reducers
-    return { type: REGISTER_USER, token: data }
+    return { type: REGISTER_USER, token: data.accessToken }
 }
 
-export function registerUserThunkCreator(lastName, password1, email, firstName, middleName, group) { //обращение к серверу
+export function registerUserThunkCreator(lastName, firstName, middleName, group, email, password) { //обращение к серверу
     return async (dispatch) => {
-        if (!lastName || !middleName || !email || !password1 || !group) {
+        if (!lastName || !firstName || !middleName || !email || !password) {
             alert("Пожалуйста, заполните все поля.");
             return;
         }
         try {
-            const data = await userApi.registerUser(lastName, password1, email, firstName, middleName, group);
+            const data = await userApi.registerUser(lastName, firstName, middleName, group, email, password);
             dispatch(registerUserActionCreator(data));
-            localStorage.setItem('token', `${data.token}`);
+            localStorage.setItem('token', `${data.accessToken}`);
             localStorage.setItem('lastName', `${lastName}`);
             localStorage.setItem('firstName', `${lastName[0]}`);
             localStorage.setItem('middleName', `${lastName[0]}`);
+            const datas = await userApi.getProfile();
+            localStorage.setItem('role', `${datas.roles}`);
             alert("Успешный вход!");
         }
         catch (error) {

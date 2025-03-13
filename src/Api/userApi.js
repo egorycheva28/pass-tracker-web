@@ -1,90 +1,65 @@
-import axios from "axios";
+import createAxiosInstance from "./axiosInstance";
 
-const instance = axios.create({
-    baseURL: 'https://localhost:7129/user'
-});
+const api = createAxiosInstance("user");
 
-const instanceA = axios.create({
-    baseURL: 'https://localhost:7129/user',
-    headers: {
-        'Authorization': `Bearer ${localStorage.getItem('token')}`
-    }
-});
+function loginUser(email, password) {
+    return api.post("/login", { email, password })
 
-function loginUser(email, password){
-    return instance.post("/login", { email, password })
-    .then(response => {
-        if(response.status === 200){
-            return response.data;
-        }
-    })
-    .catch(error => {
-        console.log(error.response.data.error)
-    });
-}
-
-function getProfile(){
-    return instance.get("/profile")
-    .then(response => {
-        if(response=== 200){
-            return response.data;
-        }
-    })
-    .catch(error => {
-        console.log(error.response.data.error)
-    });
-    
-}
-
-function registerUser(fullName, password, email, birthDate, gender, phoneNumber) {
-    const body = {
-        fullName: fullName,
-        password: password,
-        email: email,
-        birthDate: birthDate,
-        gender: gender,
-        phoneNumber: phoneNumber
-        /*lastName: lastName,
-        firstName: firstName,
-        middleName: middleName,
-        group: group,
-        email: email,
-        password1: password1,
-        password2: password2*/
-    }
-
-    return instance.post(`register`, body)
         .then(response => {
-            console.log("Catalog Data:", response.data);
-
             if (response.status === 200) {
-                console.log("Catalog Data:", response.data);
+                localStorage.setItem('token', response.data.accessToken);
+                localStorage.setItem('refreshToken', response.data.refreshToken);
                 return response.data;
             }
         })
         .catch(error => {
-            console.log(error.response.data.error)
+            console.log(error.response.data?.error || "Ошибка входа");
         });
 }
 
-async function logout() {
-    return await instanceA.post(`logout`)
+function registerUser(lastName, firstName, middleName, group, email, password) {
+    return api.post("/register", { lastName, firstName, middleName, group, email, password })
         .then(response => {
-            console.log("Catalog Data:", response.data);
-
             if (response.status === 200) {
-                console.log("Catalog Data:", response.data);
+                localStorage.setItem('token', response.data.accessToken);
+                localStorage.setItem('refreshToken', response.data.refreshToken);
                 return response.data;
             }
         })
-        .catch(error => {
-            console.log(error.response.data.error)
-        });
+        .catch(error => console.log(error.response.data?.error || "Ошибка регистрации"));
+}
+
+function getProfile() {
+    return api.get("/profile")
+        .then(response => response.data)
+        .catch(error => console.log(error.response.data?.error || "Ошибка получения профиля"));
+}
+
+function getProfileById(id) {
+    return api.get(`/profile/${id}`)
+        .then(response => response.data)
+        .catch(error => console.log(error.response.data?.error || "Ошибка получения профиля"));
+}
+function logout() {
+    return api.post("/logout", {})
+        .then(response => response.data)
+        .catch(error => console.log(error.response.data?.error || "Ошибка выхода"));
+}
+
+
+function updateProfile(email) {
+    return api.patch("/edit/email", { email })
+
+        .then(response => response.data)
+        .catch(error => console.log(error.response.data?.error || "Ошибка обновления профиля"));
 }
 
 export const userApi = {
     loginUser: loginUser,
     getProfile: getProfile,
     registerUser: registerUser,
-    logout: logout
+    logout: logout,
+    updateProfile: updateProfile,
+    getProfileById: getProfileById
+
 }

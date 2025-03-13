@@ -11,6 +11,7 @@ function Navbar() {
     const lastName = localStorage.getItem('lastName');
     const firstName = localStorage.getItem('firstName');
     const middleName = localStorage.getItem('middleName');
+    const role= localStorage.getItem('role');
 
     const logout = async () => {
         await dispatch(logoutThunkCreator());
@@ -44,19 +45,25 @@ function Navbar() {
                     37.5046 5.22264 30.8582 5.22264 22.6884V5.64296H35.1794V22.6884H35.1794Z" fill="rgb(231, 53, 89)"></path>
                 </svg>
                 <h2 style={{ marginLeft: 10, marginRight: 20, marginTop: '15px', whiteSpace: 'nowrap', color: 'rgb(231, 53, 89)' }}>Pass-tracker</h2>
-                {token ? (
-                    <Link to="/listStudents" style={{ marginInline: 20, color: 'white', marginTop: '20px', whiteSpace: 'nowrap' }}>Список студентов</Link>
+                {token /*&& role=='Teacher'*/ ? (
+                    <Link to="/listStudents" style={{ marginInline: 20, color: 'white', marginTop: '20px', whiteSpace: 'nowrap' }}>Одобренные заявки для преподавателей</Link>
 
                 ) : (
                     null
                 )}
-                {token ? (
-                    <Link to="/applications" style={{ marginInline: 20, color: 'white', marginTop: '20px', whiteSpace: 'nowrap' }}>Заявки</Link>
+                {token /*&& role=='Deanery'*/ ? (
+                    <Link to="/approvedApplications" style={{ marginInline: 20, color: 'white', marginTop: '20px', whiteSpace: 'nowrap' }}>Одобренные заявки для деканата</Link>
 
                 ) : (
                     null
                 )}
-                {token ? (
+                {token /*&& role=='Deanery'*/ ? (
+                    <Link to="/unapprovedApplications" style={{ marginInline: 20, color: 'white', marginTop: '20px', whiteSpace: 'nowrap' }}>Неодобренные заявки</Link>
+
+                ) : (
+                    null
+                )}
+                {token /*&& role=='Deanery'*/ ? (
                     <Link to="/role" style={{ marginInline: 20, color: 'white', marginTop: '20px', whiteSpace: 'nowrap' }}>Выдача роли</Link>
 
                 ) : (

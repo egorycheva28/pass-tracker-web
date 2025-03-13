@@ -117,8 +117,11 @@ function GetUserProfile() {
   const [email, setEmail] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newEmail, setNewEmail] = useState("");
+  const isFetched = useRef(false);
 
   useEffect(() => {
+    if (isFetched.current) return; // Если уже загружали, не запускаем повторно
+    isFetched.current = true;
     fetchProfile();
   }, []);
   

@@ -1,26 +1,19 @@
 import axios from "axios";
+import createAxiosInstance from "./axiosInstance";
 
-
-
-const instance = axios.create({
-    baseURL: 'https://localhost:7129',
-
-});
+const api = createAxiosInstance("");
 
 function getDetails(id){
-    const token = localStorage.getItem("token");
-console.log("Токен в localStorage:", token);
 
-    return instance.get(`/request/get-requestInfo/${id}`, {
+
+    return api.get(`/request/get-requestInfo/${id}`, {
         headers: {
-            Authorization: `Bearer ${token}`, 
-    Accept: "application/json"
+            Accept: "application/json"
         }
     })
    
     .then(response => {
         if(response.status=== 200){
-            console.log(response.data)
             return response.data;
         }
     })

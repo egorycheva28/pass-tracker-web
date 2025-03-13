@@ -152,6 +152,7 @@ function GetUserProfile() {
       const updatedUser = await userApi.updateProfile(newEmail );
       setUser(updatedUser);
       await fetchProfile();
+      isFetched.current = false;
       console.log("Успешное обновление");
       setIsModalOpen(false);
     } catch (err) {

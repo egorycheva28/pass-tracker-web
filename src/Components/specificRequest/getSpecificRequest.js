@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef  } from "react";
 import { requestApi } from "../../Api/specificRequestApi.js";
 import { deaneryApi } from '../../Api/deaneryApi.js';
 import { useParams } from 'react-router-dom';
@@ -139,8 +139,15 @@ function GetSpecificRequest() {
 
   const [isDeclineModalOpen, setIsDeclineModalOpen] = useState(false);
   const [declineComment, setDeclineComment] = useState("");
+    const isFetched = useRef(false);
+  
+    useEffect(() => {
+      if (isFetched.current) return; // Если уже загружали, не запускаем повторно
+      isFetched.current = true;
+  
+      fetchProfile();
+    }, []);
 
-  useEffect(() => {
     const fetchProfile = async () => {
       try {
         const data = await requestApi.getDetails(id);
@@ -152,9 +159,6 @@ function GetSpecificRequest() {
         setError(err.message || "Ошибка загрузки профиля");
       }
     };
-    fetchProfile();
-  }, []);
-
   const formatDate = (date) => {
     if (!date) return "12.13.2024";
     return new Date(date).toLocaleDateString("ru-RU");

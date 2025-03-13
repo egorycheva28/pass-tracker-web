@@ -5,13 +5,9 @@ const instance = axios.create({
 });
 
 function listStudents(params) {
-    const token = localStorage.getItem("token");
-    return instance.get(`request/get-all-requests?StatusRequestSort=Accepted&StartDate=${params.startDate}&FinishDate=${params.finishDate}
-        &Group=${params.group}&Name=${params.fullName}&page=${params.page}&size=${params.size}`, {
-        headers: {
-            Authorization: `Bearer ${token}`
-        }
-    })
+    //console.log(params.author);
+    //return api.get(`post?author=${params.author}&page=${params.page}&size=${params.size}`)
+    return instance.get(`post?author=${params.author}&page=${params.page}&size=${params.size}`)
         .then(response => {
             console.log("Catalog Data:", response.data);
             if (response.status === 200) {

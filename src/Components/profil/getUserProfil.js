@@ -48,9 +48,9 @@ const styles = {
     marginBottom: "10px",
     fontSize: "16px",
   }
-
-
-
+  
+  
+  
 };
 
 function GetUserProfile() {
@@ -64,7 +64,6 @@ function GetUserProfile() {
         if (data) {
           console.log("Успешная загрузка профиля", data);
           setUser(data);
-          localStorage.setItem('role', `${data.roles}`);
           //setFullName(data.fullName || "");
           //setGroup(data.group || ""); 
         }
@@ -91,14 +90,14 @@ function GetUserProfile() {
       <div style={styles.formBox}>
         <h2 style={{ marginBottom: "20px" }}>Профиль </h2>
 
-        <div style={styles.infoRow}> <strong>Фамилия:</strong> {user?.name || "Нет данных"} </div>
+        <div style={styles.infoRow}> <strong>Фамилия:</strong> {user?.email || "Нет данных"} </div> 
 
-        <div style={styles.infoRow}> <strong>Имя:</strong> {user?.name || "Нет данных"} </div>
-        <div style={styles.infoRow}> <strong>Отчество:</strong> {user?.name || "Нет данных"} </div>
-        <div style={styles.infoRow}> <strong>Роль:</strong> {user?.roles || "Нет данных"} </div>
-        <div style={styles.infoRow}> <strong>Группа:</strong> {user?.group || "Нет данных"} </div>
-        <div style={styles.infoRow}> <strong>Почта:</strong> {user?.email || "Нет данных"} </div>
-        <div style={styles.infoRow}> <strong>Роль:</strong> {user?.email || "Нет данных"} </div>
+        <div style={styles.infoRow}> <strong>Имя:</strong> {user?.email || "Нет данных"} </div> 
+        <div style={styles.infoRow}> <strong>Отчество:</strong> {user?.email || "Нет данных"} </div> 
+        <div style={styles.infoRow}> <strong>Роль:</strong> {user?.email || "Нет данных"} </div> 
+        <div style={styles.infoRow}> <strong>Группа:</strong> {user?.email || "Нет данных"} </div> 
+        <div style={styles.infoRow}> <strong>Почта:</strong> {user?.email || "Нет данных"} </div> 
+        <div style={styles.infoRow}> <strong>Роль:</strong> {user?.email || "Нет данных"} </div> 
       </div>
     </div>
   );

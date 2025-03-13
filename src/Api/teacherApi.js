@@ -22,7 +22,7 @@ function listStudents(params) {
 }
 
 function exportListStudents() {
-    return api.get(`/deanery/download-requests`, {
+    return api.get(`/deanery/download-requests?StatusRequestSort=Accepted`, {
         responseType: 'blob'
     })
         .then(response => {

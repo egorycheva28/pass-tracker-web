@@ -71,7 +71,13 @@ function LoginUser() {
     try {
       const data = await userApi.loginUser(email, password);
       if (data) {
-        localStorage.setItem('token', `${data.accessToken}`);
+        //localStorage.setItem('token', `${data.accessToken}`);
+        const datas = await userApi.getProfile();
+        const fio = datas.name.split(" ");
+        localStorage.setItem('lastName', `${fio[0]}`);
+        localStorage.setItem('firstName', `${fio[1][0]}`);
+        localStorage.setItem('middleName', `${fio[2][0]}`);
+        localStorage.setItem('role', `${datas.roles}`);
         navigate('/profile');
         console.log("Успешный вход!", data);
         alert("Вы вошли в систему!");

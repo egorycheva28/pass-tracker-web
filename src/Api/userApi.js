@@ -91,10 +91,10 @@ function getProfile(){
 
 function updateProfile( email ){
     const token = localStorage.getItem("token");
-
     return instance.patch("/edit/email", { email }, {
         headers: {
-            Authorization: `Bearer ${token}` 
+            Authorization: `Bearer ${token}` ,
+            "Content-Type": "application/json",
         }
     })
 

@@ -119,24 +119,22 @@ function GetUserProfile() {
   const [newEmail, setNewEmail] = useState("");
 
   useEffect(() => {
-    const fetchProfile = async () => {
-      try {
-        const data = await userApi.getProfile();
-        if (data) {
-          console.log("Успешная загрузка профиля", data);
-          setUser(data);
-          //setFullName(data.fullName || "");
-          //setGroup(data.group || ""); 
-        }
-      } catch (err) {
-        setError(err.message || "Ошибка загрузки профиля");
-      }
-    };
     fetchProfile();
   }, []);
-
+  
+  const fetchProfile = async () => {
+    try {
+      const data = await userApi.getProfile();
+      if (data) {
+        console.log("Успешная загрузка профиля", data);
+        setUser(data);
+      }
+    } catch (err) {
+      setError(err.message || "Ошибка загрузки профиля");
+    }
+  };
   const handleOpenModal = () => {
-    setNewEmail(user?.email || ""); // Заполняем текущий email
+    setNewEmail(user?.email || "");
     setIsModalOpen(true);
   };
 
@@ -146,8 +144,9 @@ function GetUserProfile() {
 
   const handleSaveEmail = async () => {
     try {
-      const updatedUser = await userApi.updateProfile({ email: newEmail });
+      const updatedUser = await userApi.updateProfile(newEmail );
       setUser(updatedUser);
+      await fetchProfile();
       console.log("Успешное обновление");
       setIsModalOpen(false);
     } catch (err) {
@@ -216,37 +215,3 @@ function GetUserProfile() {
 }
 
 export default GetUserProfile;
-/*{user?.group === null ? (
-    <div>
-                <label style={styles.label}>Группа:</label>
-  <input 
-    type="text" 
-    value={group} 
-    onChange={(e) => setGroup(e.target.value)} 
-    style={styles.input} 
-  />
-   </div> 
-) : (<div style={styles.infoRow}> <strong>Группа:</strong> {user?.email || "Нет данных"} </div> )
-}
-
-
-
-<label style={styles.label}>Почта:</label>
-<input 
-  type="email" 
-  value={fullName} 
-  onChange={(e) => setFullName(e.target.value)} 
-  style={styles.input} 
-/>
-
-<label style={styles.label}>Пароль:</label>
-<input 
-  type="password" 
-  value={password} 
-  onChange={(e) => setPassword(e.target.value)} 
-  style={styles.input} 
-/>
-
-<button onClick={handleUpdateProfile} style={styles.button}>
-  Сохранить изменения
-</button>*/

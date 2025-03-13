@@ -1,12 +1,12 @@
 import React from "react";
-import ListStudentsItem from "./listStudentsItem";
+import ApprovedApplicationItem from "./approvedApplicationItem";
 import { Button, Card, Form, Input, DatePicker, Pagination } from "antd";
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { getStudentsThunkCreator } from "../../reducers/teacherReducer";
-import { exportThunkCreator } from "../../reducers/teacherReducer";
+import { approvedApplicationsThunkCreator } from "../../../reducers/deaneryReducer";
+import { exportThunkCreator } from "../../../reducers/deaneryReducer";
 
-const ListStudents = ({ teacherPage }) => {
+const ApprovedApplications = ({ deaneryPage }) => {
     const dispatch = useDispatch()
 
     const [startDate, setStartDate] = useState("");
@@ -15,7 +15,7 @@ const ListStudents = ({ teacherPage }) => {
     const [fullName, setFullName] = useState("");
     const [current, setCurrent] = useState(1);
     const [pageSize, setPageSize] = useState(5);
-    const count = teacherPage.pagination.count;
+    const count = deaneryPage.pagination.count;
 
     //console.log(startDate, finishDate, group, fullName);
 
@@ -24,6 +24,7 @@ const ListStudents = ({ teacherPage }) => {
         finishDate: finishDate,
         group: group,
         fullName: fullName,
+        author: group,
         page: current,
         size: pageSize
     });
@@ -36,11 +37,12 @@ const ListStudents = ({ teacherPage }) => {
             finishDate: finishDate,
             group: group,
             fullName: fullName,
+            author: group,
             page: current,
             size: pageSize
         });
 
-        await dispatch(getStudentsThunkCreator(parameters));
+        await dispatch(approvedApplicationsThunkCreator(parameters));
     };
 
     const resetFilters = async (e) => {
@@ -61,7 +63,7 @@ const ListStudents = ({ teacherPage }) => {
             size: pageSize
         });
 
-        await dispatch(getStudentsThunkCreator(parameters));
+        await dispatch(approvedApplicationsThunkCreator(parameters));
         //console.log(parameters);
     };
 
@@ -76,7 +78,7 @@ const ListStudents = ({ teacherPage }) => {
 
         });
 
-        dispatch(getStudentsThunkCreator(parameters));
+        dispatch(approvedApplicationsThunkCreator(parameters));
     }, [current, pageSize]);
 
     const exportListStudents = async () => {
@@ -87,7 +89,7 @@ const ListStudents = ({ teacherPage }) => {
 
     return (
         <div>
-            <h1 style={{ marginTop: '100px', marginBottom: '30px' }}>Список пропусков</h1>
+            <h1 style={{ marginTop: '100px', marginBottom: '30px' }}>Список одобренных заявок</h1>
 
             <Card style={{ margin: '20px', textAlign: 'left', marginBottom: '50px' }}>
                 <Form >
@@ -103,8 +105,9 @@ const ListStudents = ({ teacherPage }) => {
             </Card >
 
             <div className="card-deck">
-                {teacherPage.listStudents.map((value) => (
-                    <ListStudentsItem userName={value.userName} group={value.group} startDate={value.startDate} finishDate={value.finishDate} key={value.id} />
+                {deaneryPage.approvedApplications.map((value) => (
+                    <ApprovedApplicationItem userName={value.userName} group={value.group} startDate={value.startDate}
+                        finishDate={value.finishDate} typeRequest={value.typeRequest} id={value.id} key={value.id} />
                 ))}
             </div>
 
@@ -121,4 +124,4 @@ const ListStudents = ({ teacherPage }) => {
     );
 };
 
-export default ListStudents;
+export default ApprovedApplications;

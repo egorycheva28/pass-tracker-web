@@ -28,11 +28,10 @@ const teacherReducer = (state = initialState, action) => {
 }
 
 export function getStudentsActionCreator(data) { //обращение к reducers
-    return { type: LIST_STUDENT, listStudents: data.posts, pagination: data.pagination }
+    return { type: LIST_STUDENT, listStudents: data.requests, pagination: data.pagination }
 }
 
 export function getStudentsThunkCreator(params) { //обращение к серверу
-    console.log(params);
     return async (dispatch) => {
         try {
             const data = await prepodApi.listStudents(params);
@@ -45,7 +44,7 @@ export function getStudentsThunkCreator(params) { //обращение к сер
     }
 }
 
-/*export function exportActionCreator(data) { //обращение к reducers
+export function exportActionCreator(data) { //обращение к reducers
     return { type: EXPORT }
 }
 
@@ -60,6 +59,6 @@ export function exportThunkCreator() { //обращение к серверу
             alert("Произошла ошибка.");
         }
     }
-}*/
+}
 
 export default teacherReducer;

@@ -1,12 +1,11 @@
 import React from "react";
-import ListStudentsItem from "./listStudentsItem";
+import RoleItem from "./roleItem";
 import { Button, Card, Form, Input, DatePicker, Pagination } from "antd";
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { getStudentsThunkCreator } from "../../reducers/teacherReducer";
-import { exportThunkCreator } from "../../reducers/teacherReducer";
+import { roleThunkCreator } from "../../../reducers/deaneryReducer";
 
-const ListStudents = ({ teacherPage }) => {
+const Role = ({ deaneryPage }) => {
     const dispatch = useDispatch()
 
     const [startDate, setStartDate] = useState("");
@@ -15,15 +14,16 @@ const ListStudents = ({ teacherPage }) => {
     const [fullName, setFullName] = useState("");
     const [current, setCurrent] = useState(1);
     const [pageSize, setPageSize] = useState(5);
-    const count = teacherPage.pagination.count;
+    const count = deaneryPage.pagination.count;
 
     //console.log(startDate, finishDate, group, fullName);
 
     var parameters = ({
-        startDate: startDate,
+        /*startDate: startDate,
         finishDate: finishDate,
         group: group,
-        fullName: fullName,
+        fullName: fullName*/
+        author: group,
         page: current,
         size: pageSize
     });
@@ -32,15 +32,16 @@ const ListStudents = ({ teacherPage }) => {
         e.preventDefault();
         //console.log(startDate, finishDate, group, fullName);
         parameters = ({
-            startDate: startDate,
+            /*startDate: startDate,
             finishDate: finishDate,
             group: group,
-            fullName: fullName,
+            fullName: fullName*/
+            author: group,
             page: current,
             size: pageSize
         });
 
-        await dispatch(getStudentsThunkCreator(parameters));
+        await dispatch(roleThunkCreator(parameters));
     };
 
     const resetFilters = async (e) => {
@@ -53,41 +54,36 @@ const ListStudents = ({ teacherPage }) => {
 
         //console.log(startDate, finishDate, group, fullName);
         parameters = ({
-            startDate: "",
+            /*startDate: "",
             finishDate: "",
             group: "",
-            fullName: "",
+            fullName: "*/
+            author: "",
             page: current,
             size: pageSize
         });
 
-        await dispatch(getStudentsThunkCreator(parameters));
+        await dispatch(roleThunkCreator(parameters));
         //console.log(parameters);
     };
 
     useEffect(() => {
         parameters = ({
-            startDate: startDate,
-            finishDate: finishDate,
-            group: group,
-            fullName: fullName,
+            author: group,
             page: current,
             size: pageSize,
-
+            /*startDate,
+            finishDate,
+            group,
+            fullName*/
         });
 
-        dispatch(getStudentsThunkCreator(parameters));
+        dispatch(roleThunkCreator(parameters));
     }, [current, pageSize]);
-
-    const exportListStudents = async () => {
-        //console.log('export');
-        dispatch(exportThunkCreator());
-
-    };
 
     return (
         <div>
-            <h1 style={{ marginTop: '100px', marginBottom: '30px' }}>Список пропусков</h1>
+            <h1 style={{ marginTop: '100px', marginBottom: '30px' }}>Выдача роли</h1>
 
             <Card style={{ margin: '20px', textAlign: 'left', marginBottom: '50px' }}>
                 <Form >
@@ -103,13 +99,9 @@ const ListStudents = ({ teacherPage }) => {
             </Card >
 
             <div className="card-deck">
-                {teacherPage.listStudents.map((value) => (
-                    <ListStudentsItem userName={value.userName} group={value.group} startDate={value.startDate} finishDate={value.finishDate} key={value.id} />
+                {deaneryPage.role.map((value) => (
+                    <RoleItem name={value.name} group={value.group} id={value.id} key={value.id} />
                 ))}
-            </div>
-
-            <div style={{ margin: '20px', display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
-                <Button type="primary" htmlType="submit" style={{ background: 'rgb(231, 53, 89)' }} onClick={exportListStudents}>Экспортировать</Button>
             </div>
 
             <div style={{ display: 'flex', alignItems: 'center', margin: '20px' }}>
@@ -121,4 +113,4 @@ const ListStudents = ({ teacherPage }) => {
     );
 };
 
-export default ListStudents;
+export default Role;

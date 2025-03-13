@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef  } from "react";
 import { userApi } from '../../Api/userApi.js';
 
 const styles = {
@@ -56,8 +56,12 @@ const styles = {
 function GetUserProfile() {
   const [error, setError] = useState("");
   const [user, setUser] = useState(null);
+  const isFetched = useRef(false);
 
   useEffect(() => {
+
+    if (isFetched.current) return; // Если уже загружали, не запускаем повторно
+    isFetched.current = true;
     const fetchProfile = async () => {
       try {
         const data = await userApi.getProfile();

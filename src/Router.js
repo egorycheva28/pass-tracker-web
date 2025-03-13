@@ -1,5 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import LoginUser from "./Components/login/loginUser";
+
 import RegisterUserContainer from "./Components/registration/registerUserContainer";
 import ListStudentsContainer from "./Components/teacher/listStudentsContainer";
 import GetUserProfile from "./Components/profil/getUserProfil";
@@ -8,11 +9,13 @@ import UnapprovedApplicationsContainer from "./Components/deanery/secondPage/una
 import RoleContainer from "./Components/deanery/thirdPage/roleContainer";
 import ProfileById from "./Components/profil/profileById";
 
+
 function RoutesPage() {
     return (
         <Routes>
             <Route path="/" element={<LoginUser />} />
             <Route path="/login" element={<LoginUser />} />
+
             <Route path="/profile" element={<GetUserProfile />} />
             <Route path="/registration" element={<RegisterUserContainer />} />
             <Route path="/listStudents" element={<ListStudentsContainer />} />
@@ -21,6 +24,7 @@ function RoutesPage() {
             <Route path="/detail/:id" element={<GetUserProfile/>}/>
             <Route path="/profile/:id" element={<ProfileById/>}/>
             <Route path="/role" element={<RoleContainer/>}/>
+
         </Routes>
     )
 };

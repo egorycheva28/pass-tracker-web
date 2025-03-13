@@ -4,6 +4,7 @@ const api = createAxiosInstance("user");
 
 function loginUser(email, password) {
     return api.post("/login", { email, password })
+
         .then(response => {
             if (response.status === 200) {
                 localStorage.setItem('token', response.data.accessToken);

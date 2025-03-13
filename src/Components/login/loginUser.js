@@ -80,6 +80,7 @@ function LoginUser() {
         localStorage.setItem('role', `${datas.roles}`);
         navigate('/profile');
         console.log("Успешный вход!", data);
+        localStorage.setItem("token", data.accessToken);
         alert("Вы вошли в систему!");
       }
     } catch (err) {

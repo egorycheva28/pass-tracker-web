@@ -1,21 +1,14 @@
 import axios from "axios";
+import createAxiosInstance from "./axiosInstance";
 
-const instance = axios.create({
-    baseURL: 'https://localhost:7129/'
-});
-//const api = createAxiosInstance("user");
+const api = createAxiosInstance("");
 
 function listStudents(params) {
     //console.log(params.author);
-    //return api.get(`post?author=${params.author}&page=${params.page}&size=${params.size}`)
+    return api.get(`request/get-all-requests?StatusRequestSort=Accepted&StartDate=${params.startDate}&FinishDate=${params.finishDate}
+         &Group=${params.group}&Name=${params.fullName}&page=${params.page}&size=${params.size}`)
     //return instance.get(`post?author=${params.author}&page=${params.page}&size=${params.size}`)
-    const token = localStorage.getItem("token");
-    return instance.get(`request/get-all-requests?StatusRequestSort=Accepted&StartDate=${params.startDate}&FinishDate=${params.finishDate}
-         &Group=${params.group}&Name=${params.fullName}&page=${params.page}&size=${params.size}`, {
-        headers: {
-            Authorization: `Bearer ${token}`
-        }
-    })
+
         .then(response => {
             console.log("Catalog Data:", response.data);
             if (response.status === 200) {
@@ -29,11 +22,7 @@ function listStudents(params) {
 }
 
 function exportListStudents() {
-    const token = localStorage.getItem("token");
-    return instance.get(`/deanery/download-requests`, {
-        headers: {
-            Authorization: `Bearer ${token}`
-        },
+    return api.get(`/deanery/download-requests`, {
         responseType: 'blob'
     })
         .then(response => {

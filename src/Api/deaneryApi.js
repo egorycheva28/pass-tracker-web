@@ -1,17 +1,13 @@
 import axios from "axios";
+import createAxiosInstance from "./axiosInstance";
 
-const instance = axios.create({
-    baseURL: 'https://localhost:7129/'
-});
+
+const api = createAxiosInstance("");
 
 function approvedApplications(params) {
-    const token = localStorage.getItem("token");
-    return instance.get(`request/get-all-requests?StatusRequestSort=Accepted&StartDate=${params.startDate}&FinishDate=${params.finishDate}
-        &Group=${params.group}&Name=${params.fullName}&page=${params.page}&size=${params.size}`, {
-        headers: {
-            Authorization: `Bearer ${token}`
-        }
-    })
+    return api.get(`request/get-all-requests?StatusRequestSort=Accepted&StartDate=${params.startDate}&FinishDate=${params.finishDate}
+        &Group=${params.group}&Name=${params.fullName}&page=${params.page}&size=${params.size}`)
+
         .then(response => {
             console.log("Catalog Data:", response.data);
             if (response.status === 200) {
@@ -25,13 +21,9 @@ function approvedApplications(params) {
 }
 
 function unapprovedApplications(params) {
-    const token = localStorage.getItem("token");
-    return instance.get(`request/get-all-requests?StatusRequestSort=Pending&StartDate=${params.startDate}&FinishDate=${params.finishDate}
-        &Group=${params.group}&Name=${params.fullName}&page=${params.page}&size=${params.size}`, {
-        headers: {
-            Authorization: `Bearer ${token}`
-        }
-    })
+    return api.get(`request/get-all-requests?StatusRequestSort=Pending&StartDate=${params.startDate}&FinishDate=${params.finishDate}
+        &Group=${params.group}&Name=${params.fullName}&page=${params.page}&size=${params.size}`)
+
         .then(response => {
             console.log("Catalog Data:", response.data);
             if (response.status === 200) {
@@ -45,12 +37,8 @@ function unapprovedApplications(params) {
 }
 
 function role(params) {
-    const token = localStorage.getItem("token");
-    return instance.get(`admin/users?page=${params.page}&size=${params.size}`, {
-        headers: {
-            Authorization: `Bearer ${token}`
-        }
-    })
+    return api.get(`admin/users?page=${params.page}&size=${params.size}`)
+
         .then(response => {
             console.log("Catalog Data:", response.data);
             if (response.status === 200) {
@@ -64,12 +52,8 @@ function role(params) {
 }
 
 function acceptRequest(id) {
-    const token = localStorage.getItem("token");
-    return instance.post(`deanery/accept-request/${id}`, {}, {
-        headers: {
-            Authorization: `Bearer ${token}`
-        }
-    })
+    return api.post(`deanery/accept-request/${id}`, {})
+
         .then(response => {
             console.log("Catalog Data:", response.data);
             if (response.status === 200) {
@@ -83,12 +67,8 @@ function acceptRequest(id) {
 }
 
 function declineRequest(id, comment) {
-    const token = localStorage.getItem("token");
-    return instance.post(`deanery/decline-request/${id}`, { comment: comment }, {
-        headers: {
-            Authorization: `Bearer ${token}`
-        }
-    })
+    return api.post(`deanery/decline-request/${id}`, { comment: comment })
+
         .then(response => {
             console.log("Catalog Data:", response.data);
             if (response.status === 200) {
@@ -102,13 +82,12 @@ function declineRequest(id, comment) {
 }
 
 function exportListStudents() {
-    const token = localStorage.getItem("token");
-    return instance.get(`/deanery/download-requests`, {
-        headers: {
-            Authorization: `Bearer ${token}`
-        },
+    return api.get(`/deanery/download-requests`,{
+
         responseType: 'blob'
-    })
+        }
+    )
+
         .then(response => {
             console.log("Catalog Data:", response.data);
 

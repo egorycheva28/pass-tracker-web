@@ -46,14 +46,8 @@ function logout() {
 }
 
 
-function getProfileById(id) {
-    return api.get(`/profile/${id}`)
-        .then(response => response.data)
-        .catch(error => console.log(error.response.data?.error || "Ошибка получения профиля"));
-}
-
 function updateProfile(email) {
-    return api.post("/edit/email", { email })
+    return api.patch("/edit/email", { email })
 
         .then(response => response.data)
         .catch(error => console.log(error.response.data?.error || "Ошибка обновления профиля"));

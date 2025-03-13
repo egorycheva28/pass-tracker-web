@@ -69,43 +69,23 @@ async function logout() {
         });
 }
 
-function getProfile(){
-    const token = localStorage.getItem("token"); 
-
-    return instance.get("/profile", {
-        headers: {
-            Authorization: `Bearer ${token}` 
-        }
-    })
-
-    .then(response => {
-        if(response.status=== 200){
-            return response.data;
-        }
-    })
-    .catch(error => {
-        console.log(error.response.data.error)
-    });
-    
+function getProfile() {
+    return api.get("/profile")
+        .then(response => response.data)
+        .catch(error => console.log(error.response.data?.error || "Ошибка получения профиля"));
 }
 
-function updateProfile( email ){
-    const token = localStorage.getItem("token");
-    return instance.patch("/edit/email", { email }, {
-        headers: {
-            Authorization: `Bearer ${token}` ,
-            "Content-Type": "application/json",
-        }
-    })
+function getProfileById(id) {
+    return api.get(`/profile/${id}`)
+        .then(response => response.data)
+        .catch(error => console.log(error.response.data?.error || "Ошибка получения профиля"));
+}
 
-    .then(response => {
-            return response.data;
-        
-    })
-    .catch(error => {
-        console.log(error.response.data.error)
-    });
-    
+
+function updateProfile(email) {
+    return api.post("/edit/email", { email })
+        .then(response => response.data)
+        .catch(error => console.log(error.response.data?.error || "Ошибка обновления профиля"));
 }
 export const userApi = {
     loginUser: loginUser,

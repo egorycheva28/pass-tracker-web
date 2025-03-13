@@ -36,12 +36,14 @@ export function registerUserThunkCreator(lastName, firstName, middleName, group,
         try {
             const data = await userApi.registerUser(lastName, firstName, middleName, group, email, password);
             dispatch(registerUserActionCreator(data));
+            const data2 = await userApi.getProfile();
+            const data3 = await userApi.getHighestRole(data2.id);
             localStorage.setItem('token', `${data.accessToken}`);
-            localStorage.setItem('lastName', `${lastName}`);
-            localStorage.setItem('firstName', `${lastName[0]}`);
-            localStorage.setItem('middleName', `${lastName[0]}`);
-            const datas = await userApi.getProfile();
-            localStorage.setItem('role', `${datas.roles}`);
+            const fio = data2.name.split(" ");
+            localStorage.setItem('lastName', `${fio[0]}`);
+            localStorage.setItem('firstName', `${fio[1][0]}`);
+            localStorage.setItem('middleName', `${fio[2][0]}`);
+            localStorage.setItem('role', `${data3.role}`);
             alert("Успешный вход!");
         }
         catch (error) {
@@ -60,7 +62,7 @@ export function logoutThunkCreator() { //обращение к серверу
         try {
             const data = await userApi.logout();
             dispatch(logoutActionCreator());
-
+            localStorage.removeItem('role');
             alert("Успешный выход!");
         }
         catch (error) {

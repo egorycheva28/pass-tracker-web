@@ -69,18 +69,20 @@ function LoginUser() {
     setError("");
 
     try {
-      const data = await userApi.loginUser(email, password);
-      if (data) {
+      const data1 = await userApi.loginUser(email, password);
+      if (data1) {
         //localStorage.setItem('token', `${data.accessToken}`);
-        const datas = await userApi.getProfile();
-        const fio = datas.name.split(" ");
+        const data2 = await userApi.getProfile();
+        const data3 = await userApi.getHighestRole(data2.id);
+        console.log(data3);
+        const fio = data2.name.split(" ");
         localStorage.setItem('lastName', `${fio[0]}`);
         localStorage.setItem('firstName', `${fio[1][0]}`);
         localStorage.setItem('middleName', `${fio[2][0]}`);
-        localStorage.setItem('role', `${datas.roles}`);
+        localStorage.setItem('role', `${data3.role}`);
         navigate('/profile');
-        console.log("Успешный вход!", data);
-        localStorage.setItem("token", data.accessToken);
+        console.log("Успешный вход!", data1);
+        localStorage.setItem("token", data1.accessToken);
         alert("Вы вошли в систему!");
       }
     } catch (err) {

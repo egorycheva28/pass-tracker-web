@@ -17,8 +17,8 @@ function loginUser(email, password) {
         });
 }
 
-function registerUser(lastName, firstName, middleName, group, email, password) {
-    return api.post("/register", { lastName, firstName, middleName, group, email, password })
+function registerUser(secondName, firstName, middleName, group, email, password) {
+    return api.post("/register", { secondName, firstName, middleName, group, email, password })
         .then(response => {
             if (response.status === 200) {
                 localStorage.setItem('token', response.data.accessToken);
@@ -54,12 +54,19 @@ function updateProfile(email) {
         .catch(error => console.log(error.response.data?.error || "Ошибка обновления профиля"));
 }
 
+function getHighestRole(id) {
+    return api.get(`/highest-role/${id}`)
+
+        .then(response => response.data)
+        .catch(error => console.log(error.response.data?.error || "Ошибка получения высшей роли"));
+}
+
 export const userApi = {
     loginUser: loginUser,
     getProfile: getProfile,
     registerUser: registerUser,
     logout: logout,
     updateProfile: updateProfile,
-    getProfileById: getProfileById
-
+    getProfileById: getProfileById,
+    getHighestRole: getHighestRole
 }

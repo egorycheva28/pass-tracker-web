@@ -3,7 +3,7 @@ import React from "react";
 import ListStudents from './listStudents';
 import { getStudentsThunkCreator } from "../../reducers/teacherReducer";
 
-class MiddlePizzasComponent extends React.Component {
+class MiddleListStudentsComponent extends React.Component {
     /*componentDidMount() {
         this.props.getStudentsThunkCreator();
     }*/
@@ -16,6 +16,6 @@ function mapStateProps(state) {
     return { teacherPage: state.teacherPage };
 }
 
-const ListStudentsContainer = connect(mapStateProps, { getStudentsThunkCreator })(MiddlePizzasComponent)
+const ListStudentsContainer = connect(mapStateProps, { getStudentsThunkCreator })(MiddleListStudentsComponent)
 
 export default ListStudentsContainer;

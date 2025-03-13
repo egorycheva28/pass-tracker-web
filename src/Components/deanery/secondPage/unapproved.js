@@ -1,12 +1,11 @@
 import React from "react";
-import ListStudentsItem from "./listStudentsItem";
+import UnapprovedItem from "./unapprovedItem";
 import { Button, Card, Form, Input, DatePicker, Pagination } from "antd";
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { getStudentsThunkCreator } from "../../reducers/teacherReducer";
-import { exportThunkCreator } from "../../reducers/teacherReducer";
+import { unapprovedApplicationsThunkCreator } from "../../../reducers/deaneryReducer";
 
-const ListStudents = ({ teacherPage }) => {
+const Unapproved = ({ deaneryPage }) => {
     const dispatch = useDispatch()
 
     const [startDate, setStartDate] = useState("");
@@ -15,7 +14,7 @@ const ListStudents = ({ teacherPage }) => {
     const [fullName, setFullName] = useState("");
     const [current, setCurrent] = useState(1);
     const [pageSize, setPageSize] = useState(5);
-    const count = teacherPage.pagination.count;
+    const count = deaneryPage.pagination.count;
 
     //console.log(startDate, finishDate, group, fullName);
 
@@ -40,7 +39,7 @@ const ListStudents = ({ teacherPage }) => {
             size: pageSize
         });
 
-        await dispatch(getStudentsThunkCreator(parameters));
+        await dispatch(unapprovedApplicationsThunkCreator(parameters));
     };
 
     const resetFilters = async (e) => {
@@ -61,7 +60,7 @@ const ListStudents = ({ teacherPage }) => {
             size: pageSize
         });
 
-        await dispatch(getStudentsThunkCreator(parameters));
+        await dispatch(unapprovedApplicationsThunkCreator(parameters));
         //console.log(parameters);
     };
 
@@ -73,21 +72,14 @@ const ListStudents = ({ teacherPage }) => {
             fullName: fullName,
             page: current,
             size: pageSize,
-
         });
 
-        dispatch(getStudentsThunkCreator(parameters));
+        dispatch(unapprovedApplicationsThunkCreator(parameters));
     }, [current, pageSize]);
-
-    const exportListStudents = async () => {
-        //console.log('export');
-        dispatch(exportThunkCreator());
-
-    };
 
     return (
         <div>
-            <h1 style={{ marginTop: '100px', marginBottom: '30px' }}>Список пропусков</h1>
+            <h1 style={{ marginTop: '100px', marginBottom: '30px' }}>Список неодобренных заявок</h1>
 
             <Card style={{ margin: '20px', textAlign: 'left', marginBottom: '50px' }}>
                 <Form >
@@ -103,13 +95,10 @@ const ListStudents = ({ teacherPage }) => {
             </Card >
 
             <div className="card-deck">
-                {teacherPage.listStudents.map((value) => (
-                    <ListStudentsItem userName={value.userName} group={value.group} startDate={value.startDate} finishDate={value.finishDate} key={value.id} />
+                {deaneryPage.unapprovedApplications.map((value) => (
+                    <UnapprovedItem userName={value.userName} group={value.group} startDate={value.startDate}
+                        finishDate={value.finishDate} typeRequest={value.typeRequest} id={value.id} key={value.id} />
                 ))}
-            </div>
-
-            <div style={{ margin: '20px', display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
-                <Button type="primary" htmlType="submit" style={{ background: 'rgb(231, 53, 89)' }} onClick={exportListStudents}>Экспортировать</Button>
             </div>
 
             <div style={{ display: 'flex', alignItems: 'center', margin: '20px' }}>
@@ -121,4 +110,4 @@ const ListStudents = ({ teacherPage }) => {
     );
 };
 
-export default ListStudents;
+export default Unapproved;

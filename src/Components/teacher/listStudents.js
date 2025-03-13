@@ -1,7 +1,7 @@
 import React from "react";
 import ListStudentsItem from "./listStudentsItem";
 import { Button, Card, Form, Input, DatePicker, Pagination } from "antd";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { getStudentsThunkCreator } from "../../reducers/teacherReducer";
 import { exportThunkCreator } from "../../reducers/teacherReducer";
@@ -16,6 +16,7 @@ const ListStudents = ({ teacherPage }) => {
     const [current, setCurrent] = useState(1);
     const [pageSize, setPageSize] = useState(5);
     const count = teacherPage.pagination.count;
+    const isFetched = useRef(false);
 
     //console.log(startDate, finishDate, group, fullName);
 
@@ -66,6 +67,8 @@ const ListStudents = ({ teacherPage }) => {
     };
 
     useEffect(() => {
+        if (isFetched.current) return; // Если уже загружали, не запускаем повторно
+        isFetched.current = true;
         parameters = ({
             startDate: startDate,
             finishDate: finishDate,

@@ -1,7 +1,7 @@
 import React from "react";
 import RoleItem from "./roleItem";
 import { Button, Card, Form, Input, DatePicker, Pagination } from "antd";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { roleThunkCreator } from "../../../reducers/deaneryReducer";
 
@@ -15,6 +15,7 @@ const Role = ({ deaneryPage }) => {
     const [current, setCurrent] = useState(1);
     const [pageSize, setPageSize] = useState(5);
     const count = deaneryPage.pagination.count;
+    const isFetched = useRef(false);
 
     //console.log(startDate, finishDate, group, fullName);
 
@@ -68,6 +69,8 @@ const Role = ({ deaneryPage }) => {
     };
 
     useEffect(() => {
+        if (isFetched.current) return; // Если уже загружали, не запускаем повторно
+        isFetched.current = true;
         parameters = ({
             author: group,
             page: current,

@@ -10,13 +10,16 @@ function RoleItem(props) {
 
     return (
         <Card style={{ margin: '20px', textAlign: 'left', cursor: 'pointer' }}
-            >
+        >
             <div style={{ display: 'flex', alignItems: 'center' }}>
                 <div style={{ flexGrow: 1 }}>
-                    <p style={{ margin: 0 }} onClick={detail}>{props.name} - {props.group}</p>
+                    {props.group != null ? (
+                        <p style={{ margin: 0 }} onClick={detail}>{props.name} — {props.group}</p>
+                    ) : (
+                        <p style={{ margin: 0 }} onClick={detail}>{props.name}</p>
+                    )}
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-
                     <Button type="primary" htmlType="submit" style={{ background: 'rgb(231, 53, 89)' }}>Выдать роль</Button>
                 </div>
             </div>

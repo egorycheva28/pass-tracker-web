@@ -1,12 +1,11 @@
-import React from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import RoleItem from "./roleItem";
 import { Button, Card, Form, Input, DatePicker, Pagination } from "antd";
-import { useState, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { roleThunkCreator } from "../../../reducers/deaneryReducer";
 
 const Role = ({ deaneryPage }) => {
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
 
     const [startDate, setStartDate] = useState("");
     const [finishDate, setFinishDate] = useState("");
@@ -15,75 +14,37 @@ const Role = ({ deaneryPage }) => {
     const [current, setCurrent] = useState(1);
     const [pageSize, setPageSize] = useState(5);
     const count = deaneryPage.pagination.count;
-    const isFetched = useRef(false);
 
-    //console.log(startDate, finishDate, group, fullName);
-
-    var parameters = ({
-        /*startDate: startDate,
-        finishDate: finishDate,
-        group: group,
-        fullName: fullName*/
+    // Функция для получения параметров запроса
+    const getParameters = useCallback(() => ({
         author: group,
         page: current,
-        size: pageSize
-    });
+        size: pageSize,
+    }), [group, current, pageSize]);
 
-    const applyFilters = async (e) => {
+    const applyFilters = useCallback(async (e) => {
         e.preventDefault();
-        //console.log(startDate, finishDate, group, fullName);
-        parameters = ({
-            /*startDate: startDate,
-            finishDate: finishDate,
-            group: group,
-            fullName: fullName*/
-            author: group,
-            page: current,
-            size: pageSize
-        });
+        await dispatch(roleThunkCreator(getParameters()));
+    }, [dispatch, getParameters]);
 
-        await dispatch(roleThunkCreator(parameters));
-    };
-
-    const resetFilters = async (e) => {
+    const resetFilters = useCallback(async (e) => {
         e.preventDefault();
-
         setStartDate("");
         setFinishDate("");
         setGroup("");
         setFullName("");
+        setCurrent(1);
 
-        //console.log(startDate, finishDate, group, fullName);
-        parameters = ({
-            /*startDate: "",
-            finishDate: "",
-            group: "",
-            fullName: "*/
+        await dispatch(roleThunkCreator({
             author: "",
-            page: current,
-            size: pageSize
-        });
-
-        await dispatch(roleThunkCreator(parameters));
-        //console.log(parameters);
-    };
+            page: 1,
+            size: pageSize,
+        }));
+    }, [dispatch, pageSize]);
 
     useEffect(() => {
-        if (isFetched.current) return; // Если уже загружали, не запускаем повторно
-        isFetched.current = true;
-        parameters = ({
-            author: group,
-            page: current,
-            size: pageSize,
-            /*startDate,
-            finishDate,
-            group,
-            fullName*/
-        });
-
-        dispatch(roleThunkCreator(parameters));
-    }, [current, pageSize]);
-
+        dispatch(roleThunkCreator(getParameters()));
+    }, [dispatch, getParameters]);
     return (
         <div>
             <h1 style={{ marginTop: '100px', marginBottom: '30px' }}>Выдача роли</h1>

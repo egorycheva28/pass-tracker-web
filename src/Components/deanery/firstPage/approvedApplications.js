@@ -1,14 +1,14 @@
-import React from "react";
-import ApprovedApplicationItem from "./approvedApplicationItem";
-import { Button, Card, Form, Input, DatePicker, Pagination } from "antd";
-import { useState, useEffect, useRef} from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
-import { approvedApplicationsThunkCreator } from "../../../reducers/deaneryReducer";
-import { exportThunkCreator } from "../../../reducers/deaneryReducer";
+import { Button, Card, Form, Input, DatePicker, Pagination } from "antd";
+import ApprovedApplicationItem from "./approvedApplicationItem";
+import { approvedApplicationsThunkCreator, exportThunkCreator } from "../../../reducers/deaneryReducer";
 
 const ApprovedApplications = ({ deaneryPage }) => {
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
+    const isFetched = useRef(false);
 
+    // Состояния фильтров и пагинации
     const [startDate, setStartDate] = useState("");
     const [finishDate, setFinishDate] = useState("");
     const [group, setGroup] = useState("");
@@ -16,78 +16,50 @@ const ApprovedApplications = ({ deaneryPage }) => {
     const [current, setCurrent] = useState(1);
     const [pageSize, setPageSize] = useState(5);
     const count = deaneryPage.pagination.count;
-    const isFetched = useRef(false);
 
-    //console.log(startDate, finishDate, group, fullName);
-
-    var parameters = ({
-        startDate: startDate,
-        finishDate: finishDate,
-        group: group,
-        fullName: fullName,
-        author: group,
-        page: current,
-        size: pageSize
-    });
-
-    const applyFilters = async (e) => {
-        e.preventDefault();
-        //console.log(startDate, finishDate, group, fullName);
-        parameters = ({
-            startDate: startDate,
-            finishDate: finishDate,
-            group: group,
-            fullName: fullName,
+    // Функция загрузки данных
+    const fetchData = async () => {
+        const parameters = {
+            startDate,
+            finishDate,
+            group,
+            fullName,
             author: group,
             page: current,
-            size: pageSize
-        });
-
+            size: pageSize,
+        };
+        console.log("Запрос отправлен:", parameters);
         await dispatch(approvedApplicationsThunkCreator(parameters));
     };
 
-    const resetFilters = async (e) => {
-        e.preventDefault();
+    // Запуск запроса при изменении фильтров или пагинации
+    useEffect(() => {
+        if (!isFetched.current) {
+            isFetched.current = true; // Пропускаем первый рендер
+        } else {
+            fetchData();
+        }
+    }, [startDate, finishDate, group, fullName, current, pageSize]);
 
+    // Применение фильтров
+    const applyFilters = (e) => {
+        e.preventDefault();
+        setCurrent(1); // Сбрасываем страницу (useEffect сам вызовет запрос)
+    };
+
+    // Сброс фильтров
+    const resetFilters = (e) => {
+        e.preventDefault();
         setStartDate("");
         setFinishDate("");
         setGroup("");
         setFullName("");
-
-        //console.log(startDate, finishDate, group, fullName);
-        parameters = ({
-            startDate: "",
-            finishDate: "",
-            group: "",
-            fullName: "",
-            page: current,
-            size: pageSize
-        });
-
-        await dispatch(approvedApplicationsThunkCreator(parameters));
-        //console.log(parameters);
+        setCurrent(1);
     };
 
-    useEffect(() => {
-        if (isFetched.current) return; // Если уже загружали, не запускаем повторно
-        isFetched.current = true;
-        parameters = ({
-            startDate: startDate,
-            finishDate: finishDate,
-            group: group,
-            fullName: fullName,
-            page: current,
-            size: pageSize,
-
-        });
-
-        dispatch(approvedApplicationsThunkCreator(parameters));
-    }, [current, pageSize]);
-
+    // Экспорт данных
     const exportListStudents = async () => {
-        //console.log('export');
         dispatch(exportThunkCreator());
-
     };
 
     return (
@@ -126,5 +98,6 @@ const ApprovedApplications = ({ deaneryPage }) => {
         </div>
     );
 };
+
 
 export default ApprovedApplications;

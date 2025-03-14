@@ -1,12 +1,12 @@
-import React from "react";
-import UnapprovedItem from "./unapprovedItem";
-import { Button, Card, Form, Input, DatePicker, Pagination } from "antd";
-import { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
+import { Button, Card, Form, Input, DatePicker, Pagination } from "antd";
+import UnapprovedItem from "./unapprovedItem";
 import { unapprovedApplicationsThunkCreator } from "../../../reducers/deaneryReducer";
 
 const Unapproved = ({ deaneryPage }) => {
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
+    const isFetched = useRef(false);
 
     const [startDate, setStartDate] = useState("");
     const [finishDate, setFinishDate] = useState("");
@@ -14,71 +14,43 @@ const Unapproved = ({ deaneryPage }) => {
     const [fullName, setFullName] = useState("");
     const [current, setCurrent] = useState(1);
     const [pageSize, setPageSize] = useState(5);
+
     const count = deaneryPage.pagination.count;
-    const isFetched = useRef(false);
 
-    //console.log(startDate, finishDate, group, fullName);
-
-    var parameters = ({
-        startDate: startDate,
-        finishDate: finishDate,
-        group: group,
-        fullName: fullName,
-        page: current,
-        size: pageSize
-    });
-
-    const applyFilters = async (e) => {
-        e.preventDefault();
-        //console.log(startDate, finishDate, group, fullName);
-        parameters = ({
-            startDate: startDate,
-            finishDate: finishDate,
-            group: group,
-            fullName: fullName,
+    const fetchData = async () => {
+        const parameters = {
+            startDate,
+            finishDate,
+            group,
+            fullName,
             page: current,
-            size: pageSize
-        });
-
+            size: pageSize,
+        };
+        console.log("Запрос отправлен:", parameters);
         await dispatch(unapprovedApplicationsThunkCreator(parameters));
     };
 
-    const resetFilters = async (e) => {
-        e.preventDefault();
+    useEffect(() => {
+        if (!isFetched.current) {
+            isFetched.current = true; 
+        } else {
+            fetchData();
+        }
+    }, [startDate, finishDate, group, fullName, current, pageSize]);
 
+    const applyFilters = (e) => {
+        e.preventDefault();
+        setCurrent(1);
+    };
+
+    const resetFilters = (e) => {
+        e.preventDefault();
         setStartDate("");
         setFinishDate("");
         setGroup("");
         setFullName("");
-
-        //console.log(startDate, finishDate, group, fullName);
-        parameters = ({
-            startDate: "",
-            finishDate: "",
-            group: "",
-            fullName: "",
-            page: current,
-            size: pageSize
-        });
-
-        await dispatch(unapprovedApplicationsThunkCreator(parameters));
-        //console.log(parameters);
+        setCurrent(1); 
     };
-
-    useEffect(() => {
-        if (isFetched.current) return; // Если уже загружали, не запускаем повторно
-        isFetched.current = true;
-        parameters = ({
-            startDate: startDate,
-            finishDate: finishDate,
-            group: group,
-            fullName: fullName,
-            page: current,
-            size: pageSize,
-        });
-
-        dispatch(unapprovedApplicationsThunkCreator(parameters));
-    }, [current, pageSize]);
 
     return (
         <div>
@@ -112,5 +84,6 @@ const Unapproved = ({ deaneryPage }) => {
         </div>
     );
 };
+
 
 export default Unapproved;

@@ -1,11 +1,13 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React from "react";
 import ListStudentsItem from "./listStudentsItem";
 import { Button, Card, Form, Input, DatePicker, Pagination } from "antd";
+import { useState, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
-import { getStudentsThunkCreator, exportThunkCreator } from "../../reducers/teacherReducer";
+import { getStudentsThunkCreator } from "../../reducers/teacherReducer";
+import { exportThunkCreator } from "../../reducers/teacherReducer";
 
 const ListStudents = ({ teacherPage }) => {
-    const dispatch = useDispatch();
+    const dispatch = useDispatch()
 
     const [startDate, setStartDate] = useState("");
     const [finishDate, setFinishDate] = useState("");
@@ -14,45 +16,75 @@ const ListStudents = ({ teacherPage }) => {
     const [current, setCurrent] = useState(1);
     const [pageSize, setPageSize] = useState(5);
     const count = teacherPage.pagination.count;
+    const isFetched = useRef(false);
 
-    const getParameters = useCallback(() => ({
-        startDate,
-        finishDate,
-        group,
-        fullName,
+    //console.log(startDate, finishDate, group, fullName);
+
+    var parameters = ({
+        startDate: startDate,
+        finishDate: finishDate,
+        group: group,
+        fullName: fullName,
         page: current,
-        size: pageSize,
-    }), [startDate, finishDate, group, fullName, current, pageSize]);
+        size: pageSize
+    });
 
-    const applyFilters = useCallback(async (e) => {
+    const applyFilters = async (e) => {
         e.preventDefault();
-        await dispatch(getStudentsThunkCreator(getParameters()));
-    }, [dispatch, getParameters]);
+        //console.log(startDate, finishDate, group, fullName);
+        parameters = ({
+            startDate: startDate,
+            finishDate: finishDate,
+            group: group,
+            fullName: fullName,
+            page: current,
+            size: pageSize
+        });
 
-    const resetFilters = useCallback(async (e) => {
+        await dispatch(getStudentsThunkCreator(parameters));
+    };
+
+    const resetFilters = async (e) => {
         e.preventDefault();
+
         setStartDate("");
         setFinishDate("");
         setGroup("");
         setFullName("");
-        setCurrent(1);
 
-        await dispatch(getStudentsThunkCreator({
+        //console.log(startDate, finishDate, group, fullName);
+        parameters = ({
             startDate: "",
             finishDate: "",
             group: "",
             fullName: "",
-            page: 1,
-            size: pageSize,
-        }));
-    }, [dispatch, pageSize]);
+            page: current,
+            size: pageSize
+        });
+
+        await dispatch(getStudentsThunkCreator(parameters));
+        //console.log(parameters);
+    };
 
     useEffect(() => {
-        dispatch(getStudentsThunkCreator(getParameters()));
-    }, [dispatch, getParameters]);
+
+        parameters = ({
+            startDate: startDate,
+            finishDate: finishDate,
+            group: group,
+            fullName: fullName,
+            page: current,
+            size: pageSize,
+
+        });
+
+        dispatch(getStudentsThunkCreator(parameters));
+    }, [current, pageSize]);
 
     const exportListStudents = async () => {
+        //console.log('export');
         dispatch(exportThunkCreator());
+
     };
 
     return (

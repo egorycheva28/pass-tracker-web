@@ -1,12 +1,13 @@
-import React, { useState, useEffect, useRef } from "react";
-import { useDispatch } from "react-redux";
-import { Button, Card, Form, Input, DatePicker, Pagination } from "antd";
+import React from "react";
 import ApprovedApplicationItem from "./approvedApplicationItem";
-import { approvedApplicationsThunkCreator, exportThunkCreator } from "../../../reducers/deaneryReducer";
+import { Button, Card, Form, Input, DatePicker, Pagination } from "antd";
+import { useState, useEffect, useRef} from "react";
+import { useDispatch } from "react-redux";
+import { approvedApplicationsThunkCreator } from "../../../reducers/deaneryReducer";
+import { exportThunkCreator } from "../../../reducers/deaneryReducer";
 
 const ApprovedApplications = ({ deaneryPage }) => {
-    const dispatch = useDispatch();
-    const isFetched = useRef(false);
+    const dispatch = useDispatch()
 
     const [startDate, setStartDate] = useState("");
     const [finishDate, setFinishDate] = useState("");
@@ -15,45 +16,77 @@ const ApprovedApplications = ({ deaneryPage }) => {
     const [current, setCurrent] = useState(1);
     const [pageSize, setPageSize] = useState(5);
     const count = deaneryPage.pagination.count;
+    const isFetched = useRef(false);
 
-    const fetchData = async () => {
-        const parameters = {
-            startDate,
-            finishDate,
-            group,
-            fullName,
+    //console.log(startDate, finishDate, group, fullName);
+
+    var parameters = ({
+        startDate: startDate,
+        finishDate: finishDate,
+        group: group,
+        fullName: fullName,
+        author: group,
+        page: current,
+        size: pageSize
+    });
+
+    const applyFilters = async (e) => {
+        e.preventDefault();
+        //console.log(startDate, finishDate, group, fullName);
+        parameters = ({
+            startDate: startDate,
+            finishDate: finishDate,
+            group: group,
+            fullName: fullName,
             author: group,
             page: current,
-            size: pageSize,
-        };
-        console.log("Запрос отправлен:", parameters);
+            size: pageSize
+        });
+
         await dispatch(approvedApplicationsThunkCreator(parameters));
     };
 
-    useEffect(() => {
-        if (!isFetched.current) {
-            isFetched.current = true;
-        } else {
-            fetchData();
-        }
-    }, [startDate, finishDate, group, fullName, current, pageSize]);
-
-    const applyFilters = (e) => {
+    const resetFilters = async (e) => {
         e.preventDefault();
-        setCurrent(1);
-    };
 
-    const resetFilters = (e) => {
-        e.preventDefault();
         setStartDate("");
         setFinishDate("");
         setGroup("");
         setFullName("");
-        setCurrent(1);
+
+        //console.log(startDate, finishDate, group, fullName);
+        parameters = ({
+            startDate: "",
+            finishDate: "",
+            group: "",
+            fullName: "",
+            page: current,
+            size: pageSize
+        });
+
+        await dispatch(approvedApplicationsThunkCreator(parameters));
+        //console.log(parameters);
     };
 
+    useEffect(() => {
+
+        parameters = ({
+            startDate: startDate,
+            finishDate: finishDate,
+            group: group,
+            fullName: fullName,
+            page: current,
+            size: pageSize,
+
+        });
+
+        dispatch(approvedApplicationsThunkCreator(parameters));
+    }, [current, pageSize]);
+
     const exportListStudents = async () => {
+        //console.log('export');
         dispatch(exportThunkCreator());
+
     };
 
     return (
@@ -92,6 +125,5 @@ const ApprovedApplications = ({ deaneryPage }) => {
         </div>
     );
 };
-
 
 export default ApprovedApplications;

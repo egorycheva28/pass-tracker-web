@@ -62,7 +62,6 @@ export function logoutThunkCreator() { //обращение к серверу
         try {
             const data = await userApi.logout();
             dispatch(logoutActionCreator());
-            localStorage.removeItem('role');
             alert("Успешный выход!");
         }
         catch (error) {

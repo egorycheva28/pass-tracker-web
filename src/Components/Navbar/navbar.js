@@ -16,9 +16,11 @@ function Navbar() {
     const logout = async () => {
         await dispatch(logoutThunkCreator());
         localStorage.removeItem('token');
+        localStorage.removeItem('refreshToken');
         localStorage.removeItem('lastName');
         localStorage.removeItem('firstName');
         localStorage.removeItem('middleName');
+        localStorage.removeItem('role');
         navigate('/login');
     };
 
@@ -46,13 +48,13 @@ function Navbar() {
                 </svg>
                 <h2 style={{ marginLeft: 10, marginRight: 20, marginTop: '15px', whiteSpace: 'nowrap', color: 'rgb(231, 53, 89)' }}>Pass-tracker</h2>
                 {token && role == 'Teacher' ? (
-                    <Link to="/listStudents" style={{ marginInline: 20, color: 'white', marginTop: '20px', whiteSpace: 'nowrap' }}>Одобренные заявки для преподавателей</Link>
+                    <Link to="/listStudents" style={{ marginInline: 20, color: 'white', marginTop: '20px', whiteSpace: 'nowrap' }}>Одобренные заявки</Link>
 
                 ) : (
                     null
                 )}
                 {token && role == 'Deanery' ? (
-                    <Link to="/approvedApplications" style={{ marginInline: 20, color: 'white', marginTop: '20px', whiteSpace: 'nowrap' }}>Одобренные заявки для деканата</Link>
+                    <Link to="/approvedApplications" style={{ marginInline: 20, color: 'white', marginTop: '20px', whiteSpace: 'nowrap' }}>Одобренные заявки</Link>
 
                 ) : (
                     null

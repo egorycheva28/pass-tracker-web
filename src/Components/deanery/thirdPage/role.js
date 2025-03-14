@@ -7,8 +7,6 @@ import { roleThunkCreator } from "../../../reducers/deaneryReducer";
 const Role = ({ deaneryPage }) => {
     const dispatch = useDispatch();
 
-    const [startDate, setStartDate] = useState("");
-    const [finishDate, setFinishDate] = useState("");
     const [group, setGroup] = useState("");
     const [fullName, setFullName] = useState("");
     const [current, setCurrent] = useState(1);
@@ -17,10 +15,11 @@ const Role = ({ deaneryPage }) => {
 
     // Функция для получения параметров запроса
     const getParameters = useCallback(() => ({
-        author: group,
+        group: group,
+        fullName: fullName,
         page: current,
         size: pageSize,
-    }), [group, current, pageSize]);
+    }), [group,fullName, current, pageSize]);
 
     const applyFilters = useCallback(async (e) => {
         e.preventDefault();
@@ -29,14 +28,13 @@ const Role = ({ deaneryPage }) => {
 
     const resetFilters = useCallback(async (e) => {
         e.preventDefault();
-        setStartDate("");
-        setFinishDate("");
         setGroup("");
         setFullName("");
         setCurrent(1);
 
         await dispatch(roleThunkCreator({
-            author: "",
+            group: "",
+            fullName: "",
             page: 1,
             size: pageSize,
         }));
@@ -51,8 +49,6 @@ const Role = ({ deaneryPage }) => {
 
             <Card style={{ margin: '20px', textAlign: 'left', marginBottom: '50px' }}>
                 <Form >
-                    <DatePicker value={startDate} onChange={(date) => setStartDate(date)} placeholder="Дата начала" style={{ marginRight: 15, width: 'auto' }} />
-                    <DatePicker value={finishDate} onChange={(date) => setFinishDate(date)} placeholder="Дата конца" style={{ marginInline: 15, width: 'auto' }} />
                     <Input value={group} onChange={(e) => setGroup(e.target.value)} placeholder="Номер группы" style={{ marginInline: 15, width: 'auto' }} />
                     <Input value={fullName} onChange={(e) => setFullName(e.target.value)} placeholder="ФИО" style={{ marginLeft: 15, width: '350px' }} />
                     <div style={{ marginTop: 20, display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>

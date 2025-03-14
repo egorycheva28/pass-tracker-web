@@ -37,7 +37,7 @@ function unapprovedApplications(params) {
 }
 
 function role(params) {
-    return api.get(`admin/users?page=${params.page}&size=${params.size}`)
+    return api.get(`admin/users?Group=${params.group}&Name=${params.fullName}&page=${params.page}&size=${params.size}`)
 
         .then(response => {
             console.log("Catalog Data:", response.data);

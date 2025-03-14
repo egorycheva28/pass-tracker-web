@@ -24,7 +24,6 @@ const Role = ({ deaneryPage }) => {
         finishDate: finishDate,*/
         group: group,
         fullName: fullName,
-    
         page: current,
         size: pageSize
     });
@@ -37,7 +36,6 @@ const Role = ({ deaneryPage }) => {
             finishDate: finishDate,*/
             group: group,
             fullName: fullName,
-
             page: current,
             size: pageSize
         });
@@ -60,7 +58,6 @@ const Role = ({ deaneryPage }) => {
             finishDate: "",*/
             group: "",
             fullName: "",
-
             page: current,
             size: pageSize
         });
@@ -71,12 +68,10 @@ const Role = ({ deaneryPage }) => {
 
     useEffect(() => {
         parameters = ({
- 
+            group: group,
+            fullName: fullName,
             page: current,
-            size: pageSize,
- 
-            group: current,
-            fullName: fullName
+            size: pageSize
         });
 
         dispatch(roleThunkCreator(parameters));
@@ -91,7 +86,6 @@ const Role = ({ deaneryPage }) => {
 
             <Card style={{ margin: '20px', textAlign: 'left', marginBottom: '50px' }}>
                 <Form >
-                    
                     <Input value={group} onChange={(e) => setGroup(e.target.value)} placeholder="Номер группы" style={{ marginInline: 15, width: 'auto' }} />
                     <Input value={fullName} onChange={(e) => setFullName(e.target.value)} placeholder="ФИО" style={{ marginLeft: 15, width: '350px' }} />
                     <div style={{ marginTop: 20, display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>

@@ -8,7 +8,6 @@ const ApprovedApplications = ({ deaneryPage }) => {
     const dispatch = useDispatch();
     const isFetched = useRef(false);
 
-    // Состояния фильтров и пагинации
     const [startDate, setStartDate] = useState("");
     const [finishDate, setFinishDate] = useState("");
     const [group, setGroup] = useState("");
@@ -17,7 +16,6 @@ const ApprovedApplications = ({ deaneryPage }) => {
     const [pageSize, setPageSize] = useState(5);
     const count = deaneryPage.pagination.count;
 
-    // Функция загрузки данных
     const fetchData = async () => {
         const parameters = {
             startDate,
@@ -32,22 +30,19 @@ const ApprovedApplications = ({ deaneryPage }) => {
         await dispatch(approvedApplicationsThunkCreator(parameters));
     };
 
-    // Запуск запроса при изменении фильтров или пагинации
     useEffect(() => {
         if (!isFetched.current) {
-            isFetched.current = true; // Пропускаем первый рендер
+            isFetched.current = true;
         } else {
             fetchData();
         }
     }, [startDate, finishDate, group, fullName, current, pageSize]);
 
-    // Применение фильтров
     const applyFilters = (e) => {
         e.preventDefault();
-        setCurrent(1); // Сбрасываем страницу (useEffect сам вызовет запрос)
+        setCurrent(1);
     };
 
-    // Сброс фильтров
     const resetFilters = (e) => {
         e.preventDefault();
         setStartDate("");
@@ -57,7 +52,6 @@ const ApprovedApplications = ({ deaneryPage }) => {
         setCurrent(1);
     };
 
-    // Экспорт данных
     const exportListStudents = async () => {
         dispatch(exportThunkCreator());
     };

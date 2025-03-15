@@ -6,6 +6,8 @@ import { acceptRequestThunkCreator } from "../../../reducers/deaneryReducer";
 import { useDispatch } from "react-redux";
 import { declineRequestThunkCreator } from "../../../reducers/deaneryReducer";
 
+Modal.setAppElement('#root');
+
 function UnapprovedItem(props) {
     const navigate = useNavigate();
     const dispatch = useDispatch();

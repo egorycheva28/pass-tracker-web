@@ -82,10 +82,10 @@ function declineRequest(id, comment) {
 }
 
 function exportListStudents() {
-    return api.get(`/deanery/download-requests?StatusRequestSort=Accepted`,{
+    return api.get(`/deanery/download-requests?StatusRequestSort=Accepted`, {
 
         responseType: 'blob'
-        }
+    }
     )
 
         .then(response => {
@@ -109,11 +109,43 @@ function exportListStudents() {
         });
 }
 
+function addRole(id, role) {
+    return api.post(`admin/deanery?id=${id}&role=${role}`)
+        //console.log(id);
+        .then(response => {
+            console.log("Catalog Data:", response.data);
+            if (response.status === 200) {
+                console.log("Catalog Data:", response.data);
+                return response.data;
+            }
+        })
+        .catch(error => {
+            console.log(error.response.data.error)
+        });
+}
+
+function deleteRole(id, role) {
+    return api.delete(`admin/deanery?id=${id}&role=${role}`)
+
+        .then(response => {
+            console.log("Catalog Data:", response.data);
+            if (response.status === 200) {
+                console.log("Catalog Data:", response.data);
+                return response.data;
+            }
+        })
+        .catch(error => {
+            console.log(error.response.data.error)
+        });
+}
+
 export const deaneryApi = {
     approvedApplications: approvedApplications,
     unapprovedApplications: unapprovedApplications,
     role: role,
     acceptRequest: acceptRequest,
     declineRequest: declineRequest,
-    exportListStudents: exportListStudents
+    exportListStudents: exportListStudents,
+    addRole: addRole,
+    deleteRole: deleteRole
 }

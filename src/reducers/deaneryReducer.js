@@ -6,6 +6,8 @@ const ROLE = "ROLE";
 const ACCEPT_REQUEST = "ACCEPT_REQUEST";
 const DECLINE_REQUEST = "DECLINE";
 const EXPORT = "EXPORT";
+const ADD_ROLE = "ADD_ROLE";
+const DELETE_ROLE = "DELETE_ROLE";
 
 let initialState = {
     approvedApplications: [],
@@ -39,6 +41,10 @@ const deaneryReducer = (state = initialState, action) => {
         case DECLINE_REQUEST:
             return newState;
         case EXPORT:
+            return newState;
+        case ADD_ROLE:
+            return newState;
+        case DELETE_ROLE:
             return newState;
         default:
             return newState;
@@ -143,6 +149,42 @@ export function exportThunkCreator() { //обращение к серверу
             const data = await deaneryApi.exportListStudents();
             dispatch(exportActionCreator(data));
             console.log(data.body);
+        }
+        catch (error) {
+            console.error("Ошибка:", error);
+            alert("Произошла ошибка.");
+        }
+    }
+}
+
+export function addRoleActionCreator(data) { //обращение к reducers
+    return { type: ADD_ROLE }
+}
+
+export function addRoleThunkCreator(id, role) { //обращение к серверу
+    return async (dispatch) => {
+        try {
+            const data = await deaneryApi.addRole(id, role);
+            dispatch(addRoleActionCreator(data));
+           // console.log(data.body);
+        }
+        catch (error) {
+            console.error("Ошибка:", error);
+            alert("Произошла ошибка.");
+        }
+    }
+}
+
+export function deleteRoleActionCreator(data) { //обращение к reducers
+    return { type: DELETE_ROLE }
+}
+
+export function deleteRoleThunkCreator(id, role) { //обращение к серверу
+    return async (dispatch) => {
+        try {
+            const data = await deaneryApi.deleteRole(id, role);
+            dispatch(deleteRoleActionCreator(data));
+            //console.log(data.body);
         }
         catch (error) {
             console.error("Ошибка:", error);

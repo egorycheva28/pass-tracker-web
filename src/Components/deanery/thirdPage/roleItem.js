@@ -57,7 +57,6 @@ function RoleItem(props) {
             setDeanery(false);
         }
         profile();
-
     }
 
     const openModal = () => {
@@ -104,8 +103,10 @@ function RoleItem(props) {
                                 <p>Студент</p>
                             </div>
                             <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                                <Button type="primary" htmlType="submit" style={{ marginRight: 10, background: 'rgb(231, 53, 89)' }} onClick={() => addRole(props.id, 'Student')}>Да</Button>
-                                <Button type="primary" htmlType="submit" style={{ background: 'rgb(231, 53, 89)' }} onClick={() => deleteRole(props.id, 'Student')}>Нет</Button>
+                                <Button type="primary" htmlType="submit" style={{ marginRight: 10, background: 'rgb(231, 53, 89)' }} onClick={() => addRole(props.id, 'Student')}>
+                                    <div style={{ transform: 'rotate(45deg)' }}>&times;{ }</div>
+                                </Button>
+                                <Button type="primary" htmlType="submit" style={{ background: 'rgb(231, 53, 89)' }} onClick={() => deleteRole(props.id, 'Student')}>&minus;{ }</Button>
                             </div>
                         </div>
                         <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -119,8 +120,10 @@ function RoleItem(props) {
                                 <p>Преподаватель</p>
                             </div>
                             <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                                <Button type="primary" htmlType="submit" style={{ marginRight: 10, background: 'rgb(231, 53, 89)' }} onClick={() => addRole(props.id, 'Teacher')}>Да</Button>
-                                <Button type="primary" htmlType="submit" style={{ background: 'rgb(231, 53, 89)' }} onClick={() => deleteRole(props.id, 'Teacher')}>Нет</Button>
+                                <Button type="primary" htmlType="submit" style={{ marginRight: 10, background: 'rgb(231, 53, 89)' }} onClick={() => addRole(props.id, 'Teacher')}>
+                                    <div style={{ transform: 'rotate(45deg)' }}>&times;{ }</div>
+                                </Button>
+                                <Button type="primary" htmlType="submit" style={{ background: 'rgb(231, 53, 89)' }} onClick={() => deleteRole(props.id, 'Teacher')}>&minus;{ }</Button>
                             </div>
                         </div>
                         <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -134,8 +137,10 @@ function RoleItem(props) {
                                 <p>Деканат</p>
                             </div>
                             <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                                <Button type="primary" htmlType="submit" style={{ marginRight: 10, background: 'rgb(231, 53, 89)' }} onClick={() => addRole(props.id, 'Deanery')}>Да</Button>
-                                <Button type="primary" htmlType="submit" style={{ background: 'rgb(231, 53, 89)' }} onClick={() => deleteRole(props.id, 'Deanery')}>Нет</Button>
+                                <Button type="primary" htmlType="submit" style={{ marginRight: 10, background: 'rgb(231, 53, 89)' }} onClick={() => addRole(props.id, 'Deanery')}>
+                                    <div style={{ transform: 'rotate(45deg)' }}>&times;{ }</div>
+                                </Button>
+                                <Button type="primary" htmlType="submit" style={{ background: 'rgb(231, 53, 89)' }} onClick={() => deleteRole(props.id, 'Deanery')}>&minus;{ }</Button>
                             </div>
                         </div>
                     </div>

@@ -8,18 +8,18 @@ const UnconfirmedUsers = () => {
     const [pageSize, setPageSize] = useState(5);
     const [count, setCount] = useState(0);
 
+    const fetchData = async (page = current, size = pageSize) => {
+        try {
+            const response = await adminApi.getUnconfirmedUsers({ page, size });
+            console.log("API response:", response);
+            setUsers(response?.requests || []);
+            setCount(response?.pagination?.count || 0);
+        } catch (error) {
+            console.error("Ошибка загрузки данных:", error);
+        }
+    };
+
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await adminApi.getUnconfirmedUsers({ page: current, size: pageSize });
-                console.log("API response:", response);
-                setUsers(response?.requests || []);
-                setCount(response?.pagination?.count || 0);
-            } catch (error) {
-                console.error("Ошибка загрузки данных:", error);
-            }
-        };
-    
         fetchData();
     }, [current, pageSize]);
     
@@ -27,7 +27,12 @@ const UnconfirmedUsers = () => {
 
     const handleDeleteUser = async (id) => {
         await adminApi.deleteUser(id);
-        setUsers(users.filter(user => user.id !== id));
+        await fetchData();
+    };
+
+    const handleConfirmUser = async (id, role) => {
+        await adminApi.confirmUser(id, role);
+        await fetchData();
     };
 
     return (
@@ -43,14 +48,18 @@ const UnconfirmedUsers = () => {
                         group={user.group}
                         id={user.id}    
                         onDelete={handleDeleteUser}
+                        onConfirm={handleConfirmUser}
                     />
                     ))
                 ) : (
                     <p>Нет неподтвержденных пользователей.</p>
                 )}
             </div>
-
-            <Pagination current={current} onChange={setCurrent} total={count * 10} />
+    <div style={{ display: 'flex', alignItems: 'center', margin: '20px' }}>
+                <Pagination current={current} onChange={(page) => setCurrent(page)} total={count * 10} />
+                <Input type="number" id="page-size" value={pageSize} onChange={(e) => setPageSize(e.target.value)} min={1}
+                    style={{ width: '150px', marginLeft: '10px' }} />
+            </div>
         </div>
     );
 };

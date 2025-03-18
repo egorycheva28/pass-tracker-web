@@ -66,7 +66,7 @@ function UnapprovedItem(props) {
                 <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
 
                     <Button type="primary" htmlType="submit" style={{ background: 'rgb(231, 53, 89)' }} onClick={() => acceptRequest(props.id)}>Одобрить</Button>
-                    <Button type="primary" htmlType="submit" style={{ background: 'rgb(231, 53, 89)', marginLeft: '10px' }} onClick={openModal}>Отклонить</Button>
+                    <Button type="primary" htmlType="submit" style={{ background: '#555', marginLeft: '10px' }} onClick={openModal}>Отклонить</Button>
                 </div>
             </div>
             <Modal isOpen={modalIsOpen} onRequestClose={closeModal} style={{ content: { width: '300px', height: '200px', margin: 'auto', borderRadius: '15px' } }}>

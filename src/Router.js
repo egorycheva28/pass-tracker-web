@@ -8,6 +8,7 @@ import UnapprovedApplicationsContainer from "./Components/deanery/secondPage/una
 import RoleContainer from "./Components/deanery/thirdPage/roleContainer";
 import ProfileById from "./Components/profil/profileById";
 import GetSpecificRequest from "./Components/specificRequest/getSpecificRequest";
+import UnconfirmedUsers from "./Components/admin/unconfirmedUser";
 
 function RoutesPage() {
     return (
@@ -22,7 +23,7 @@ function RoutesPage() {
             <Route path="/detail/:id" element={<GetSpecificRequest/>}/>
             <Route path="/profile/:id" element={<ProfileById/>}/>
             <Route path="/role" element={<RoleContainer/>}/>
-            <Route path="/confirmUser" element={<RoleContainer/>}/>
+            <Route path="/confirmUser" element={<UnconfirmedUsers/>}/>
         </Routes>
     )
 };

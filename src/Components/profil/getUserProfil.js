@@ -164,7 +164,8 @@ function GetUserProfile() {
     Teacher: "Учитель",
     Student: "Студент",
     Deanery: "Деканат",
-    New: "Роль ещё не выдана"
+    New: "Роль ещё не выдана",
+    4: "Админ"
   };
   
   const translatedRoles = user?.roles?.map(role => roleTranslations[role] || role);

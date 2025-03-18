@@ -59,14 +59,20 @@ function Navbar() {
                 ) : (
                     null
                 )}
-                {token && role == 'Deanery' ? (
+                {token && (role == 'Deanery' || role == 4) ? (
                     <Link to="/unapprovedApplications" style={{ marginInline: 20, color: 'white', marginTop: '20px', whiteSpace: 'nowrap' }}>Неодобренные заявки</Link>
 
                 ) : (
                     null
                 )}
-                {token && role == 'Deanery' ? (
+                {token && (role == 'Deanery' || role == 4) ? (
                     <Link to="/role" style={{ marginInline: 20, color: 'white', marginTop: '20px', whiteSpace: 'nowrap' }}>Выдача роли</Link>
+
+                ) : (
+                    null
+                )}
+                {token && role == 4 ? (
+                    <Link to="/confirmUser" style={{ marginInline: 20, color: 'white', marginTop: '20px', whiteSpace: 'nowrap' }}>Подтверждение пользователей</Link>
 
                 ) : (
                     null

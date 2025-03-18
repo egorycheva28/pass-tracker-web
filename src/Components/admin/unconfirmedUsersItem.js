@@ -1,4 +1,4 @@
-import { Card,Button, Select } from "antd";
+import { Card, Button, Select } from "antd";
 import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 
@@ -12,7 +12,7 @@ function UnconfirmedUsersItem(props) {
         navigate(`/profile/${props.id}`);
     };
     const handleDelete = async () => {
-        await props.onDelete(props.id); 
+        await props.onDelete(props.id);
     };
 
     const handleConfirm = async () => {
@@ -27,12 +27,16 @@ function UnconfirmedUsersItem(props) {
         <Card style={{ margin: "20px", textAlign: "left", cursor: "pointer" }}>
             <div style={{ display: "flex", alignItems: "center" }}>
                 <div style={{ flexGrow: 1 }} onClick={() => navigate(`/profile/${props.id}`)}>
-                    <p style={{ margin: 0 }}>{props.userName} —— {props.group || "Без группы"}</p>
+                    {props.group != null ? (
+                        <p style={{ margin: 0 }}>{props.userName} —— {props.group}</p>
+                    ) : (
+                        <p style={{ margin: 0 }}>{props.userName}</p>
+                    )}
                 </div>
 
-                <Select 
-                    placeholder="Выберите роль" 
-                    style={{ width: 150, marginRight: "10px" }} 
+                <Select
+                    placeholder="Выберите роль"
+                    style={{ width: 150, marginRight: "10px" }}
                     onChange={(value) => setRole(value)}
                 >
                     <Option value="Student">Студент</Option>

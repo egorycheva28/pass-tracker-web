@@ -3,7 +3,7 @@ import UnconfirmedUsersItem from "./unconfirmedUsersItem.js";
 import { Pagination, Input } from "antd";
 import { adminApi } from "../../Api/adminApi.js";
 const UnconfirmedUsers = () => {
-    const [users, setUsers] = useState([]); 
+    const [users, setUsers] = useState([]);
     const [current, setCurrent] = useState(1);
     const [pageSize, setPageSize] = useState(5);
     const [count, setCount] = useState(0);
@@ -22,7 +22,7 @@ const UnconfirmedUsers = () => {
     useEffect(() => {
         fetchData();
     }, [current, pageSize]);
-    
+
     console.log(users);
 
     const handleDeleteUser = async (id) => {
@@ -37,25 +37,25 @@ const UnconfirmedUsers = () => {
 
     return (
         <div>
-            <h1>Не подтвержденные пользователи</h1>
+            <h1 style={{ marginTop: '100px', marginBottom: '30px' }}>Не подтвержденные пользователи</h1>
 
             <div className="card-deck">
                 {users.length > 0 ? (
                     users.map((user) => (
-                        <UnconfirmedUsersItem 
-                        key={user.id} 
-                        userName={user.name}
-                        group={user.group}
-                        id={user.id}    
-                        onDelete={handleDeleteUser}
-                        onConfirm={handleConfirmUser}
-                    />
+                        <UnconfirmedUsersItem
+                            key={user.id}
+                            userName={user.name}
+                            group={user.group}
+                            id={user.id}
+                            onDelete={handleDeleteUser}
+                            onConfirm={handleConfirmUser}
+                        />
                     ))
                 ) : (
                     <p>Нет неподтвержденных пользователей.</p>
                 )}
             </div>
-    <div style={{ display: 'flex', alignItems: 'center', margin: '20px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', margin: '20px' }}>
                 <Pagination current={current} onChange={(page) => setCurrent(page)} total={count * 10} />
                 <Input type="number" id="page-size" value={pageSize} onChange={(e) => setPageSize(e.target.value)} min={1}
                     style={{ width: '150px', marginLeft: '10px' }} />

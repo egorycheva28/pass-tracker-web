@@ -19,6 +19,7 @@ function RoleItem(props) {
     const [student, setStudent] = useState(false);
     const [teacher, setTeacher] = useState(false);
     const [deanery, setDeanery] = useState(false);
+    const role = localStorage.getItem('role');
 
     const detail = () => {
         navigate(`/profile/${props.id}`);
@@ -136,12 +137,16 @@ function RoleItem(props) {
                             <div style={{ flexGrow: 1 }}>
                                 <p>Деканат</p>
                             </div>
-                            <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                                <Button type="primary" htmlType="submit" style={{ marginRight: 10, background: 'rgb(231, 53, 89)' }} onClick={() => addRole(props.id, 'Deanery')}>
-                                    <div style={{ transform: 'rotate(45deg)' }}>&times;{ }</div>
-                                </Button>
-                                <Button type="primary" htmlType="submit" style={{ background: 'rgb(231, 53, 89)' }} onClick={() => deleteRole(props.id, 'Deanery')}>&minus;{ }</Button>
-                            </div>
+                            {role == 4 ? (
+                                <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                                    <Button type="primary" htmlType="submit" style={{ marginRight: 10, background: 'rgb(231, 53, 89)' }} onClick={() => addRole(props.id, 'Deanery')}>
+                                        <div style={{ transform: 'rotate(45deg)' }}>&times;{ }</div>
+                                    </Button>
+                                    <Button type="primary" htmlType="submit" style={{ background: 'rgb(231, 53, 89)' }} onClick={() => deleteRole(props.id, 'Deanery')}>&minus;{ }</Button>
+                                </div>
+                            ) : (
+                                null
+                            )}
                         </div>
                     </div>
                 </div>

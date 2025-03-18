@@ -22,7 +22,7 @@ function RoutesPage() {
             <Route path="/detail/:id" element={<GetSpecificRequest/>}/>
             <Route path="/profile/:id" element={<ProfileById/>}/>
             <Route path="/role" element={<RoleContainer/>}/>
-
+            <Route path="/confirmUser" element={<RoleContainer/>}/>
         </Routes>
     )
 };

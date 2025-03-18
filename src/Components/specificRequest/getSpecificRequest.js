@@ -139,6 +139,9 @@ function GetSpecificRequest() {
 
   const [isDeclineModalOpen, setIsDeclineModalOpen] = useState(false);
   const [declineComment, setDeclineComment] = useState("");
+  const [isProlongModalOpen, setIsProlongModalOpen] = useState(false);
+  const [newFinishDate, setNewFinishDate] = useState("");
+
     const isFetched = useRef(false);
   
     useEffect(() => {
@@ -166,11 +169,22 @@ function GetSpecificRequest() {
 
   const handleAccept = async () => {
     try {
-      await deaneryApi.acceptRequest(id); // Предположим, что у пользователя есть id, используйте соответствующее поле
+      await deaneryApi.acceptRequest(id);
       console.log("Запрос принят");
       setUser((prevUser) => ({ ...prevUser, statusRequest: "Accepted" })); // Обновление состояния
     } catch (err) {
       setError(err.message || "Ошибка принятия запроса");
+    }
+  };
+
+  const handleProlong = async () => {
+    try {
+      await requestApi.prolongRequest(id, newFinishDate);
+      console.log("Запрос продлён до:", newFinishDate);
+      setUser((prevUser) => ({ ...prevUser, finishDate: newFinishDate }));
+      setIsProlongModalOpen(false);
+    } catch (err) {
+      setError(err.message || "Ошибка продления запроса");
     }
   };
 
@@ -209,9 +223,9 @@ function GetSpecificRequest() {
         <h2 style={{ marginBottom: "20px" }}>{user?.userName} - {user?.group} </h2>
         <div style={styles.infoRow}>
           <strong>Дата:</strong> {formatDate(user?.startDate)} - {formatDate(user?.finishDate)}
-          {user?.typeRequest === "EducationalActivity" ? (
+          {user?.typeRequest === "EducationalActivity" && user?.statusRequest === "Accepted" ? (
 
-            <button style={styles.button}>Продлить</button>
+            <button style={styles.button} onClick={() => setIsProlongModalOpen(true)}>Продлить</button>
 
           ) : null}
 
@@ -221,24 +235,45 @@ function GetSpecificRequest() {
         </div>
 
         <div style={styles.infoRow}>
-          <strong>Причина:</strong> {translations[user?.statusRequest] || user?.statusRequest || "Не указано"}
+          <strong>Статус:</strong> {translations[user?.statusRequest] || user?.statusRequest || "Не указано"}
+        </div>
+
+        <div style={styles.infoRow}>
+          <div style={styles.infoRow}>
+  <strong>Занёс документы в деканат:</strong>
+  <div style={{  
+    width: "20px",
+    height: "20px",
+    border: "1px solid #000",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  }}>
+    {user?.inDeanery ? (
+      <img
+      src="/checkmark.png"
+        alt="Red Checkmark"
+        style={{ width: "20px", height: "20px" }}
+      />
+    ) : null}
+  </div>
+</div>
         </div>
       </div>
 
 
       <div style={styles.formBox}>
-        <h2 style={{ marginBottom: "20px" }}>Описание:</h2>
-        <div style={styles.infoRow}>{user?.comment || "Нет данных"}</div>
-      </div>
-
-      <div style={styles.formBox}>
         <h2 style={{ marginBottom: "20px" }}>Документы:</h2>
-        <img
+
+        {user?.typeRequest === "EducationalActivity" && user?.statusRequest === "Accepted" ? ( 
+          <img
           src={`data:image/png;base64,${user?.photo}`}
           alt="User photo"
           style={styles.imageStyle}
           onClick={() => setIsModalOpen(true)}
         />
+          ) : null}
+        
       </div>
       {user?.statusRequest === "Pending" ? (
         <div>
@@ -272,6 +307,24 @@ function GetSpecificRequest() {
             <div style={{ display: "flex", justifyContent: "space-between", width: "100%" }}>
               <button style={styles.button} onClick={handleDecline}>Подтвердить</button>
               <button style={styles.declineButton} onClick={handleCloseDeclineModal}>Отмена</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+{isProlongModalOpen && (
+        <div style={styles.modalOverlay}>
+          <div style={styles.modalContent}>
+            <h3>Продлить запрос</h3>
+            <input
+              type="date"
+              value={newFinishDate}
+              onChange={(e) => setNewFinishDate(e.target.value)}
+              style={{ width: "100%", padding: "8px", marginBottom: "10px" }}
+            />
+            <div style={{ display: "flex", justifyContent: "space-between", width: "100%" }}>
+              <button style={styles.button} onClick={handleProlong}>Подтвердить</button>
+              <button style={styles.declineButton} onClick={() => setIsProlongModalOpen(false)}>Отмена</button>
             </div>
           </div>
         </div>

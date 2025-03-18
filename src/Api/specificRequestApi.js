@@ -24,6 +24,28 @@ function getDetails(id){
     
 }
 
+
+function prolongRequest(id, finishDate){
+
+
+    const isoDate = new Date(finishDate).toISOString();
+
+  return api.put(`/deanery/prolong-request/${id}`, { finishDate: isoDate })
+   
+    .then(response => {
+        if(response.status=== 200){
+            return response.data;
+        }
+    })
+    .catch(error => {
+        console.error("Ошибка запроса:", error.response?.data || error.message);
+    });
+    
+    
+}
+
+
 export const requestApi = {
-    getDetails: getDetails
+    getDetails: getDetails,
+    prolongRequest: prolongRequest,
 }

@@ -14,7 +14,7 @@ function RegisterUser() {
     const [lastName, setLastName] = useState("");
     const [firstName, setFirstName] = useState("");
     const [middleName, setMiddleName] = useState("");
-    const [group, setGroup] = useState("");
+    const [group, setGroup] = useState(null);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
@@ -43,7 +43,7 @@ function RegisterUser() {
                     <Input value={middleName} onChange={(e) => setMiddleName(e.target.value)} placeholder="Введите отчество" style={{ width: "432px" }} />
                 </Form.Item>
                 <Form.Item name="group" label="Номер группы" rules={[{ required: false }]} style={{ marginLeft: '11px', textAlign: 'right' }}>
-                    <Input value={group} onChange={(e) => setGroup(e.target.value)} placeholder="Введите номер группы" style={{ width: "432px" }} />
+                    <Input value={group || ''} onChange={(e) => setGroup(e.target.value)} placeholder="Введите номер группы" style={{ width: "432px" }} />
                 </Form.Item>
                 <Form.Item name="email" label="Email"
                     rules={[{ required: true, message: 'Введите email' },

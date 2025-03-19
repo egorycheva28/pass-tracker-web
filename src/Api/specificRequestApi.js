@@ -39,6 +39,7 @@ function prolongRequest(id, finishDate){
     })
     .catch(error => {
         console.error("Ошибка запроса:", error.response?.data || error.message);
+        throw error;
     });
     
     

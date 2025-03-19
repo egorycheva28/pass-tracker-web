@@ -25,13 +25,13 @@ function UnapprovedItem(props) {
 
     var type = "";
     if (props.typeRequest == "EducationalActivity") {
-        type = "По учебной деятельности";
+        type = "Образовательная деятельность";
     }
     else if (props.typeRequest == "FamilyCircumstances") {
-        type = "По семейным обстоятельствам";
+        type = "Семейные обстоятельства";
     }
     else if (props.typeRequest == "Disease") {
-        type = "По болезни";
+        type = "Болезнь";
     }
 
     const acceptRequest = async (id) => {

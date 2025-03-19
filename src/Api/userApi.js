@@ -13,7 +13,8 @@ function loginUser(email, password) {
             }
         })
         .catch(error => {
-            console.log(error.response.data?.error || "Ошибка входа");
+            console.error("Ошибка запроса:", error.response?.data || error.message);
+            throw error;
         });
 }
 

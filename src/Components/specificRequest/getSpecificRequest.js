@@ -313,7 +313,7 @@ function GetSpecificRequest() {
               style={styles.textarea}
               value={declineComment}
               onChange={(e) => setDeclineComment(e.target.value)}
-              placeholder="Введите комментарий..."
+              placeholder="Введите комментарий...(Это не обязательно)"
             />
             <div style={{ display: "flex", justifyContent: "space-between", width: "100%" }}>
               <button style={styles.button} onClick={handleDecline}>Подтвердить</button>

@@ -42,7 +42,7 @@ function RegisterUser() {
                 <Form.Item name="middleName" label="Отчество" rules={[{ required: true, message: 'Введите отчество' }]} style={{ textAlign: 'right' }}>
                     <Input value={middleName} onChange={(e) => setMiddleName(e.target.value)} placeholder="Введите отчество" style={{ width: "432px" }} />
                 </Form.Item>
-                <Form.Item name="group" label="Номер группы" rules={[{ required: false }]} style={{ marginLeft: '11px', textAlign: 'right' }}>
+                <Form.Item name="group" label="Номер группы" rules={[{ required: false }, { pattern: new RegExp('^\\d*$'), message: 'Введите корректный номер группы' }]} style={{ marginLeft: '11px', textAlign: 'right' }}>
                     <Input value={group || ''} onChange={(e) => setGroup(e.target.value)} placeholder="Введите номер группы" style={{ width: "432px" }} />
                 </Form.Item>
                 <Form.Item name="email" label="Email"
@@ -55,7 +55,7 @@ function RegisterUser() {
                         </span>
                     </div>
                 </Form.Item>
-                <Form.Item name="password1" label="Пароль" rules={[{ required: true, message: 'Введите пароль' }]} style={{ textAlign: 'right' }}>
+                <Form.Item name="password" label="Пароль" rules={[{ required: true, message: 'Введите пароль' }]} style={{ textAlign: 'right' }}>
                     <Input.Password value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Введите пароль" style={{ width: "432px" }} />
                 </Form.Item>
                 <Form.Item>

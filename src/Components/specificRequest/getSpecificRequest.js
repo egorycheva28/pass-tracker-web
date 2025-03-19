@@ -178,15 +178,26 @@ function GetSpecificRequest() {
   };
 
   const handleProlong = async () => {
+    if (!newFinishDate) {
+      setError("Выберите дату для продления.");
+      return;
+    }
+  
     try {
-      await requestApi.prolongRequest(id, newFinishDate);
+      await requestApi.prolongRequest(id, new Date(newFinishDate).toISOString());
       console.log("Запрос продлён до:", newFinishDate);
       setUser((prevUser) => ({ ...prevUser, finishDate: newFinishDate }));
       setIsProlongModalOpen(false);
+      setError(""); // Очистка ошибок после успешного запроса
     } catch (err) {
-      setError(err.message || "Ошибка продления запроса");
+      if (err.response?.status === 404 && err.response?.data?.detail === "You cant short request") {
+        setError("Ошибка: Нельзя указать дату раньше текущей.");
+      } else {
+        setError(err.response?.data?.detail || "Ошибка продления запроса");
+      }
     }
   };
+  
 
   const translations = {
     EducationalActivity: "Образовательная деятельность",
@@ -316,12 +327,14 @@ function GetSpecificRequest() {
         <div style={styles.modalOverlay}>
           <div style={styles.modalContent}>
             <h3>Продлить запрос</h3>
+            {error && <p style={{ color: "red", marginBottom: "15px" }}>{error}</p>}
             <input
               type="date"
               value={newFinishDate}
               onChange={(e) => setNewFinishDate(e.target.value)}
-              style={{ width: "100%", padding: "8px", marginBottom: "10px" }}
+              style={{ width: "100%", padding: "8px", marginBottom: "15px" }}
             />
+
             <div style={{ display: "flex", justifyContent: "space-between", width: "100%" }}>
               <button style={styles.button} onClick={handleProlong}>Подтвердить</button>
               <button style={styles.declineButton} onClick={() => setIsProlongModalOpen(false)}>Отмена</button>

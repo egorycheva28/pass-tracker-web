@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import UnconfirmedUsersItem from "./unconfirmedUsersItem.js";
 import { Pagination, Input } from "antd";
 import { adminApi } from "../../Api/adminApi.js";
+
 const UnconfirmedUsers = () => {
     const [users, setUsers] = useState([]);
     const [current, setCurrent] = useState(1);
@@ -37,7 +38,7 @@ const UnconfirmedUsers = () => {
 
     return (
         <div>
-            <h1 style={{ marginTop: '100px', marginBottom: '30px' }}>Не подтвержденные пользователи</h1>
+            <h1 style={{ marginTop: '100px', marginBottom: '30px' }}>Неподтвержденные пользователи</h1>
 
             <div className="card-deck">
                 {users.length > 0 ? (

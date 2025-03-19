@@ -47,33 +47,28 @@ function Navbar() {
                     37.5046 5.22264 30.8582 5.22264 22.6884V5.64296H35.1794V22.6884H35.1794Z" fill="rgb(231, 53, 89)"></path>
                 </svg>
                 <h2 style={{ marginLeft: 10, marginRight: 20, marginTop: '15px', whiteSpace: 'nowrap', color: 'rgb(231, 53, 89)' }}>Pass-tracker</h2>
+                {token && role == 4 ? (
+                    <Link to="/confirmUser" style={{ marginInline: 20, color: 'white', marginTop: '20px', whiteSpace: 'nowrap' }}>Пользователи</Link>
+                ) : (
+                    null
+                )}
+                {token && (role == 'Deanery' || role == 4) ? (
+                    <Link to="/role" style={{ marginInline: 20, color: 'white', marginTop: '20px', whiteSpace: 'nowrap' }}>Роли</Link>
+                ) : (
+                    null
+                )}
                 {token && role == 'Teacher' ? (
-                    <Link to="/listStudents" style={{ marginInline: 20, color: 'white', marginTop: '20px', whiteSpace: 'nowrap' }}>Одобренные заявки</Link>
-
+                    <Link to="/listStudents" style={{ marginInline: 20, color: 'white', marginTop: '20px', whiteSpace: 'nowrap' }}>Пропуски</Link>
                 ) : (
                     null
                 )}
                 {token && role == 'Deanery' ? (
-                    <Link to="/approvedApplications" style={{ marginInline: 20, color: 'white', marginTop: '20px', whiteSpace: 'nowrap' }}>Одобренные заявки</Link>
-
+                    <Link to="/approvedApplications" style={{ marginInline: 20, color: 'white', marginTop: '20px', whiteSpace: 'nowrap' }}>Пропуски</Link>
                 ) : (
                     null
                 )}
                 {token && (role == 'Deanery' || role == 4) ? (
-                    <Link to="/unapprovedApplications" style={{ marginInline: 20, color: 'white', marginTop: '20px', whiteSpace: 'nowrap' }}>Неодобренные заявки</Link>
-
-                ) : (
-                    null
-                )}
-                {token && (role == 'Deanery' || role == 4) ? (
-                    <Link to="/role" style={{ marginInline: 20, color: 'white', marginTop: '20px', whiteSpace: 'nowrap' }}>Выдача роли</Link>
-
-                ) : (
-                    null
-                )}
-                {token && role == 4 ? (
-                    <Link to="/confirmUser" style={{ marginInline: 20, color: 'white', marginTop: '20px', whiteSpace: 'nowrap' }}>Подтверждение пользователей</Link>
-
+                    <Link to="/unapprovedApplications" style={{ marginInline: 20, color: 'white', marginTop: '20px', whiteSpace: 'nowrap' }}>Заявки</Link>
                 ) : (
                     null
                 )}
@@ -86,7 +81,7 @@ function Navbar() {
                 </Dropdown>
             ) : (
                 <Link to="/login" style={{ marginInline: 70, color: 'white', marginTop: '20px', whiteSpace: 'nowrap' }}>
-                    Войти
+                    Вход
                 </Link>
             )}
         </nav>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef  } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { requestApi } from "../../Api/specificRequestApi.js";
 import { deaneryApi } from '../../Api/deaneryApi.js';
 import { useParams } from 'react-router-dom';
@@ -125,9 +125,7 @@ const styles = {
     borderRadius: "4px",
     border: "1px solid #ccc",
     fontSize: "14px",
-  },
-
-
+  }
 };
 
 function GetSpecificRequest() {
@@ -142,26 +140,27 @@ function GetSpecificRequest() {
   const [isProlongModalOpen, setIsProlongModalOpen] = useState(false);
   const [newFinishDate, setNewFinishDate] = useState("");
 
-    const isFetched = useRef(false);
-  
-    useEffect(() => {
-      if (isFetched.current) return; // Если уже загружали, не запускаем повторно
-      isFetched.current = true;
-  
-      fetchProfile();
-    }, []);
+  const isFetched = useRef(false);
 
-    const fetchProfile = async () => {
-      try {
-        const data = await requestApi.getDetails(id);
-        if (data) {
-          console.log("Успешная загрузка профиля", data);
-          setUser(data);
-        }
-      } catch (err) {
-        setError(err.message || "Ошибка загрузки профиля");
+  useEffect(() => {
+    if (isFetched.current) return; // Если уже загружали, не запускаем повторно
+    isFetched.current = true;
+
+    fetchProfile();
+  }, []);
+
+  const fetchProfile = async () => {
+    try {
+      const data = await requestApi.getDetails(id);
+      if (data) {
+        console.log("Успешная загрузка профиля", data);
+        setUser(data);
       }
-    };
+    } catch (err) {
+      setError(err.message || "Ошибка загрузки профиля");
+    }
+  };
+
   const formatDate = (date) => {
     if (!date) return "12.13.2024";
     return new Date(date).toLocaleDateString("ru-RU");
@@ -182,7 +181,7 @@ function GetSpecificRequest() {
       setError("Выберите дату для продления.");
       return;
     }
-  
+
     try {
       await requestApi.prolongRequest(id, new Date(newFinishDate).toISOString());
       console.log("Запрос продлён до:", newFinishDate);
@@ -197,7 +196,6 @@ function GetSpecificRequest() {
       }
     }
   };
-  
 
   const translations = {
     EducationalActivity: "Образовательная деятельность",
@@ -251,24 +249,24 @@ function GetSpecificRequest() {
 
         <div style={styles.infoRow}>
           <div style={styles.infoRow}>
-  <strong>Занёс документы в деканат:</strong>
-  <div style={{  
-    width: "20px",
-    height: "20px",
-    border: "1px solid #000",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-  }}>
-    {user?.inDeanery ? (
-      <img
-      src="/checkmark.png"
-        alt="Red Checkmark"
-        style={{ width: "20px", height: "20px" }}
-      />
-    ) : null}
-  </div>
-</div>
+            <strong>Занёс документы в деканат:</strong>
+            <div style={{
+              width: "20px",
+              height: "20px",
+              border: "1px solid #000",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}>
+              {user?.inDeanery ? (
+                <img
+                  src="/checkmark.png"
+                  alt="Red Checkmark"
+                  style={{ width: "20px", height: "20px" }}
+                />
+              ) : null}
+            </div>
+          </div>
         </div>
       </div>
 
@@ -276,15 +274,15 @@ function GetSpecificRequest() {
       <div style={styles.formBox}>
         <h2 style={{ marginBottom: "20px" }}>Документы:</h2>
 
-        {user?.typeRequest === "EducationalActivity" && user?.statusRequest === "Accepted" ? ( 
+        {user?.typeRequest === "EducationalActivity" && user?.statusRequest === "Accepted" ? (
           <img
-          src={`data:image/png;base64,${user?.photo}`}
-          alt="User photo"
-          style={styles.imageStyle}
-          onClick={() => setIsModalOpen(true)}
-        />
-          ) : null}
-        
+            src={`data:image/png;base64,${user?.photo}`}
+            alt="User photo"
+            style={styles.imageStyle}
+            onClick={() => setIsModalOpen(true)}
+          />
+        ) : null}
+
       </div>
       {user?.statusRequest === "Pending" ? (
         <div>
@@ -323,7 +321,7 @@ function GetSpecificRequest() {
         </div>
       )}
 
-{isProlongModalOpen && (
+      {isProlongModalOpen && (
         <div style={styles.modalOverlay}>
           <div style={styles.modalContent}>
             <h3>Продлить запрос</h3>

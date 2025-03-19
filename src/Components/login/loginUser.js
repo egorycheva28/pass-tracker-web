@@ -71,7 +71,6 @@ function LoginUser() {
     try {
       const data1 = await userApi.loginUser(email, password);
       if (data1) {
-        //localStorage.setItem('token', `${data.accessToken}`);
         const data2 = await userApi.getProfile();
         const data3 = await userApi.getHighestRole(data2.id);
         console.log(data3);
@@ -90,20 +89,19 @@ function LoginUser() {
         const emailErrors = err.response.data.errors.Email;
         if (emailErrors.includes("The Email field is required.")) {
           setError("Ошибка: Поле Email обязательно.");
-        } 
+        }
       } else if (err?.response?.data?.errors?.Password) {
         const passwordErrors = err.response.data.errors.Password;
         if (passwordErrors.includes("The Password field is required.")) {
           setError("Ошибка: Поле Пароль обязательно.");
         }
-      } else if (err.response?.data?.detail ===  "Invalid credentials!") {
-          setError("Ошибка: Введённые данные некоректны."); 
-      }else {
+      } else if (err.response?.data?.detail === "Invalid credentials!") {
+        setError("Ошибка: Введённые данные некоректны.");
+      } else {
         setError("Произошла ошибка при авторизации. Попробуйте позже.");
       }
       console.error("Ошибка запроса:", err);
     }
-
   };
 
   const registration = async () => {
@@ -115,7 +113,7 @@ function LoginUser() {
       <div style={styles.formBox}>
         <h2>Авторизация</h2>
         <form style={styles.form}>
-        {error && <div style={{color: "red"}}>{error}</div>}
+          {error && <div style={{ color: "red" }}>{error}</div>}
           <div style={styles.inputContainer}>
             <input
               type="email"

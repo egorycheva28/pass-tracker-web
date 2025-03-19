@@ -1,6 +1,6 @@
 import React from "react";
 import RoleItem from "./roleItem";
-import { Button, Card, Form, Input, DatePicker, Pagination } from "antd";
+import { Button, Card, Form, Input, Pagination } from "antd";
 import { useState, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { roleThunkCreator } from "../../../reducers/deaneryReducer";
@@ -8,8 +8,6 @@ import { roleThunkCreator } from "../../../reducers/deaneryReducer";
 const Role = ({ deaneryPage }) => {
     const dispatch = useDispatch()
 
-    const [startDate, setStartDate] = useState("");
-    const [finishDate, setFinishDate] = useState("");
     const [group, setGroup] = useState("");
     const [fullName, setFullName] = useState("");
     const [current, setCurrent] = useState(1);
@@ -17,11 +15,7 @@ const Role = ({ deaneryPage }) => {
     const count = deaneryPage.pagination.count;
     const isFetched = useRef(false);
 
-    //console.log(startDate, finishDate, group, fullName);
-
     var parameters = ({
-        /*startDate: startDate,
-        finishDate: finishDate,*/
         group: group,
         fullName: fullName,
         page: current,
@@ -30,10 +24,7 @@ const Role = ({ deaneryPage }) => {
 
     const applyFilters = async (e) => {
         e.preventDefault();
-        //console.log(startDate, finishDate, group, fullName);
         parameters = ({
-            /*startDate: startDate,
-            finishDate: finishDate,*/
             group: group,
             fullName: fullName,
             page: current,
@@ -46,16 +37,10 @@ const Role = ({ deaneryPage }) => {
     const resetFilters = async (e) => {
         e.preventDefault();
 
-        setStartDate("");
-        setFinishDate("");
         setGroup("");
         setFullName("");
 
-
-        //console.log(startDate, finishDate, group, fullName);
         parameters = ({
-            /*startDate: "",
-            finishDate: "",*/
             group: "",
             fullName: "",
             page: current,
@@ -63,7 +48,6 @@ const Role = ({ deaneryPage }) => {
         });
 
         await dispatch(roleThunkCreator(parameters));
-        //console.log(parameters);
     };
 
     useEffect(() => {
@@ -77,12 +61,9 @@ const Role = ({ deaneryPage }) => {
         dispatch(roleThunkCreator(parameters));
     }, [current, pageSize]);
 
-
-
-
     return (
         <div>
-            <h1 style={{ marginTop: '100px', marginBottom: '30px' }}>Выдача роли</h1>
+            <h1 style={{ marginTop: '100px', marginBottom: '30px' }}>Роли пользователей</h1>
 
             <Card style={{ margin: '20px', textAlign: 'left', marginBottom: '50px' }}>
                 <Form >
@@ -90,7 +71,7 @@ const Role = ({ deaneryPage }) => {
                     <Input value={fullName} onChange={(e) => setFullName(e.target.value)} placeholder="ФИО" style={{ marginLeft: 15, width: '350px' }} />
                     <div style={{ marginTop: 20, display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
                         <Button type="primary" htmlType="submit" style={{ marginRight: 5, background: 'rgb(231, 53, 89)' }} onClick={applyFilters}>Применить</Button>
-                        <Button type="primary" htmlType="submit" style={{ marginLeft: 5, background: 'rgb(231, 53, 89)' }} onClick={resetFilters}>Сбросить</Button>
+                        <Button type="primary" htmlType="submit" style={{ marginLeft: 5, background: '#555' }} onClick={resetFilters}>Сбросить</Button>
                     </div>
                 </Form>
             </Card >

@@ -76,7 +76,6 @@ export function unapprovedApplicationsThunkCreator(params) { //обращени�
     return async (dispatch) => {
         try {
             const data = await deaneryApi.unapprovedApplications(params);
-            console.log(data);
             dispatch(unapprovedApplicationsActionCreator(data));
         }
         catch (error) {
@@ -94,7 +93,6 @@ export function roleThunkCreator(params) { //обращение к сервер�
     return async (dispatch) => {
         try {
             const data = await deaneryApi.role(params);
-            console.log(data);
             dispatch(roleActionCreator(data));
         }
         catch (error) {
@@ -103,6 +101,7 @@ export function roleThunkCreator(params) { //обращение к сервер�
         }
     }
 }
+
 export function acceptRequestActionCreator() { //обращение к reducers
     return { type: ACCEPT_REQUEST }
 }
@@ -111,7 +110,6 @@ export function acceptRequestThunkCreator(id) { //обращение к серв
     return async (dispatch) => {
         try {
             await deaneryApi.acceptRequest(id);
-            //console.log(data);
             dispatch(acceptRequestActionCreator());
         }
         catch (error) {
@@ -129,7 +127,6 @@ export function declineRequestThunkCreator(id, comment) { //обращение �
     return async (dispatch) => {
         try {
             const data = await deaneryApi.declineRequest(id, comment);
-            console.log(data);
             dispatch(declineRequestActionCreator(data));
         }
         catch (error) {
@@ -148,7 +145,6 @@ export function exportThunkCreator() { //обращение к серверу
         try {
             const data = await deaneryApi.exportListStudents();
             dispatch(exportActionCreator(data));
-            console.log(data.body);
         }
         catch (error) {
             console.error("Ошибка:", error);
@@ -166,7 +162,6 @@ export function addRoleThunkCreator(id, role) { //обращение к серв
         try {
             const data = await deaneryApi.addRole(id, role);
             dispatch(addRoleActionCreator(data));
-           // console.log(data.body);
         }
         catch (error) {
             console.error("Ошибка:", error);
@@ -184,7 +179,6 @@ export function deleteRoleThunkCreator(id, role) { //обращение к се�
         try {
             const data = await deaneryApi.deleteRole(id, role);
             dispatch(deleteRoleActionCreator(data));
-            //console.log(data.body);
         }
         catch (error) {
             console.error("Ошибка:", error);

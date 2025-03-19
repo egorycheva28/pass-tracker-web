@@ -1,10 +1,6 @@
-import axios from "axios";
 import createAxiosInstance from "./axiosInstance";
 
-
 const api = createAxiosInstance("admin");
-
-
 
 function getUnconfirmedUsers(params) {
     return api.get(`/unconfirmed?page=${params.page}&size=${params.size}`)
@@ -37,7 +33,7 @@ function deleteUser(id) {
 }
 
 function confirmUser(id, role) {
-    return api.post(`/confirm-user?id=${id}&role=${role}`) 
+    return api.post(`/confirm-user?id=${id}&role=${role}`)
         .then(response => {
             console.log("Catalog Data:", response.data);
             if (response.status === 200) {
@@ -50,10 +46,8 @@ function confirmUser(id, role) {
         });
 }
 
-
 export const adminApi = {
     getUnconfirmedUsers: getUnconfirmedUsers,
     deleteUser: deleteUser,
     confirmUser: confirmUser
-
 }

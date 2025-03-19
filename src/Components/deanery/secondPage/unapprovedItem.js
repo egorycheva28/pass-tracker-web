@@ -74,7 +74,7 @@ function UnapprovedItem(props) {
                     <button onClick={closeModal} style={{ position: 'absolute', top: '10px', right: '15px', background: 'none', border: 'none', fontSize: '44px', cursor: 'pointer' }}>&times;{ }</button>
 
                     <div style={{ flex: '1', display: 'flex', flexDirection: 'column', justifyContent: 'start' }}>
-                        <h4>Комментарий к заявке</h4>
+                        <h4>Отклонить заявку</h4>
                         <Input value={comment} onChange={(e) => setCommetn(e.target.value)} placeholder="Введите комментарий" style={{ width: "300px" }} />
                     </div>
 

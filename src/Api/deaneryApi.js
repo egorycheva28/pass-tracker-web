@@ -1,6 +1,4 @@
-import axios from "axios";
 import createAxiosInstance from "./axiosInstance";
-
 
 const api = createAxiosInstance("");
 
@@ -9,7 +7,6 @@ function approvedApplications(params) {
         &Group=${params.group}&Name=${params.fullName}&page=${params.page}&size=${params.size}`)
 
         .then(response => {
-            console.log("Catalog Data:", response.data);
             if (response.status === 200) {
                 console.log("Catalog Data:", response.data);
                 return response.data;
@@ -25,7 +22,6 @@ function unapprovedApplications(params) {
         &Group=${params.group}&Name=${params.fullName}&page=${params.page}&size=${params.size}`)
 
         .then(response => {
-            console.log("Catalog Data:", response.data);
             if (response.status === 200) {
                 console.log("Catalog Data:", response.data);
                 return response.data;
@@ -40,7 +36,6 @@ function role(params) {
     return api.get(`admin/users?Group=${params.group}&Name=${params.fullName}&page=${params.page}&size=${params.size}`)
 
         .then(response => {
-            console.log("Catalog Data:", response.data);
             if (response.status === 200) {
                 console.log("Catalog Data:", response.data);
                 return response.data;
@@ -55,7 +50,6 @@ function acceptRequest(id) {
     return api.post(`deanery/accept-request/${id}`, {})
 
         .then(response => {
-            console.log("Catalog Data:", response.data);
             if (response.status === 200) {
                 console.log("Catalog Data:", response.data);
                 return response.data;
@@ -70,7 +64,6 @@ function declineRequest(id, comment) {
     return api.post(`deanery/decline-request/${id}`, { comment: comment })
 
         .then(response => {
-            console.log("Catalog Data:", response.data);
             if (response.status === 200) {
                 console.log("Catalog Data:", response.data);
                 return response.data;
@@ -83,14 +76,9 @@ function declineRequest(id, comment) {
 
 function exportListStudents() {
     return api.get(`/deanery/download-requests?StatusRequestSort=Accepted`, {
-
         responseType: 'blob'
-    }
-    )
-
+    })
         .then(response => {
-            console.log("Catalog Data:", response.data);
-
             if (response.status === 200) {
                 const url = window.URL.createObjectURL(new Blob([response.data]));
                 const a = document.createElement('a');
@@ -111,9 +99,7 @@ function exportListStudents() {
 
 function addRole(id, role) {
     return api.post(`admin/deanery?id=${id}&role=${role}`)
-        //console.log(id);
         .then(response => {
-            console.log("Catalog Data:", response.data);
             if (response.status === 200) {
                 console.log("Catalog Data:", response.data);
                 return response.data;
@@ -128,7 +114,6 @@ function deleteRole(id, role) {
     return api.delete(`admin/deanery?id=${id}&role=${role}`)
 
         .then(response => {
-            console.log("Catalog Data:", response.data);
             if (response.status === 200) {
                 console.log("Catalog Data:", response.data);
                 return response.data;

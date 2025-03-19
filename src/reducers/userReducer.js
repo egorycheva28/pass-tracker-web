@@ -4,7 +4,6 @@ const REGISTER_USER = "REGISTER_USER";
 const LOGOUT = "LOGOUT";
 
 let initialState = {
-
     accessToken: ''
 }
 
@@ -16,7 +15,6 @@ const userReducer = (state = initialState, action) => {
             newState.accessToken = action.accessToken;
             return newState;
         case LOGOUT:
-            //newState.token = action.token;
             return newState;
         default:
             return newState;
@@ -48,7 +46,6 @@ export function registerUserThunkCreator(lastName, firstName, middleName, group,
         }
         catch (error) {
             console.error("Ошибка:", error);
-            alert("Произошла ошибка при регистрации.");
         }
     }
 }

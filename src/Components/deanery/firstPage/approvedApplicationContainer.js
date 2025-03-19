@@ -4,9 +4,7 @@ import ApprovedApplications from "./approvedApplications";
 import { approvedApplicationsThunkCreator } from "../../../reducers/deaneryReducer";
 
 class MiddleApprovedComponent extends React.Component {
-    /*componentDidMount() {
-        this.props.getStudentsThunkCreator();
-    }*/
+
     render() {
         return (<ApprovedApplications{...this.props} />)
     }

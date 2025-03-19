@@ -4,9 +4,7 @@ import Role from "./role";
 import { roleThunkCreator } from "../../../reducers/deaneryReducer";
 
 class MiddleRoleComponent extends React.Component {
-    /*componentDidMount() {
-        this.props.getStudentsThunkCreator();
-    }*/
+
     render() {
         return (<Role{...this.props} />)
     }

@@ -18,8 +18,6 @@ const ListStudents = ({ teacherPage }) => {
     const count = teacherPage.pagination.count;
     const isFetched = useRef(false);
 
-    //console.log(startDate, finishDate, group, fullName);
-
     var parameters = ({
         startDate: startDate,
         finishDate: finishDate,
@@ -31,7 +29,6 @@ const ListStudents = ({ teacherPage }) => {
 
     const applyFilters = async (e) => {
         e.preventDefault();
-        //console.log(startDate, finishDate, group, fullName);
         parameters = ({
             startDate: startDate,
             finishDate: finishDate,
@@ -52,7 +49,6 @@ const ListStudents = ({ teacherPage }) => {
         setGroup("");
         setFullName("");
 
-        //console.log(startDate, finishDate, group, fullName);
         parameters = ({
             startDate: "",
             finishDate: "",
@@ -63,11 +59,9 @@ const ListStudents = ({ teacherPage }) => {
         });
 
         await dispatch(getStudentsThunkCreator(parameters));
-        //console.log(parameters);
     };
 
     useEffect(() => {
-
         parameters = ({
             startDate: startDate,
             finishDate: finishDate,
@@ -75,21 +69,18 @@ const ListStudents = ({ teacherPage }) => {
             fullName: fullName,
             page: current,
             size: pageSize,
-
         });
 
         dispatch(getStudentsThunkCreator(parameters));
     }, [current, pageSize]);
 
     const exportListStudents = async () => {
-        //console.log('export');
         dispatch(exportThunkCreator());
-
     };
 
     return (
         <div>
-            <h1 style={{ marginTop: '100px', marginBottom: '30px' }}>Список пропусков</h1>
+            <h1 style={{ marginTop: '100px', marginBottom: '30px' }}>Пропуски студентов</h1>
 
             <Card style={{ margin: '20px', textAlign: 'left', marginBottom: '50px' }}>
                 <Form >
@@ -111,7 +102,7 @@ const ListStudents = ({ teacherPage }) => {
             </div>
 
             <div style={{ margin: '20px', display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
-                <Button type="primary" htmlType="submit" style={{ background: 'rgb(231, 53, 89)' }} onClick={exportListStudents}>Экспортировать</Button>
+                <Button type="primary" htmlType="submit" style={{ background: 'rgb(231, 53, 89)' }} onClick={exportListStudents}>Скачать список</Button>
             </div>
 
             <div style={{ display: 'flex', alignItems: 'center', margin: '20px' }}>

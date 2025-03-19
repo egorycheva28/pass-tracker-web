@@ -5,10 +5,7 @@ import RegisterUser from "./registerUser";
 import { registerUserThunkCreator } from "../../reducers/userReducer";
 
 class MiddleUserComponent extends React.Component {
-    
-    /*componentDidMount() {
-        this.props.registerUserThunkCreator();
-    }*/
+
     render() {
         return (<RegisterUser{...this.props} />)
     }

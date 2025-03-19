@@ -27,7 +27,14 @@ function registerUser(secondName, firstName, middleName, group, email, password)
                 return response.data;
             }
         })
-        .catch(error => console.log(error.response.data?.error || "Ошибка регистрации"));
+        .catch(error => {
+            if (error.response?.status === 400 && error.response?.data?.detail === "This email is already used!") {
+                console.error("Ошибка: Такая почта уже используется.");
+                alert("Ошибка: Такая почта уже используется.");
+            } else {
+                console.error(error.response?.data?.detail || "Ошибка регистрации");
+            }
+        })
 }
 
 function getProfile() {
@@ -41,12 +48,12 @@ function getProfileById(id) {
         .then(response => response.data)
         .catch(error => console.log(error.response.data?.error || "Ошибка получения профиля"));
 }
+
 function logout() {
     return api.post("/logout", {})
         .then(response => response.data)
         .catch(error => console.log(error.response.data?.error || "Ошибка выхода"));
 }
-
 
 function updateProfile(email) {
     return api.patch("/edit/email", { email })

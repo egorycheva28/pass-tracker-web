@@ -4,9 +4,7 @@ import ListStudents from './listStudents';
 import { getStudentsThunkCreator } from "../../reducers/teacherReducer";
 
 class MiddleListStudentsComponent extends React.Component {
-    /*componentDidMount() {
-        this.props.getStudentsThunkCreator();
-    }*/
+
     render() {
         return (<ListStudents{...this.props} />)
     }

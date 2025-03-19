@@ -4,9 +4,7 @@ import Unapproved from "./unapproved";
 import { unapprovedApplicationsThunkCreator } from "../../../reducers/deaneryReducer";
 
 class MiddleUnapprovedComponent extends React.Component {
-    /*componentDidMount() {
-        this.props.getStudentsThunkCreator();
-    }*/
+
     render() {
         return (<Unapproved{...this.props} />)
     }

@@ -1,7 +1,7 @@
 import React from "react";
 import ApprovedApplicationItem from "./approvedApplicationItem";
 import { Button, Card, Form, Input, DatePicker, Pagination } from "antd";
-import { useState, useEffect, useRef} from "react";
+import { useState, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { approvedApplicationsThunkCreator } from "../../../reducers/deaneryReducer";
 import { exportThunkCreator } from "../../../reducers/deaneryReducer";
@@ -18,8 +18,6 @@ const ApprovedApplications = ({ deaneryPage }) => {
     const count = deaneryPage.pagination.count;
     const isFetched = useRef(false);
 
-    //console.log(startDate, finishDate, group, fullName);
-
     var parameters = ({
         startDate: startDate,
         finishDate: finishDate,
@@ -32,7 +30,6 @@ const ApprovedApplications = ({ deaneryPage }) => {
 
     const applyFilters = async (e) => {
         e.preventDefault();
-        //console.log(startDate, finishDate, group, fullName);
         parameters = ({
             startDate: startDate,
             finishDate: finishDate,
@@ -54,7 +51,6 @@ const ApprovedApplications = ({ deaneryPage }) => {
         setGroup("");
         setFullName("");
 
-        //console.log(startDate, finishDate, group, fullName);
         parameters = ({
             startDate: "",
             finishDate: "",
@@ -65,7 +61,6 @@ const ApprovedApplications = ({ deaneryPage }) => {
         });
 
         await dispatch(approvedApplicationsThunkCreator(parameters));
-        //console.log(parameters);
     };
 
     useEffect(() => {
@@ -84,14 +79,12 @@ const ApprovedApplications = ({ deaneryPage }) => {
     }, [current, pageSize]);
 
     const exportListStudents = async () => {
-        //console.log('export');
         dispatch(exportThunkCreator());
-
     };
 
     return (
         <div>
-            <h1 style={{ marginTop: '100px', marginBottom: '30px' }}>Список одобренных заявок</h1>
+            <h1 style={{ marginTop: '100px', marginBottom: '30px' }}>Пропуски студентов</h1>
 
             <Card style={{ margin: '20px', textAlign: 'left', marginBottom: '50px' }}>
                 <Form >
@@ -101,7 +94,7 @@ const ApprovedApplications = ({ deaneryPage }) => {
                     <Input value={fullName} onChange={(e) => setFullName(e.target.value)} placeholder="ФИО" style={{ marginLeft: 15, width: '350px' }} />
                     <div style={{ marginTop: 20, display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
                         <Button type="primary" htmlType="submit" style={{ marginRight: 5, background: 'rgb(231, 53, 89)' }} onClick={applyFilters}>Применить</Button>
-                        <Button type="primary" htmlType="submit" style={{ marginLeft: 5, background: 'rgb(231, 53, 89)' }} onClick={resetFilters}>Сбросить</Button>
+                        <Button type="primary" htmlType="submit" style={{ marginLeft: 5, background: '#555' }} onClick={resetFilters}>Сбросить</Button>
                     </div>
                 </Form>
             </Card >
@@ -114,7 +107,7 @@ const ApprovedApplications = ({ deaneryPage }) => {
             </div>
 
             <div style={{ margin: '20px', display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
-                <Button type="primary" htmlType="submit" style={{ background: 'rgb(231, 53, 89)' }} onClick={exportListStudents}>Экспортировать</Button>
+                <Button type="primary" htmlType="submit" style={{ background: 'rgb(231, 53, 89)' }} onClick={exportListStudents}>Скачать список</Button>
             </div>
 
             <div style={{ display: 'flex', alignItems: 'center', margin: '20px' }}>

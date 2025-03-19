@@ -8,9 +8,7 @@ function UnconfirmedUsersItem(props) {
 
     const [role, setRole] = useState("");
     const navigate = useNavigate();
-    const detail = () => {
-        navigate(`/profile/${props.id}`);
-    };
+
     const handleDelete = async () => {
         await props.onDelete(props.id);
     };
@@ -40,7 +38,7 @@ function UnconfirmedUsersItem(props) {
                     onChange={(value) => setRole(value)}
                 >
                     <Option value="Student">Студент</Option>
-                    <Option value="Teacher">Учитель</Option>
+                    <Option value="Teacher">Преподаватель</Option>
                     <Option value="DeanOffice">Деканат</Option>
                 </Select>
 

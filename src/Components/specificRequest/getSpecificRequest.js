@@ -274,7 +274,7 @@ function GetSpecificRequest() {
       <div style={styles.formBox}>
         <h2 style={{ marginBottom: "20px" }}>Документы:</h2>
 
-        {user?.typeRequest === "EducationalActivity" && user?.statusRequest === "Accepted" ? (
+        {user?.photo !== null ? (
           <img
             src={`data:image/png;base64,${user?.photo}`}
             alt="User photo"

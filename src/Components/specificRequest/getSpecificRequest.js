@@ -215,6 +215,13 @@ function GetSpecificRequest() {
     setIsDeclineModalOpen(false);
   };
 
+  const handleCloseProlongModal = () => {
+    setIsProlongModalOpen(false);
+    setError("");
+    setNewFinishDate("");
+  };
+  
+
   const handleDecline = async () => {
     try {
       await deaneryApi.declineRequest(id, declineComment);
@@ -334,8 +341,8 @@ function GetSpecificRequest() {
             />
 
             <div style={{ display: "flex", justifyContent: "space-between", width: "100%" }}>
-              <button style={styles.button} onClick={handleProlong}>Подтвердить</button>
-              <button style={styles.declineButton} onClick={() => setIsProlongModalOpen(false)}>Отмена</button>
+              <button style={{ ...styles.button, padding: "10px 20px", fontSize: "12px" }} onClick={handleProlong}>Подтвердить</button>
+              <button style={styles.declineButton}  onClick={handleCloseProlongModal}>Отмена</button>
             </div>
           </div>
         </div>

@@ -59,7 +59,7 @@ export function logoutThunkCreator() { //обращение к серверу
         try {
             const data = await userApi.logout();
             dispatch(logoutActionCreator());
-            alert("Успешный выход!");
+            //alert("Успешный выход!");
         }
         catch (error) {
             console.error("Ошибка:", error);

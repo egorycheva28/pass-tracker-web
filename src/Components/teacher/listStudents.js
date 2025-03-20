@@ -14,7 +14,7 @@ const ListStudents = ({ teacherPage }) => {
     const [group, setGroup] = useState("");
     const [fullName, setFullName] = useState("");
     const [current, setCurrent] = useState(1);
-    const [pageSize, setPageSize] = useState(5);
+    const [pageSize, setPageSize] = useState(15);
     const count = teacherPage.pagination.count;
     const isFetched = useRef(false);
 

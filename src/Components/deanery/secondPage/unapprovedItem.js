@@ -75,7 +75,7 @@ function UnapprovedItem(props) {
 
                     <div style={{ flex: '1', display: 'flex', flexDirection: 'column', justifyContent: 'start' }}>
                         <h4>Отклонить заявку</h4>
-                        <Input value={comment} onChange={(e) => setCommetn(e.target.value)} placeholder="Введите комментарий" style={{ width: "300px" }} />
+                        <Input value={comment} onChange={(e) => setCommetn(e.target.value)} placeholder="Введите комментарий...(Это не обязательно)" style={{ width: "300px" }} />
                     </div>
 
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', marginTop: 'auto' }}>

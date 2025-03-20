@@ -6,7 +6,7 @@ import { adminApi } from "../../Api/adminApi.js";
 const UnconfirmedUsers = () => {
     const [users, setUsers] = useState([]);
     const [current, setCurrent] = useState(1);
-    const [pageSize, setPageSize] = useState(5);
+    const [pageSize, setPageSize] = useState(15);
     const [count, setCount] = useState(0);
 
     const fetchData = async (page = current, size = pageSize) => {

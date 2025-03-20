@@ -104,6 +104,8 @@ function GetUserProfile() {
   const [newEmail, setNewEmail] = useState("");
   const isFetched = useRef(false);
 
+  const role = localStorage.getItem('role');
+
   useEffect(() => {
     if (isFetched.current) return; // Если уже загружали, не запускаем повторно
     isFetched.current = true;
@@ -155,53 +157,63 @@ function GetUserProfile() {
 
   const translatedRoles = user?.roles?.map(role => roleTranslations[role] || role);
   return (
-    <div style={styles.container}>
-      <div style={styles.formBox}>
-        <h1 style={{ marginBottom: "20px", alignSelf: "center" }}>Профиль</h1>
-        <div style={{ marginTop: "60px", }}>
-          <div style={styles.infoRow}>
-            <strong>ФИО:</strong> {user?.name || "Нет данных"}
-          </div>
-
-          <div style={styles.infoRow}>
-            <strong>Роль:</strong> {translatedRoles?.join(", ") || "Нет данных"}
-          </div>
-
-          {user?.group && user?.group !== 0 ? (
+    <div>
+      <div style={styles.container}>
+        <div style={styles.formBox}>
+          <h1 style={{ marginBottom: "20px", alignSelf: "center" }}>Профиль</h1>
+          <div style={{ marginTop: "60px", }}>
             <div style={styles.infoRow}>
-              <strong>Группа:</strong> {user?.group || "Нет данных"}
+              <strong>ФИО:</strong> {user?.name || "Нет данных"}
             </div>
-          ) : null}
 
-          <div style={styles.infoRow}>
-            <strong>Почта:</strong> {user?.email || "Нет данных"}
-            <button onClick={handleOpenModal} style={styles.editButton}>
-              <img src="/edit.png" alt="Редактировать" style={styles.editIcon} />
-            </button>
+            <div style={styles.infoRow}>
+              <strong>Роль:</strong> {translatedRoles?.join(", ") || "Нет данных"}
+            </div>
+
+            {user?.group && user?.group !== 0 ? (
+              <div style={styles.infoRow}>
+                <strong>Группа:</strong> {user?.group || "Нет данных"}
+              </div>
+            ) : null}
+
+            <div style={styles.infoRow}>
+              <strong>Почта:</strong> {user?.email || "Нет данных"}
+              <button onClick={handleOpenModal} style={styles.editButton}>
+                <img src="/edit.png" alt="Редактировать" style={styles.editIcon} />
+              </button>
+            </div>
           </div>
-        </div>
 
-        {/* Модальное окно */}
-        {isModalOpen && (
-          <div style={styles.modalOverlay}>
-            <div style={styles.modalContent}>
-              <button onClick={handleCloseModal} style={styles.closeButton}>✖</button>
-              <h3>Изменить почту</h3>
-              <input
-                type="email"
-                value={newEmail}
-                onChange={(e) => setNewEmail(e.target.value)}
-                style={styles.input}
-              />
+          {/* Модальное окно */}
+          {isModalOpen && (
+            <div style={styles.modalOverlay}>
+              <div style={styles.modalContent}>
+                <button onClick={handleCloseModal} style={styles.closeButton}>✖</button>
+                <h3>Изменить почту</h3>
+                <input
+                  type="email"
+                  value={newEmail}
+                  onChange={(e) => setNewEmail(e.target.value)}
+                  style={styles.input}
+                />
 
-              <div>
-                <button onClick={handleSaveEmail} style={{ ...styles.button, ...styles.saveButton }}> Сохранить</button>
-                <button onClick={handleCloseModal} style={{ ...styles.button, ...styles.cancelButton }}> Отмена </button>
+                <div>
+                  <button onClick={handleSaveEmail} style={{ ...styles.button, ...styles.saveButton }}> Сохранить</button>
+                  <button onClick={handleCloseModal} style={{ ...styles.button, ...styles.cancelButton }}> Отмена </button>
+                </div>
               </div>
             </div>
-          </div>
-        )}
+          )}
 
+        </div>
+
+      </div>
+      <div style={{ marginTop: "-70px" }}>
+        {role == 'Student' ? (
+          <h3>Для большего функционала воспользуйтесь мобильной версией приложения &#128064;&#128241;</h3>
+        ) : (
+          null
+        )}
       </div>
     </div>
   );

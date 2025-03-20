@@ -82,7 +82,7 @@ function LoginUser() {
         navigate('/profile');
         console.log("Успешный вход!", data1);
         localStorage.setItem("token", data1.accessToken);
-        alert("Вы вошли в систему!");
+
       }
     } catch (err) {
       if (err?.response?.data?.errors?.Email) {

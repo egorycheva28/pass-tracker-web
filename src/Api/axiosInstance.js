@@ -3,6 +3,10 @@ import axios from "axios";
 const createAxiosInstance = (prefix = '') => {
     const instance = axios.create({
         baseURL: `https://8f16-195-133-2-108.ngrok-free.app/${prefix}`,
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        }
     });
 
     instance.interceptors.request.use(config => {

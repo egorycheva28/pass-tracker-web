@@ -20,7 +20,6 @@ function RegisterUser() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("Успешный вход");
 
         await dispatch(registerUserThunkCreator(lastName, firstName, middleName, group, email, password));
 
@@ -34,20 +33,23 @@ function RegisterUser() {
             <Title level={3} style={{ marginTop: 0 }}>Регистрация</Title>
             <Form>
                 <Form.Item name="lastName" label="Фамилия" rules={[{ required: true, message: 'Введите фамилию' },
-                { pattern: new RegExp('^[А-ЯЁ][а-яё]*|[A-Z][a-z]*$'), message: 'Введите корректную фамилию' }]} style={{ textAlign: 'right' }}>
+                { pattern: new RegExp('^([А-ЯЁ][а-яё]*|[A-Z][a-z]*)$'), message: 'Введите корректную фамилию' }]} style={{ textAlign: 'right' }}>
                     <Input value={lastName} onChange={(e) => setLastName(e.target.value)} placeholder="Введите фамилию" style={{ width: "432px" }} />
                 </Form.Item>
                 <Form.Item name="firstName" label="Имя" rules={[{ required: true, message: 'Введите имя' },
-                { pattern: new RegExp('^[А-ЯЁ][а-яё]*|[A-Z][a-z]*$'), message: 'Введите корректное имя' }]} style={{ textAlign: 'right' }}>
+                { pattern: new RegExp('^([А-ЯЁ][а-яё]*|[A-Z][a-z]*)$'), message: 'Введите корректное имя' }]} style={{ textAlign: 'right' }}>
                     <Input value={firstName} onChange={(e) => setFirstName(e.target.value)} placeholder="Введите имя" style={{ width: "432px" }} />
                 </Form.Item>
                 <Form.Item name="middleName" label="Отчество" rules={[{ required: true, message: 'Введите отчество' },
-                { pattern: new RegExp('^[А-ЯЁ][а-яё]*|[A-Z][a-z]*$'), message: 'Введите корректное отчество' }
+                { pattern: new RegExp('^([А-ЯЁ][а-яё]*|[A-Z][a-z]*)$'), message: 'Введите корректное отчество' }
                 ]} style={{ textAlign: 'right' }}>
                     <Input value={middleName} onChange={(e) => setMiddleName(e.target.value)} placeholder="Введите отчество" style={{ width: "432px" }} />
                 </Form.Item>
-                <Form.Item name="group" label="Номер группы" rules={[{ required: false }, { pattern: new RegExp('^\\d*$'), message: 'Введите корректный номер группы' }]} style={{ marginLeft: '11px', textAlign: 'right' }}>
-                    <Input value={group || ''} onChange={(e) => setGroup(e.target.value)} placeholder="Введите номер группы" style={{ width: "432px" }} />
+                <Form.Item name="group" label="Номер группы" rules={[{ required: false }, { pattern: new RegExp('^[\\d\\s]*$'), message: 'Введите корректный номер группы' }]} style={{ marginLeft: '11px', textAlign: 'right' }}>
+                    <Input value={group} onChange={(e) => {
+                        const value = e.target.value.trim();
+                        setGroup(value === '' ? null : value);
+                    }} placeholder="Введите номер группы" style={{ width: "432px" }} />
                 </Form.Item>
                 <Form.Item name="email" label="Email"
                     rules={[{ required: true, message: 'Введите email' },

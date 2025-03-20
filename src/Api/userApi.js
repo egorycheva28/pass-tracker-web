@@ -59,7 +59,11 @@ function updateProfile(email) {
     return api.patch("/edit/email", { email })
 
         .then(response => response.data)
-        .catch(error => console.log(error.response.data?.error || "Ошибка обновления профиля"));
+        .catch(error => {
+            console.log(error.response.data?.error || "Ошибка выхода")
+            throw error;
+           
+        })
 }
 
 function getHighestRole(id) {

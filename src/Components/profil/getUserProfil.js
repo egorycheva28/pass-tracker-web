@@ -47,7 +47,7 @@ const styles = {
     padding: "7px",
   },
   cancelButton: {
-    background: 'rgb(49, 48, 48)',
+    background: '#555',
     color: "white",
     marginLeft: "10px",
     fontSize: "16px",
@@ -106,6 +106,8 @@ function GetUserProfile() {
 
   const role = localStorage.getItem('role');
 
+
+  
   useEffect(() => {
     if (isFetched.current) return; // Если уже загружали, не запускаем повторно
     isFetched.current = true;
@@ -132,6 +134,8 @@ function GetUserProfile() {
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
+    setError("");
+    setNewEmail(user?.email || "");
   };
 
   const handleSaveEmail = async () => {
@@ -143,9 +147,15 @@ function GetUserProfile() {
       console.log("Успешное обновление");
       setIsModalOpen(false);
     } catch (err) {
-      setError(err.message || "Ошибка обновления профиля");
+      if ( err.response?.data?.detail === "This email is already used!") {
+        setError("Ошибка: Такая почта уже используется.");
+      } else {
+        setError(err.response?.data?.detail || "Ошибка смены почты. Попробуйте позже.");
+      }
     }
   };
+
+
 
   const roleTranslations = {
     Teacher: "Преподаватель",
@@ -190,6 +200,7 @@ function GetUserProfile() {
               <div style={styles.modalContent}>
                 <button onClick={handleCloseModal} style={styles.closeButton}>✖</button>
                 <h3>Изменить почту</h3>
+                {error && <p style={{ color: "red", marginBottom: "15px" }}>{error}</p>}
                 <input
                   type="email"
                   value={newEmail}

@@ -19,6 +19,7 @@ function RoleItem(props) {
     const [student, setStudent] = useState(false);
     const [teacher, setTeacher] = useState(false);
     const [deanery, setDeanery] = useState(false);
+    const [confirmUser, setConfirmUser] = useState(false);
     const role = localStorage.getItem('role');
 
     const detail = () => {
@@ -30,33 +31,64 @@ function RoleItem(props) {
         for (let i = 0; i < data.roles.length; i++) {
             if (data.roles[i] == 'Student') {
                 setStudent(true);
+                setConfirmUser(true);
             }
             else if (data.roles[i] == 'Teacher') {
                 setTeacher(true);
+                setConfirmUser(true);
             }
             else if (data.roles[i] == 'Deanery') {
                 setDeanery(true);
+                setConfirmUser(true);
             }
         }
     }
 
     const addRole = async (id, role) => {
-        await dispatch(addRoleThunkCreator(id, role));
-        profile();
+        if (confirmUser == true) {
+            const roleSetters = {
+                Student: student,
+                Teacher: teacher,
+                Deanery: deanery
+            };
+
+            if (!roleSetters[role]) {
+                await dispatch(addRoleThunkCreator(id, role));
+                profile();
+            }
+            else {
+                alert('Пользователь уже имеет эту роль.');
+            }
+        }
+        else {
+            alert('Это неподтвержденный пользователь. Необходимо сначала подтвердить пользователя.');
+        }
+        console.log(confirmUser);
     }
 
     const deleteRole = async (id, role) => {
-        await dispatch(deleteRoleThunkCreator(id, role));
-        if (role == 'Student') {
-            setStudent(false);
+        const roleSetters = {
+            Student: student,
+            Teacher: teacher,
+            Deanery: deanery
+        };
+
+        if (roleSetters[role]) {
+            await dispatch(deleteRoleThunkCreator(id, role));
+            if (role == 'Student') {
+                setStudent(false);
+            }
+            else if (role == 'Teacher') {
+                setTeacher(false);
+            }
+            else if (role == 'Deanery') {
+                setDeanery(false);
+            }
+            profile();
         }
-        else if (role == 'Teacher') {
-            setTeacher(false);
+        else {
+            alert('Невозможно удалить роль, так пользователь не имеет ее.');
         }
-        else if (role == 'Deanery') {
-            setDeanery(false);
-        }
-        profile();
     }
 
     const openModal = () => {

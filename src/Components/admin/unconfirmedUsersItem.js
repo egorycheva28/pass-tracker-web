@@ -39,7 +39,7 @@ function UnconfirmedUsersItem(props) {
                 >
                     <Option value="Student">Студент</Option>
                     <Option value="Teacher">Преподаватель</Option>
-                    <Option value="DeanOffice">Деканат</Option>
+                    <Option value="Deanery">Деканат</Option>
                 </Select>
 
                 <Button type="primary" onClick={handleConfirm} style={{ background: "rgb(231, 53, 89)" }}>
